@@ -1,0 +1,193 @@
+<div id="ipdListPage" class="wraper-container">
+  <div class="search-container">
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+          
+        <div class="patientsearchTabs" fxFlex="90%">
+                  <mat-toolbar style="background: transparent;"> 
+                          <h4 class="card_title"> IPD List</h4>
+                          <div style="width:100%;text-align:right;" class="navBtn">
+                                <button mat-raised-button color="primary" class="toplink" (click)="backToIpdList()" >Back To Home </button>
+                          </div>
+                  </mat-toolbar>
+              
+                <div class="reglisttables" >
+                    <form [formGroup]="pharmacyListsrchForm" novalidate > 
+
+                            <!--
+                            <mat-form-field>
+                                <input matInput [matDatepicker]="picker3" placeholder="Admission Date" formControlName="pharmcylistSrchDt" >
+                                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                                <mat-datepicker #picker3></mat-datepicker>
+                            </mat-form-field> 
+                            <button mat-flat-button color="primary" style="margin-left:10px;" (click)="searchPrescriptionList()" ><mat-icon>search</mat-icon> Search</button>
+                            -->
+                    </form>
+                    <mat-tab-group (selectedTabChange)="tabChanged($event)">
+                            <mat-tab>
+                                    <ng-template mat-tab-label>
+                                            <mat-icon>assignment_turned_in </mat-icon>
+                                           IPD List
+                                    </ng-template>
+
+                                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 reglisttable" style="width: 100%;" >
+  
+                                            <ng-container matColumnDef="action" >
+                                                <th mat-header-cell *matHeaderCellDef style="width:20%;"> Action </th>
+                                                <td mat-cell *matCellDef="let row" >
+
+
+                                                  <button type="button" mat-flat-button color="accent" class="prescriptionBtn customeblockBtn" (click)="getIPDRegDetail($event,row)" id="ipdVisitRowBtn_{{row.ipdID}}">
+                                                        Visit
+                                                  </button>
+
+                                                  <button type="button" mat-flat-button color="accent" class="customeblockBtn" id="ipdVisitRowWaitBtn_{{row.ipdID}}" [ngStyle]="{'display': 'none'}">
+                                                      <span class="blinking">Wait...</span>
+                                                  </button>
+
+                                                   &nbsp;
+                                                  
+                                                  <button type="button" mat-flat-button color="warn" class="prescriptionBtn customeblockBtn" (click)="ipdDischarge($event,row)" id="dischargerowBtn_{{row.ipdID}}">
+                                                     Discharge
+                                                  </button>
+                                                  <button type="button" mat-flat-button color="warn" class="customeblockBtn" id="ipdDischargeRowWaitBtn_{{row.ipdID}}" [ngStyle]="{'display': 'none'}">
+                                                      <span class="blinking">Wait...</span>
+                                                  </button>
+                                                
+
+                                                  </td>
+                                            </ng-container>
+              
+                                            <ng-container matColumnDef="admission_dt">
+                                              <th mat-header-cell *matHeaderCellDef> Admission Dt </th>
+                                              <td mat-cell *matCellDef="let row"> {{row.admission_dt}} </td>
+                                            </ng-container>
+                        
+                                            <ng-container matColumnDef="patient_name">
+                                                <th mat-header-cell *matHeaderCellDef> Name </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.patient_name}} </td>
+                                            </ng-container>
+                        
+                                            <ng-container matColumnDef="mobile_one">
+                                                <th mat-header-cell *matHeaderCellDef> Mobile </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.mobile_one}} </td>
+                                            </ng-container>
+              
+                                            <ng-container matColumnDef="patient_code">
+                                              <th mat-header-cell *matHeaderCellDef> Type </th>
+                                              <td mat-cell *matCellDef="let row"> {{row.patient_type}} </td>
+                                            </ng-container>
+              
+                                            <ng-container matColumnDef="bed_no">
+                                            <th mat-header-cell *matHeaderCellDef> Bed No </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.bed_no}} </td>
+                                           </ng-container>
+              
+                                          <ng-container matColumnDef="room_no">
+                                            <th mat-header-cell *matHeaderCellDef> Room No </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.room_no}} </td>
+                                          </ng-container>
+                                            
+                                          <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
+                                            <tr mat-row  *matRowDef="let row; columns: displayedColumns;"></tr>
+                                    </table>
+
+                                    <mat-toolbar class="norecord" *ngIf="!recordsFound">
+                                        <h2>No Records found for today</h2>
+                                    </mat-toolbar>
+
+                            </mat-tab>
+
+                            <mat-tab>
+                                    <ng-template mat-tab-label>
+                                            <mat-icon>assignment_turned_in </mat-icon>
+                                           Discharged List
+                                    </ng-template>
+
+                                    <table mat-table [dataSource]="dischargeDataSource" class="mat-elevation-z8 reglisttable" style="width: 100%;" >
+  
+                                            <ng-container matColumnDef="action" >
+                                                <th mat-header-cell *matHeaderCellDef style="width:20%;"> Action </th>
+                                                <td mat-cell *matCellDef="let row" >
+
+
+
+                                                  <button type="button" mat-flat-button color="accent" class="prescriptionBtn customeblockBtn" (click)="removeIPDDischarge($event,row)" id="dischargeRemoveBtn_{{row.ipdID}}">
+                                                        Remove
+                                                  </button>
+                                                  <button type="button" mat-flat-button color="accent" class="customeblockBtn" id="dischargeRemoveWaitBtn_{{row.ipdID}}" [ngStyle]="{'display': 'none'}">
+                                                    <span class="blinking">Wait...</span>
+                                                 </button>
+                                                 
+                                                 
+                                                 &nbsp;
+
+
+                                                  <button type="button" mat-flat-button color="warn" class="prescriptionBtn customeblockBtn" (click)="ipdDischargedPreview($event,row)" id="dischargePreviewBtn_{{row.ipdID}}">
+                                                      Preview
+                                                  </button>
+                                                  <button type="button" mat-flat-button color="warn" class="customeblockBtn" id="dischargePreviewWaitBtn_{{row.ipdID}}" [ngStyle]="{'display': 'none'}">
+                                                    <span class="blinking">Wait...</span>
+                                                 </button>
+                                                 
+                                                </td>
+                                            </ng-container>
+              
+                                            <ng-container matColumnDef="admission_dt">
+                                              <th mat-header-cell *matHeaderCellDef> Admission Dt </th>
+                                              <td mat-cell *matCellDef="let row"> {{row.admission_dt}} </td>
+                                            </ng-container>
+                        
+                                            <ng-container matColumnDef="patient_name">
+                                                <th mat-header-cell *matHeaderCellDef> Name </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.patient_name}} </td>
+                                            </ng-container>
+                        
+                                            <ng-container matColumnDef="mobile_one">
+                                                <th mat-header-cell *matHeaderCellDef> Mobile </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.mobile_one}} </td>
+                                            </ng-container>
+              
+                                            <ng-container matColumnDef="patient_code">
+                                              <th mat-header-cell *matHeaderCellDef> Type </th>
+                                              <td mat-cell *matCellDef="let row"> {{row.patient_type}} </td>
+                                            </ng-container>
+              
+                                            <ng-container matColumnDef="bed_no">
+                                            <th mat-header-cell *matHeaderCellDef> Bed No </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.bed_no}} </td>
+                                           </ng-container>
+              
+                                          <ng-container matColumnDef="room_no">
+                                            <th mat-header-cell *matHeaderCellDef> Room No </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.room_no}} </td>
+                                          </ng-container>
+                                            
+                                          <tr mat-header-row *matHeaderRowDef="dischargeDisplayedColumns" ></tr>
+                                            <tr mat-row  *matRowDef="let row; columns: dischargeDisplayedColumns;"></tr>
+                                    </table>
+                                   
+
+                            </mat-tab>
+                    </mat-tab-group>
+
+
+
+                        
+  
+              </div><!-- Reg List Tables-->
+
+
+
+              
+
+
+
+          </div> <!--end of flex-->
+      </div>
+
+        </div>
+          <!--end of search container-->
+    </div>
+
+
+

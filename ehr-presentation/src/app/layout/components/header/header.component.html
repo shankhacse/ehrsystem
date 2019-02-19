@@ -1,0 +1,36 @@
+<mat-sidenav-container class="sidenav-container">
+  
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+       
+        <span class="fill-remaining-space">
+           
+          <mat-menu #menu="matMenu" [overlapTrigger]="true">
+            <button mat-menu-item>
+              <mat-icon>home</mat-icon>
+              <span>Home</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>people_outline</mat-icon>
+              <span>Connecting</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>videocam</mat-icon>
+              <span>Let's talk</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>exit_to_app</mat-icon>
+              <span>Logout</span>
+            </button>
+          </mat-menu>
+        </span>
+        <span class="fill-remaining-space">Application Title</span>
+      
+         <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+      </mat-toolbar>
+     
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  

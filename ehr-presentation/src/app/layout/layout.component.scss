@@ -1,0 +1,104 @@
+.fill-remaining-space {
+  /* This fills the remaining space, by using flexbox. 
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+  background-color: #e0e0e0!important;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+}
+
+.mat-drawer {
+
+  background-color: #f3f3f3;
+  color: #000000e6;
+
+}
+.mat-toolbar.mat-primary {
+
+//background: #489f0b;
+color: #fff;
+z-index:9;
+
+}
+.mat-drawer[_ngcontent-c1]{
+background:#f7f9fc;
+color: #fff;
+}
+.mat-nav-list .mat-list-item{
+height: 36px;
+letter-spacing: 1px;
+font-size: 12px;
+
+.mat-icon {
+
+  font-size: 16px;
+  height: 15px;
+  width: 24px;
+
+}
+}
+.mat-list-item-content{
+padding: 0 7px;
+}
+
+.top_header{
+  background: #FFF;
+  padding: 1% 0;
+
+   img{
+    width: 31%;
+    margin-top: 2%;
+    margin-left: 2%;
+   }
+   .datetime{
+    padding-right: 2%;
+    text-align: right;
+   }
+
+   h3{
+    letter-spacing: 5px;
+    font-weight: 400;
+    font-size: 0.9rem;
+    color:#3f6c8d;
+   }
+   .time{
+    font-weight: 500;
+    color: #f31919;
+   }
+   .date{
+     margin-top: -13px;
+     letter-spacing: 5px;
+     font-size: 12px;
+   }
+}
+
+.welcome_title {
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-indent: 5px;
+}
+.estate_title{
+  font-size: 1rem;
+  letter-spacing: 1px;
+  text-indent: 5px;
+}
+.mat-menu-content:not(:empty) {
+  padding-top: 0px;
+  padding-bottom: 0px;
+ 
+}
+.mat-menu-item{
+  font-size: 0.8rem;
+}
+

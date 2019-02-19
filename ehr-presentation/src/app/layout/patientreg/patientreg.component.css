@@ -1,0 +1,77 @@
+/*.patientregcard{
+  width: 60%;
+  float: left;
+}
+.biometricregcard{
+  width: 30%;
+  float: left;
+}
+*/
+#patientRegSearch{
+  margin:2% 0;
+}
+
+.halfwidthInput{
+  width:40%;
+  margin-right:15px;
+}
+
+
+.crow{
+margin-top:1%;
+}
+.cfinput{
+margin-right:5px; 
+}
+.mat-card-content, .mat-card-header .mat-card-title, .mat-card-subtitle {
+  font-size: 13px;
+}
+
+
+table {
+  width: 100%;
+}
+.margingap{
+  margin:1% 0;
+}
+.customforminput{
+  width: 90%;
+  padding: 2.5%;
+  border: 1px solid #e6e0e0;
+  border-radius: 4px;
+  text-indent: 5px;
+}
+
+.mat-card-actions{
+  text-align:center;
+}
+
+.biometric_img{
+  width: 30%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.biometricregcard > mat-card-actions{
+  text-align: center;
+}
+.card_title{
+  font-weight: 400;
+  letter-spacing: 1px;
+  font-family: Roboto;
+  font-size: 15px;
+}
+
+mat-toolbar{
+padding: 7px 10px !important;
+font-size: 13px;
+letter-spacing: 1px;
+border: 1px solid #d7d7d7;
+border-radius: 3px;
+height:auto;
+}
+mat-option{
+  font-size: 13px;
+  letter-spacing: 1px;
+}

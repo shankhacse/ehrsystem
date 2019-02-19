@@ -1,0 +1,217 @@
+
+<div id="symptomsPage">
+
+
+  <div class="wraper-container blockContent">
+    <div class="search-container">
+       
+
+    </div>
+
+  </div>
+
+  <div class="diagFormContainer">
+      <form [formGroup]="addPatientListForm" (ngSubmit)="onSubmit(addPatientListForm.value)">
+
+          
+                 
+      <!--test Reg Block-->
+      <section class="sympregBlock">
+              <mat-toolbar>
+
+                      View Patient List
+                  </mat-toolbar><br>
+          <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+              <div fxFlex="50%">
+                 
+
+                  <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="11.8%" fxLayoutAlign="center">
+                      
+                    
+          
+                    
+
+                      <div fxFlex="90%">
+                        <mat-form-field class="fullwidthinp">
+                          <mat-select placeholder="Patient Type" formControlName="patientTypeCtrl" >
+                              <mat-option *ngFor="let patients of patientsTypeList[0]" [value]="patients.patient_type_id">
+                                  {{patients.dr_type}}
+                              </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                    </div>
+          
+                     
+                  </div>
+
+                 
+
+                
+                  
+
+
+              </div>
+
+              
+          </div>
+          <p style="color:#F00;text-align: left;padding-left: 20px;">{{validFormErr}}</p>
+          </section>
+          <!--End Of test Reg Block-->
+           <!--Button Block-->
+      <section id="testSubmitBlock">
+          <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+              <button mat-flat-button color="primary" class="phrmcybtn" type="submit"> View</button>
+          </div>
+      </section>
+  <!-- end of mode check-->
+
+</form>
+
+ 
+
+     
+
+  </div>
+
+
+
+</div>
+
+
+
+<div *ngIf="isPageloded" id="symptomslistPage">
+
+  <div class="wraper-container">
+    <div class="search-container">
+        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+            
+          <div class="sympsearchTabs" fxFlex="100%">
+                    
+
+                    <div class="symptables">
+                      
+                        <div class="mat-elevation-z8">
+                            <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" >
+                                <div fxFlex="75%">
+                                  <mat-toolbar> 
+                                    <h4 class="form_block_title">Patient List</h4>
+                            </mat-toolbar>      
+                                </div>
+                                <div fxFlex="20%">
+                                    <mat-form-field class="fullwidthinp" style="margin-right: 15px;">
+                                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                                    </mat-form-field>
+                                </div>
+                                <div fxFlex="5%">
+                                    
+                                  </div>
+                        </div>
+                      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 diaglisttable">
+
+                        <!--- Note that these columns can be defined in any order.
+                              The actual rendered columns are set as a property on the row definition" -->
+                      
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="slno">
+                          <th mat-header-cell *matHeaderCellDef style="width:5%;"> Sl No. </th>
+                          <td mat-cell *matCellDef="let row; let i =index;">{{i+1}}  </td>
+                        </ng-container>
+
+                          <!-- Name Column -->
+                          <ng-container matColumnDef="estate">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header >Garden Code</th>
+                            <td mat-cell *matCellDef="let row">{{row.estate}} </td>
+                          </ng-container>
+                      
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="patient_code">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header > Patient Code</th>
+                          <td mat-cell *matCellDef="let row">{{row.patient_code}} </td>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="patient_name">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header >Patient Name </th>
+                          <td mat-cell *matCellDef="let row">{{row.patient_name}} </td>
+                        </ng-container>
+
+                           <!-- Name Column -->
+                           <ng-container matColumnDef="dr_type">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:7%;">Dr Type </th>
+                            <td mat-cell *matCellDef="let row">{{row.dr_type}} </td>
+                          </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="gender">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header >Gender</th>
+                              <td mat-cell *matCellDef="let row">{{row.gender}} </td>
+                            </ng-container>
+
+                              <!-- Name Column -->
+                              <ng-container matColumnDef="mobile_one">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header >Phone No</th>
+                                <td mat-cell *matCellDef="let row">{{row.mobile_one}} </td>
+                              </ng-container>
+
+                                <!-- Name Column -->
+                            <ng-container matColumnDef="mobile_two">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header >Mobile</th>
+                              <td mat-cell *matCellDef="let row">{{row.mobile_two}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="challan_number">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header >Challan No</th>
+                              <td mat-cell *matCellDef="let row">{{row.challan_number}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="currant_status">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header >Currant Status</th>
+                              <td mat-cell *matCellDef="let row">{{row.currant_status}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="dateofbirth">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header >Date of Birth</th>
+                              <td mat-cell *matCellDef="let row">{{row.dateofbirth}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="division_number">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header >Division No</th>
+                              <td mat-cell *matCellDef="let row">{{row.division_number}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="line_number">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header >Line Number</th>
+                              <td mat-cell *matCellDef="let row">{{row.line_number}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="house_no">
+                              <th mat-header-cell *matHeaderCellDef mat-sort-header >House No</th>
+                              <td mat-cell *matCellDef="let row">{{row.house_no}} </td>
+                            </ng-container>
+
+                       
+
+                       
+                
+                      
+                        
+                      
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      </table>
+                      <mat-paginator
+                    [pageSize]="10"
+                    [pageSizeOptions]="[10,25,50, 100, 200]"  
+                    showFirstLastButtons></mat-paginator>
+                  </div>
+                    </div>
+
+                    
+           </div>
+ 
+
+
+
+
+</div>
+

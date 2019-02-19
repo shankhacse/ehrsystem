@@ -1,0 +1,123 @@
+.patientsearchTabs .mat-icon {
+    padding-right: 5px;
+}
+
+.mat-header-cell {
+    color: rgb(3, 14, 41);
+    letter-spacing: 1px;
+}
+
+tr.mat-header-row {
+    background: #f9f9f9;
+    font-weight: 700;
+}
+
+.mat-cell {
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+/*
+mat-footer-row,
+mat-header-row,
+mat-row,
+td.mat-cell,
+td.mat-footer-cell,
+th.mat-header-cell {
+ border-bottom-color: #DCE4F8; 
+}
+
+.reglisttable {
+    border: 1px solid #DCE4F8;
+}
+*/
+.reglisttables , .visitedtables {
+    margin-top: 0.5%;
+}
+.reglisttable a {
+    border-radius: 100px;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.mat-tab-labels { 
+    background: #1f6fc9 !important;
+    font-size: 12px;
+    letter-spacing: 1px;
+    opacity: 1;
+}
+
+.mat-tab-label-active{
+    background-color: #085287;
+    opacity: 1 !important;
+  }
+
+.mat-tab-label .mat-tab-label-content {
+    color: #FFF;
+    font-size: 12px;
+}
+.norecord h2{
+    letter-spacing: 2px;
+    font-weight: 400;
+}
+
+.card_title{
+    font-weight: 400;
+    letter-spacing: 2px;
+    font-family: Roboto;
+    font-size: 1.2rem;
+    margin:4px;
+  }
+
+  .mat-expansion-panel-header {
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+.customeBtn{
+    border: 0;
+    background: #0e58c8;
+    padding: 6px 17px;
+    border-radius: 14px;
+    color: #FFF;
+}
+.cutomTbl{
+    border: 1px solid #efefef;
+    border-bottom: 0px;
+}
+.cutomTbl tr th {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid #dfe0e0;
+    font-weight: 500;
+    background: #f2f2f2;
+    font-size: 0.75rem;
+    height: 40px;
+   
+}
+
+.cutomTbl tr td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid #dfe0e0;
+    color: black;
+    font-size: 0.75rem;
+}
+.custombadge{
+    float: right;
+    font-weight: 500;
+    border-radius: 2px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    color: #FFF;
+    text-align: center;
+    
+}
+
+.mat-tab-label-container {
+    background: #dfe0ea !important;
+}
+mat-tab-group {
+    border:1px solid #dfe0ea;
+    border-top:0;
+}

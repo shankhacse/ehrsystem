@@ -1,0 +1,96 @@
+ <!--  Reg Block-->
+ <section class="partialComponent">
+
+    <form [formGroup]="vaccinationInfoForm">
+        <div class="container vaccinationInfoBlock" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+            <div fxFlex="100%">
+            <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                    <div fxFlex="30%">
+                        <mat-form-field class="fullwidthinp">
+                            <mat-select formControlName="scheduleForCtrl" placeholder="Select Schedule" disableOptionCentering #singleSelect (selectionChange)="getVaccinationList($event)" >
+                                <mat-option  *ngFor="let vaccinelist of vaccinationScheduleList[0] | keyvalue ;" value="{{vaccinelist.key}}">{{vaccinelist.value}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+        
+                    <div fxFlex="30%">
+                        <mat-form-field class="fullwidthinp">
+                            <input matInput placeholder="Associate Employee" formControlName="associateEmpl" autocomplete="off" readonly>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxFlex="30%">
+                        <mat-form-field class="fullwidthinp">
+                            <input matInput placeholder="Relation With Employee" formControlName="relationWithEmployee" autocomplete="off" readonly>
+                        </mat-form-field>
+                    </div>
+            </div> <!-- Row End -->
+            </div>
+        </div>
+    </form>
+
+  
+
+    <form [formGroup]="vaccinationGivenForm">
+        <div formArrayName="vaccinRows">
+            <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                <div fxFlex="98%">
+                    <table style="width:100%;" class="cutomTbl" cellspacing="0" cellpadding="0" >
+                        <tr>
+                            <th>Sl.</th>
+                            <th>Vaccine Name</th>
+                            <th>Instruction</th>
+                            <th>Dose</th>
+                            <th>Given Date</th>
+                        </tr>
+                        
+                        <tr *ngFor="let vaccin of vaccinListData[0]; let i = index " [formGroupName]="i">
+                            <td>{{i+1}} <input type="hidden" placeholder="" valeu="10" formControlName="patientHdnID" autocomplete="off" /></td>
+                            <td style="color:#47566f;font-weight:600;letter-spacing: 2px;">{{vaccin.vaccinData.vaccination_name}} </td>
+                            <td>{{vaccin.vaccinData.instruction}} <input type="hidden" placeholder="" valeu="10" formControlName="patientHdnID" autocomplete="off" /></td>
+                            <td>{{vaccin.vaccinData.dose}}</td>
+                            <td>
+                                <mat-form-field>
+                                     
+                                    <input matInput [matDatepicker]="picker2" placeholder="" formControlName="vaccinGivenDt" readonly >
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker> 
+                                </mat-form-field>
+                             
+                            </td>
+                        
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+       </div>
+
+        
+    </form> <!-- End of vaccination Given Form-->
+
+
+    <form [formGroup]="vaccinationDctrForm" (ngSubmit)="submitPre()">
+        <div class="container " fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center" style="padding: 2%;">
+            <div fxFlex="48%">
+                    <mat-form-field class="fullwidthinp">
+                        <textarea matInput placeholder="Doctor's Comment" formControlName="doctorsComment" ></textarea>
+                    </mat-form-field>
+            </div>
+            <div fxFlex="52%"></div>
+        </div>
+
+        <div class="container " fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center" style="text-align:center;">
+            <div fxFlex="100%"><button mat-flat-button color="primary" class="phrmcybtn" type="submit" >Save</button></div>
+        </div>
+
+    </form>
+
+
+
+
+  
+
+
+    </section>
+    <!--End Of Reg Block-->

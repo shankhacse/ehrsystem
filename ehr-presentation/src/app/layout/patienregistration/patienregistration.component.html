@@ -1,0 +1,476 @@
+<div id="patientRegPage">
+    <div class="wraper-container">
+      <div class="search-container">
+          <mat-card style="padding:0;">
+            <!--<h4 class="card_title"> Registration</h4>-->
+              <mat-card-content >
+                 <div class="container reggrid_block" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+                    
+                        <div class="responsiveBioAddPatient" fxFlex="40%">
+                                <div class="addAndBiometricBlock" style="text-align:right;font-size: 13px;">
+    
+                                    <button  mat-flat-button class="" style="background:#699e13;"> <mat-icon >fingerprint</mat-icon> Biometric Scan </button>&nbsp;&nbsp;
+                                    <button  mat-flat-button class=""  (click)="openDialog()" style="background:#f32969;"> <mat-icon >add_circle</mat-icon> Add New Patient </button>
+    
+                                   <!--
+                                    <div class="biometric_block">
+                                        <button  mat-flat-button class="center-obj regblockbtn" >Biometric Scan </button>
+                                    </div>
+                                    <div class="patientadd_block">
+                                            <button  mat-flat-button class="center-obj regblockbtn"  (click)="openDialog()">Add New Patient </button>
+                                    </div>
+                                    -->
+                                   
+                                </div>
+                                
+                                  
+                            </div>
+
+                      <div class="fieldsearch" fxFlex="60%" >
+                        <form [formGroup]="IDsearchForm" >
+                          <div class="ID-search">
+
+                            <!-- Start -->
+                            <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" >
+                                
+                                    <div fxFlex="96%">
+
+                                        <mat-form-field class="fullwidthinp" >
+                                               <input matInput placeholder="* Search By  Code / Name / Mobile / Aadhar No" aria-label="Patient" [matAutocomplete]="auto" formControlName="patientAdvSearchCtrl" (keyup)="getPatientListBySearch($event)">
+                                          
+
+                                                <mat-autocomplete #auto="matAutocomplete" 
+                                                mat-search-text-change="null"
+                                                [displayWith]="displayFn.bind(this)"
+                                               
+                                                >
+
+                                                
+
+                                                  <mat-option *ngFor="let patient of filteredPatients | async" [value]="patient.id" >
+                                                   <!-- <img class="example-option-img" aria-hidden [src]="state.flag" height="25"> -->
+                                                    <small class="search_drop_txt">Code: {{patient.code}}</small> |
+                                                    <small class="search_drop_txt">Name : {{patient.name}}</small> |
+                                                    <small class="search_drop_txt">Line : {{patient.lineno}}</small> |
+                                                    <small class="search_drop_txt">Challan : {{patient.challan}}</small> 
+                                                  </mat-option>
+                                                
+                                                </mat-autocomplete>
+                                        </mat-form-field>
+                                    </div>
+                            </div>
+                            <!-- End -->
+
+                            <!--
+                              <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" >
+                                
+                                   <div fxFlex="40%">
+                                      
+                                    <mat-form-field class="fullwidthinp">
+                                        <mat-select formControlName="patientID" placeholder="Search By Patient ID" disableOptionCentering #singleSelect (selectionChange)="changePpatientOption($event)" >
+                                            <ngx-mat-select-search  formControlName="pcodeFilterCtrl"
+                                            [placeholderLabel]="'Search'" 
+                                            [noEntriesFoundLabel]="'no records found'"
+                                            (keyup)="getPatientListBySearch($event)"
+                                            ></ngx-mat-select-search>
+                                            <mat-option [value] ="resetSelect">Select</mat-option>
+                                            <mat-option *ngFor="let pcode of filteredPatientCode | async" [value]="pcode">
+                                                  {{pcode.code}} - {{pcode.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    </div>
+                                    <div fxFlex="5%">
+                                        <h2>OR</h2>
+                                    </div>
+
+                                    <div fxFlex="40%">
+                                        <mat-form-field class="fullwidthinp">
+                                            <mat-select  formControlName="patientAadhar" placeholder="Search By Aadhar No" disableOptionCentering #singleSelect >
+                                                <ngx-mat-select-search  formControlName="aadharFilterCtrl"
+                                                [placeholderLabel]="'Search'" 
+                                                [noEntriesFoundLabel]="'no records found'"
+                                                (keyup)="getPatientAadharListBySearch($event)"
+                                                ></ngx-mat-select-search>
+                                                <mat-option [value] ="resetSelect" >Select</mat-option>
+                                                <mat-option *ngFor="let paadhar of filteredPatientAadhar | async" [value]="paadhar" >
+                                                      {{paadhar.aadhar}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                              </div>
+                            -->
+
+
+
+                          </div>
+                        </form>
+
+                        <!--
+                          <mat-checkbox (change)="enableAdvanceSearch($event)" >Enable Advance Search</mat-checkbox>
+                          <form [formGroup]="FieldsearchForm" >
+                          <div class="Field-search margincontent" *ngIf="enableAdvancesearch">
+                              <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" >
+                                 
+                                     <div fxFlex="30%">
+                                        <mat-form-field class="fullwidthinp">
+                        
+
+                                            <mat-select formControlName="patientNameCtrl" placeholder="Search Patient Name" disableOptionCentering #singleSelect >
+                                                <ngx-mat-select-search  formControlName="patientNameFilterCtrl"
+                                                [placeholderLabel]="'Search'" 
+                                                [noEntriesFoundLabel]="'no records found'"
+                                                ></ngx-mat-select-search>
+                                                <mat-option *ngFor="let pname of filteredPatientName | async" [value]="pname.name">
+                                                      {{pname.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        
+                                        </mat-form-field>
+                                    </div>
+
+                                    
+                                    <div fxFlex="30%">
+                                            <mat-form-field class="fullwidthinp">
+                                                <input matInput [matDatepicker]="picker1" placeholder="Date of Birth" formControlName="patientDOBCtrl" autocomplete="off" />
+                                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker1></mat-datepicker>
+                                            </mat-form-field>
+
+                                           
+                                    </div>
+
+                                    <div fxFlex="30%">
+                                        <mat-form-field class="fullwidthinp">
+                                            <input matInput placeholder="Mobile Number" formControlName="patientMobileCtrl" autocomplete="off" >
+                                        </mat-form-field>
+                                    </div>
+
+                              </div>
+                          </div>
+                          </form>
+                        -->
+
+
+                          
+                        <div class="reg-action margincontent" >
+                            <button mat-flat-button class="regblockbtn center-obj" style="background: #09446d;"  (click)="searchPatient()" *ngIf="!searchLoader">
+                                <mat-icon>search</mat-icon> Search
+                            </button>
+
+                            <mat-spinner [diameter]="40" *ngIf="searchLoader" class="center-obj"></mat-spinner>
+                        </div>
+
+
+                        <div id="err_block">
+                            <p class="error_cls" *ngIf="isRegAlreadyDone_Err" style="margin:10px auto;margin-bottom:0px">This Patient is already registered for today.
+                                <button mat-icon-button (click)="removeError()" >
+                                   <mat-icon>clear</mat-icon>
+                                </button>
+                            </p>
+
+                            
+
+                            <!--
+                            <p class="error_cls" *ngIf="basicSearchValidErr" style="margin:10px auto;margin-bottom:0px">Select atleast one search option
+                                <button mat-icon-button (click)="removeError()" >
+                                   <mat-icon>clear</mat-icon>
+                                </button>
+                            </p>
+                            <p class="error_cls" *ngIf="advSearchValidErr" style="margin:10px auto;margin-bottom:0px">Patient Name,DOB,Mobile No is required
+                                <button mat-icon-button (click)="removeError()" >
+                                   <mat-icon>clear</mat-icon>
+                                </button>
+                            </p>
+                            -->
+                        </div>
+                          
+                      </div><!--end of fieldsearch-->
+
+                    
+                      
+                        <div class="biometricsearch desktopBioAddPatient" fxFlex="20%"  >
+                            <mat-icon class="reg_big_icon">fingerprint</mat-icon>
+                            <button  mat-flat-button class="center-obj regblockbtn" style="color:#73940e;">Biometric Scan </button>
+                        </div><!--end of biometric search-->
+                        <div class="addmorepatient desktopBioAddPatient" fxFlex="20%"  >
+                            <mat-icon class="reg_big_icon">add_circle</mat-icon>
+                            <button  mat-flat-button class="center-obj regblockbtn" style="color:#de4040;" (click)="openDialog()">Add New Patient </button>
+                        </div><!--end of biometric search-->
+
+
+                    
+
+
+
+                  </div>
+         
+                </mat-card-content>
+          </mat-card>
+        </div><!--end of search container-->
+    </div>
+
+    
+    <section style="margin-top:2%;">
+
+           
+                <div class="mat-elevation-z8">
+
+                        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" >
+                                <div fxFlex="80%">
+                                    
+                                </div>
+                                <div fxFlex="20%">
+                                    <mat-form-field class="fullwidthinp">
+                                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                                    </mat-form-field>
+                                </div>
+                        </div>
+                        <form [formGroup]="patientTblRegForm">
+                    <table mat-table [dataSource]="dataSource" matSort  >
+                
+                      
+                        <ng-container matColumnDef="reg-action" >
+                             <th mat-header-cell *matHeaderCellDef>
+
+                                    <div class="desktopAction">
+                                        <button mat-flat-button color="primary" (click)="registerPtc()" class="custmbtn" *ngIf="registerBtnEnable" [disabled]="registerBtndisable">
+                                                <mat-icon class="matcustomicon">donut_large</mat-icon> Register &nbsp;&nbsp;
+                                        </button>
+                                    </div>
+                             
+                                    <div class="responsiveAction">
+                                        <button mat-icon-button class="success" matTooltip="Registere Now" matTooltipPosition="before" matTooltipClass="registernowTooltip" style="background: #3f51b5;color:#FFF;margin-left: 3px;" (click)="registerPtc()" *ngIf="registerBtnEnable" [disabled]="registerBtndisable"><mat-icon>donut_large</mat-icon></button>
+                                    </div>
+
+                                    <mat-spinner [diameter]="25" style="margin-left:25%;" *ngIf="!registerBtnEnable"></mat-spinner>
+
+                                   
+
+                                <!--
+                                <button mat-flat-button color="primary" (click)="registerPtc()" class="custmbtn" *ngIf="registerButtonActive">
+                                   <mat-icon class="matcustomicon">donut_large</mat-icon> Register &nbsp;&nbsp;
+                                </button>
+
+                               <mat-spinner [diameter]="25" style="margin-left:25%;" *ngIf="!registerButtonActive"></mat-spinner>-->
+                            </th>
+                        </ng-container>
+
+                        <!--
+                        <ng-container matColumnDef="reg-type" >
+                            <th mat-header-cell *matHeaderCellDef>
+                                <mat-form-field >
+                                    <mat-select placeholder="Select Reg. Type" formControlName="registrationTypeCtrl" (selectionChange)="regTypeChange($event)">
+                                      <mat-option value="CONSULTATION"> CONSULTATION </mat-option>
+                                      <mat-option value="VACCINATION"> VACCINATION </mat-option>
+                                      <mat-option value="PREGNANCY"> PREGNANCY </mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                            </th>
+                        </ng-container>
+                        -->
+                       
+                        <ng-container matColumnDef="reg-patientid" >
+                            <th mat-header-cell *matHeaderCellDef> {{tblPatientName}} <br>{{tblPatientID}}
+                               
+                                    <input type="hidden" formControlName="regpcodeCtrl">
+                                
+                            </th>
+                        </ng-container>
+
+                        <ng-container matColumnDef="reg-patientmobile">
+                            <th mat-header-cell *matHeaderCellDef> {{tblPatientMbl}} </th>
+                        </ng-container>
+                 
+                      <!--
+                        <ng-container matColumnDef="reg-patientname" >
+                            <th mat-header-cell *matHeaderCellDef> {{tblPatientName}} </th>
+                        </ng-container>
+                      
+                        <ng-container matColumnDef="reg-patientdob" >
+                            <th mat-header-cell *matHeaderCellDef> {{tblPatientDOB}} </th>
+                        </ng-container>
+                        
+                         <ng-container matColumnDef="reg-patientgender" >
+                             <th mat-header-cell *matHeaderCellDef> {{tblPatientGender}} </th>
+                         </ng-container>
+                        -->
+                         <ng-container matColumnDef="reg-patientdivision" >
+                            <th mat-header-cell *matHeaderCellDef> {{tblPatientDivision}} </th>
+                        </ng-container>
+                       
+                         <ng-container matColumnDef="reg-patientchallan" >
+                            <th mat-header-cell *matHeaderCellDef> {{tblPatientChallan}} </th>
+                        </ng-container>
+                        
+                         <ng-container matColumnDef="reg-patientline" >
+                            <th mat-header-cell *matHeaderCellDef> {{tblPatientLine}} </th>
+                        </ng-container>
+                        
+                        <!--
+                        <ng-container matColumnDef="reg-patientmobile">
+                            <th mat-header-cell *matHeaderCellDef> {{tblPatientMbl}} </th>
+                        </ng-container>
+                       
+                        <ng-container matColumnDef="reg-patientaadhar" >
+                            <th mat-header-cell *matHeaderCellDef> {{tblPatientAadhar}} </th>
+                        </ng-container>
+                        -->
+                         
+
+                       
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                            <td mat-cell *matCellDef="let row" class="regactioncol"> 
+
+                                    <div class="desktopAction">
+                                        <button mat-flat-button class="success custmbtn"><mat-icon class="matcustomicon">done</mat-icon>Registered</button>&nbsp;
+                                        <button mat-mini-fab color="warn" (click)="deleteRegistration(row.registration_id)"  *ngIf="row.allowdelete === 'Y'" ><mat-icon>delete</mat-icon></button>
+                                    </div>
+                                    
+                                    <!-- Enable on responsive mode -->
+                                    <div class="responsiveAction">
+                                        <button mat-icon-button matTooltip="Registered" matTooltipClass="registeredTooltip" matTooltipPosition="before" class="responsiveBtn" style="background: #1E871B;"><mat-icon>done</mat-icon></button>
+                                        <button mat-icon-button matTooltip="Delete" matTooltipClass="deleteTooltip" matTooltipPosition="before" class="responsiveBtn" style="background: #F8342D;" (click)="deleteRegistration(row.registration_id)"  *ngIf="row.allowdelete === 'Y'"><mat-icon>delete_forever</mat-icon></button>
+                                    </div>
+                                   
+                                   
+                                </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="regtype">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Registration Type </th>
+                            <td mat-cell *matCellDef="let row"> 
+                                {{row.regtype}}
+                            </td>
+                        </ng-container>
+                
+                       
+                        <ng-container matColumnDef="patient_code">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Patient</th>
+                            <td mat-cell *matCellDef="let row">{{row.patient_name}}<br> {{row.patient_code}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="mobile_one">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile </th>
+                            <td mat-cell *matCellDef="let row"> {{row.mobile_one}} </td>
+                        </ng-container>
+                
+                       <!--
+                        <ng-container matColumnDef="patient_name">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                            <td mat-cell *matCellDef="let row"> {{row.patient_name}} </td>
+                        </ng-container>
+
+                       
+                         <ng-container matColumnDef="birthdate">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> DOB </th>
+                            <td mat-cell *matCellDef="let row"> {{row.birthdate}} </td>
+                        </ng-container>
+                
+                
+                        
+                      
+                        <ng-container matColumnDef="gender">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender </th>
+                            <td mat-cell *matCellDef="let row"> {{row.gender}} </td>
+                        </ng-container>
+                        -->
+                         
+                        <ng-container matColumnDef="division_number">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Division </th>
+                            <td mat-cell *matCellDef="let row"> {{row.division_number}}</td>
+                        </ng-container>
+
+                        
+                       
+                        <ng-container matColumnDef="challan_number">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Challan </th>
+                            <td mat-cell *matCellDef="let row"> {{row.challan_number}}</td>
+                        </ng-container>
+
+                       
+                        <ng-container matColumnDef="line_number">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Line </th>
+                            <td mat-cell *matCellDef="let row"> {{row.line_number}}</td>
+                        </ng-container>
+
+                     
+                        
+                        <!--
+                        <ng-container matColumnDef="mobile_one">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile </th>
+                            <td mat-cell *matCellDef="let row"> {{row.mobile_one}} </td>
+                        </ng-container>
+                
+                       
+                        <ng-container matColumnDef="adhar">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Aadhar </th>
+                            <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.adhar}} </td>
+                        </ng-container>
+                        -->
+                
+                        <tr mat-header-row *matHeaderRowDef="todaysRegTblColumn"></tr>
+                
+                
+                        <tr mat-header-row *matHeaderRowDef="displayedColSecond" [style.display]="displayp"></tr>
+                
+                
+                
+                        <tr mat-row *matRowDef="let row; columns: todaysRegTblColumn;">
+                        </tr>
+                    </table>
+                </form>
+                
+                
+                
+                    <mat-paginator [pageSizeOptions]="[50, 100, 200]" showFirstLastButtons></mat-paginator>
+                </div>
+
+
+
+
+
+
+                
+<!--
+
+                <div style="margin:100px;">
+                <form class="example-form">
+                    <mat-form-field class="example-full-width" >
+                      <input matInput placeholder="State" aria-label="State" [matAutocomplete]="auto" [formControl]="stateCtrl">
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
+                          <img class="example-option-img" aria-hidden [src]="state.flag" height="25">
+                          <span>{{state.name}}</span> |
+                          <small>Population: {{state.population}}</small>
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  
+                    <br>
+                  
+                   
+                  </form>
+      
+                </div>
+                -->
+
+
+
+
+     </section>
+</div> 
+
+
+
+
+
+
+
+
+
+

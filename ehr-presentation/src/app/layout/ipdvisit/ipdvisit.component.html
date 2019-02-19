@@ -1,0 +1,324 @@
+<div id="ipdVisitPage" class="wraper-container blockContent">
+    <div class="search-container">
+        <!--
+        <h5> IPD Regular Visit</h5>
+        
+        <button mat-raised-button color="warn">Previous History</button> -->
+        <mat-toolbar id="ipdVisitToolbar">
+            <h5> IPD Regular Visit</h5>
+            <div class="navBtn" style="width:100%;float: right;text-align:right;">
+                <button mat-raised-button color="primary" class="toplink" (click)="backToIpdList()" >Back To List </button>  &nbsp;&nbsp;
+                <button mat-raised-button color="warn" class="toplink" (click)="visitIPDHistory()" >Visit History</button>
+            </div>
+        </mat-toolbar>
+      <div class="ipdFormContainer">
+  
+          <form (keydown.enter)="$event.preventDefault()" [formGroup]="ipdVisitRegistrationForm" (ngSubmit)="onSubmit(ipdVisitRegistrationForm.value)">
+  
+              <!--  Reg Block-->
+              <section class="ipdregBlock">
+              <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                  <div fxFlex="50%">
+                      <h5 class="form_block_title">Patient Info</h5>
+  
+                      <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                          
+                          <div fxFlex="30%">
+                              <mat-form-field class="fullwidthinp">
+                                  <input matInput [matDatepicker]="picker" placeholder="Visit Date" formControlName="visitDtCtrl" autocomplete="off"  >
+                                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                  <mat-datepicker #picker></mat-datepicker>
+                              </mat-form-field>
+                          </div>
+              
+                          <div fxFlex="30%">
+                              <mat-form-field class="fullwidthinp" >
+                                  <input matInput placeholder="Patine Name" formControlName="patientNameCtrl" autocomplete="off"  >
+                                  <input type="hidden" formControlName="ipdRowIDCtrl" autocomplete="off"  >
+                                  <input type="hidden" formControlName="patientID" autocomplete="off"  >
+                              </mat-form-field>
+                          </div>
+              
+                          <div fxFlex="30%">
+                              <mat-form-field class="fullwidthinp">
+                                  <input matInput placeholder="DOB" formControlName="dobCtrl" autocomplete="off"  >
+                              </mat-form-field>
+                          </div>
+                      </div>
+  
+
+  
+                      <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                          <div fxFlex="30%">
+                              <mat-form-field class="fullwidthinp">
+                                  <input matInput placeholder="Employee Code" formControlName="emplCodeCtrl" autocomplete="off" >
+                              </mat-form-field>
+                          </div>
+              
+                          <div fxFlex="30%">
+                              <mat-form-field class="fullwidthinp">
+                                  <mat-select placeholder="Blood Group" formControlName="bldgrpCtrl" >
+                                      <mat-option *ngFor="let bloodgrp of bloodGroupList[0]" [value]="bloodgrp.id">
+                                          {{bloodgrp.bld_group_code}}
+                                      </mat-option>
+                                  </mat-select>
+                              </mat-form-field>
+                          </div>
+              
+                          <div fxFlex="30%">
+                              
+                          </div>
+                      </div>
+                      
+  
+  
+                  </div>
+  
+                  <div fxFlex="50%">
+                      <h5 class="form_block_title">Vitals</h5>
+                      <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                          <div fxFlex="30%">
+                              <mat-form-field class="fullwidthinp">
+                                  <input matInput placeholder="BP" formControlName="bpCtrl" autocomplete="off">
+                              </mat-form-field>
+                          </div>
+  
+                          <div fxFlex="30%">
+                              <mat-form-field class="fullwidthinp">
+                                  <input matInput placeholder="Haemoglobin" formControlName="haemoglobinCtrl" autocomplete="off">
+                              </mat-form-field>
+                          </div>
+  
+                          <div fxFlex="30%">
+                              <mat-form-field class="fullwidthinp">
+                                  <input matInput placeholder="Blood Sugar(F)" formControlName="bldsugarFCtrl"  autocomplete="off">
+                              </mat-form-field>
+                          </div>
+                      </div>
+  
+                      <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                          <div fxFlex="30%">
+                              <mat-form-field class="fullwidthinp">
+                                  <input matInput placeholder="Blood Sugar(PP)" formControlName="bldsugarPPCtrl"  autocomplete="off">
+                              </mat-form-field>
+                          </div>
+  
+                          <div fxFlex="30%">
+                              <mat-form-field class="fullwidthinp">
+                                  <input matInput placeholder="Jaundice" formControlName="jaundiceCtrl"  autocomplete="off">
+                              </mat-form-field>
+                          </div>
+  
+                          <div fxFlex="30%">
+                              <mat-form-field class="fullwidthinp">
+                                  <input matInput placeholder="Temprature" formControlName="tempCtrl"  autocomplete="off">
+                              </mat-form-field>
+                          </div>
+                      </div>
+  
+                      <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                          <div fxFlex="30%">
+                              <mat-form-field class="fullwidthinp">
+                                  <input matInput placeholder="Height (Inch.)" formControlName="heightCtrl"  autocomplete="off">
+                              </mat-form-field>
+                          </div>
+  
+                          <div fxFlex="30%">
+                              <mat-form-field class="fullwidthinp">
+                                  <input matInput placeholder="Weight (In Kgs.)" formControlName="weightCtrl" autocomplete="off" >
+                              </mat-form-field>
+                          </div>
+  
+                          <div fxFlex="30%">
+                              <mat-form-field class="fullwidthinp">
+                                  <input matInput placeholder="Odema" formControlName="odemaCtrl"  autocomplete="off">
+                              </mat-form-field>
+                          </div>
+                      </div>
+  
+                  </div>
+              </div>
+  
+              </section>
+              <!--End Of Reg Block-->
+  
+              <!--Medicine and Test Block-->
+              <section id="medicinTestBlock">
+                  <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                  
+                      <div fxFlex="50%">
+                          <div class="add_medicines">
+                          <h5>Add Medicine <span class="dtlerr" style="text-align: right;float:right;">{{medicineError}}</span></h5>
+                          <table style="width:100%;" class="cutomTbl" cellspacing="0" cellpadding="0">
+                                  <tr>
+                                      <th>Medicine</th>
+                                      <th>Dosage</th>
+                                      <th>Frequency</th>
+                                      <th>Days</th>
+                                      <th>Action</th>
+  
+                                  </tr>
+                                  <tr>
+                                        
+                                          <th>
+                                              <mat-select formControlName="medicineCtrl" placeholder="Medicine" #singleSelect style="width: 155px;" (selectionChange)="getOtherDependent($event)">
+                                                  <ngx-mat-select-search formControlName="medicineFilterCtrl" [placeholderLabel]="'Search'" [noEntriesFoundLabel]="'no records found'" (keyup)="getMedicineBySerach($event)" ></ngx-mat-select-search>
+                                                  <mat-option *ngFor="let medicine of filteredMedicines | async" [value]="medicine">
+                                                      {{medicine.name}}
+                                                  </mat-option>
+                                              </mat-select>
+                                          </th>
+                                          <th>
+                                              <mat-select formControlName="dosageCtrl" placeholder="Dosage" #singleSelect style="width: 155px;">
+                                                  <ngx-mat-select-search formControlName="dosageFilterCtrl" [placeholderLabel]="'Search'" [noEntriesFoundLabel]="'no records found'"></ngx-mat-select-search>
+                                                  <mat-option *ngFor="let dosage of filteredDosages | async" [value]="dosage">
+                                                      {{dosage.value}}
+                                                  </mat-option>
+                                              </mat-select>
+  
+                                          </th>
+                                          <th>
+                                              <mat-select formControlName="instructionCtrl" placeholder="Frequncy" #singleSelect style="width: 155px;">
+                                                  <ngx-mat-select-search formControlName="instructionFilterCtrl" [placeholderLabel]="'Search'" [noEntriesFoundLabel]="'no records found'"></ngx-mat-select-search>
+                                                  <mat-option *ngFor="let frequency of filteredInstruction | async" [value]="frequency">
+                                                      {{frequency.frequency}}
+                                                  </mat-option>
+                                              </mat-select>
+                                          </th>
+                                          <th>
+                                              <mat-form-field style="width:70%;">
+                                                  <input matInput placeholder="" formControlName="daysCtrl" autocomplete="off" />
+                                              </mat-form-field>
+                                          </th>
+                                          <th>
+                                              <button type="button" mat-mini-fab color="warn" (click)="addMedicine()"><mat-icon class="addicon">add_circle</mat-icon></button>
+                                          </th>
+  
+                                  </tr>
+  
+                                  <tr *ngFor="let addedmed of addedMeddata; let i = index ">
+                                      <!--<td>{{addedmed.datetd | date:'dd/MM/yyyy'}}</td>-->
+                                      <td>{{addedmed.medicinetd.name}}</td>
+                                      <td>{{addedmed.dosagetd.value}}</td>
+                                      <td>{{addedmed.unittd.frequency}}</td>
+                                      <td>{{addedmed.daystd}}</td>
+                                      <td>
+                                          <button mat-icon-button (click)="removeData(i)" color="primary" type="button">
+                                                  <mat-icon >clear</mat-icon>
+                                          </button>
+                                      </td>
+  
+                                  </tr>
+  
+  
+                              </table>
+  
+  
+                          </div>
+                      </div> <!--End of Medicine Block-->
+  
+  
+  
+                      <div fxFlex="50%">
+  
+                          <div class="patient_investigation">
+                                
+                              <h5>Add Tests
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <span (click)="openInvestigationEntryDialog()" matTooltip="+ New Test" color="warn" style="color: #FF2616;font-size: 12px;cursor:pointer;">+ New Test</span>  
+                                <span class="dtlerr" style="text-align: right;float:right;">{{testReportError}}</span>
+                               </h5>
+                              
+                              <table style="width:100%;" class="cutomTbl" cellspacing="0" cellpadding="0">
+                                  <tr>
+                                      <!--<th>Date</th>-->
+                                      <th>Test</th>
+                                      <th>Action</th>
+                                  </tr>
+  
+                                  <tr>
+                                      <!--
+                                      <th style="width: 30%;">
+                                          <mat-form-field>
+                                              <input matInput [matDatepicker]="picker2" placeholder="" formControlName="investigationDt">
+                                              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                              <mat-datepicker #picker2></mat-datepicker>
+                                          </mat-form-field>
+                                      </th>
+                                      -->
+  
+                                      <th style="width: 60%;">
+                                          <mat-select formControlName="reportsCtrl" placeholder="Select Test" #singleSelect (selectionChange)="clearTestError($event)">
+                                              <ngx-mat-select-search formControlName="reportsFilterCtrl" [placeholderLabel]="'Search'" [noEntriesFoundLabel]="'no records found'"></ngx-mat-select-search>
+                                              <mat-option *ngFor="let reports of filteredReports | async" [value]="reports">
+                                                  {{reports.name}}
+                                              </mat-option>
+                                          </mat-select>
+                                      </th>
+  
+                                      <th style="width: 10%;">
+                                          <button type="button" mat-mini-fab color="warn" (click)="addInvestigation()"><mat-icon class="addicon" >add_circle</mat-icon></button>
+                                      </th>
+  
+                                  </tr>
+  
+                                 
+  
+                                  <tr *ngFor="let addedinv of addedInvestigations;">
+                                         <!-- <td>{{addedinv.invdate | date:'dd/MM/yyyy' }}</td>-->
+                                          <td>{{addedinv.reports.name}}</td>
+                                          <td>
+                                              <button mat-icon-button color="primary" type="button" (click)="removeMedReports(i)"><mat-icon >clear</mat-icon></button>
+                                          </td>
+                                  </tr>
+  
+  
+  
+                              </table>
+  
+                          </div>
+  
+                      </div> <!--End Of Test Block -->
+                      
+  
+                  </div>
+              </section>
+              <!--Medicine and Test Block-->
+  
+  
+  
+              <!--General Instruction and advise Block-->
+              <section class="" id="genInstructBlock">
+                  <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                      <div fxFlex="25%">
+                          <mat-form-field class="fullwidthinp">
+                              <textarea matInput placeholder="Doctor's Comment" formControlName="doctorCommentCtrl" autocomplete="off" ></textarea>
+                          </mat-form-field>
+                      </div>
+                      <div fxFlex="25%">
+                           
+                      </div>
+                      <div fxFlex="25%">
+                         
+                      </div>
+                      <div fxFlex="25%">
+                          
+                      </div>
+                  </div>
+              </section>
+  
+              <!--Button Block-->
+              <section id="ipdSubmitBlock">
+                  <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                      <button mat-flat-button color="primary" class="phrmcybtn" type="submit"> Save</button>
+                  </div>
+              </section>
+  
+          </form>
+  
+      </div>
+  
+    </div>
+  </div>
+

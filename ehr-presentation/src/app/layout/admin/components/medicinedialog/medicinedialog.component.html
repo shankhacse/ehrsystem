@@ -1,0 +1,115 @@
+
+<div id="medicinePage">
+
+
+    <div class="wraper-container blockContent">
+      <div class="search-container">
+         
+  
+      </div>
+  
+    </div>
+  
+    <div class="medFormContainer">
+     
+      <form [formGroup]="editMedicineForm" (ngSubmit)="onSubmitEdit(editMedicineForm.value)">
+            
+                   
+        <!--test Reg Block-->
+        <section class="medregBlock">
+            <mat-toolbar>
+              <div><h5 class="form_block_title">Edit Medicine</h5></div>
+
+                <div style="width:100%;float: right;text-align:right;">
+                    <button mat-mini-fab color="warn"   (click)="redirectToComp()" type="button" ><i class="material-icons">
+                          clear
+                          </i></button>
+                 
+                </div>
+            </mat-toolbar><br>
+            <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                <div fxFlex="100%">
+                    <input matInput  formControlName="medIdCtrl" autocomplete="off" hidden="true"   >   
+                    <input matInput  formControlName="oldmedicineCtrl" autocomplete="off" hidden="true"   >   
+  
+                      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="11.8%" fxLayoutAlign="center">
+  
+                          <div fxFlex="75%">
+                            
+  
+                                <mat-form-field class="fullwidthinp">
+                                    <input type="text" placeholder="Medicine Name" aria-label="Number" matInput formControlName="medicineCtrl" [matAutocomplete]="auto">
+                                    <mat-autocomplete #auto="matAutocomplete" >
+                                      <mat-option *ngFor="let medcine of filtermedcines | async" [value]="medcine.name">
+                                        {{medcine.name}}
+                                      </mat-option>
+                                    </mat-autocomplete>
+                                  </mat-form-field>
+                            
+                          </div>
+  
+                        
+                      </div>
+  
+                      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="11.8%" fxLayoutAlign="center">
+  
+                          <div fxFlex="75%">
+                              
+  
+                                <mat-form-field class="fullwidthinp">
+                                    <mat-select placeholder="Medicine Type" formControlName="medTypeCtrl" (openedChange)="openedChange($event)" >
+                                        <mat-option *ngFor="let medicinestype of medicinesTypeList[0]" [value]="medicinestype.medicine_type">
+                                            {{medicinestype.medicine_type}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            
+                          </div>
+  
+                        
+                      </div>
+  
+                      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="5.5%" fxLayoutAlign="center">
+  
+                          <div fxFlex="35%">
+                              <mat-form-field>
+                              <input matInput placeholder="Brand name" formControlName="brandnameCtrl" autocomplete="off" >
+                              </mat-form-field>
+                          </div>
+  
+                          <div fxFlex="35%">
+                              <mat-form-field>
+                              <input matInput placeholder="Generic" formControlName="genericCtrl" autocomplete="off" >
+                              </mat-form-field>
+                            
+                          </div>
+  
+                        
+                      </div>
+  
+                </div>
+         </div>
+            <p style="color: #C34E4E;text-align: left;padding-left: 59px;">{{validFormErr}}</p><br>
+            </section>
+            <!--End Of test Reg Block-->
+             <!--Button Block-->
+             <br>
+        <section id="testSubmitBlock">
+            <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                <button mat-flat-button color="primary" class="phrmcybtn" type="submit"> Update</button>
+            </div>
+        </section>
+    <!-- end of mode check-->
+  
+  
+  </form>
+   
+  
+       
+  
+    </div>
+  
+  
+  
+  </div>
+  

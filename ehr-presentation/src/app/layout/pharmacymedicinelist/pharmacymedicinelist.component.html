@@ -1,0 +1,197 @@
+<div class="wraper-container">
+  <div class="search-container">
+
+
+  
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+
+         
+
+
+          <div class="patientsearchTabs" fxFlex="90%">
+                  <mat-toolbar style="background: transparent;"> 
+                          <h4 class="card_title"> Prescription's List</h4>
+                  </mat-toolbar>
+                 
+      
+
+                  <!--
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="picker3" placeholder="Angular forms" [formControl]="date">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                  </mat-form-field>
+                  -->
+
+              <div class="reglisttables" >
+                <!--
+                    <form [formGroup]="pharmacyListsrchForm" novalidate > 
+                            <mat-form-field>
+                                
+                                <input matInput [matDatepicker]="picker3" placeholder="Prescription Date" formControlName="pharmcylistSrchDt" >
+                                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                                <mat-datepicker #picker3></mat-datepicker>
+                      
+                            </mat-form-field> 
+                            <button mat-flat-button color="primary" style="margin-left:10px;" (click)="searchPrescriptionList()" ><mat-icon>search</mat-icon> Search</button>
+                    </form>
+                    -->
+
+                    <mat-tab-group (selectedTabChange)="tabChanged($event)">
+                        <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <mat-icon>assignment_turned_in </mat-icon>
+                                   Request From OPD
+                                </ng-template>
+
+                                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 reglisttable" style="width: 100%;" >
+  
+                                        <ng-container matColumnDef="action" >
+                                            <th mat-header-cell *matHeaderCellDef style="width:12%;"> Action </th>
+                                            <td mat-cell *matCellDef="let row" >
+                                                <button type="button" mat-raised-button color="warn" class="prescriptionBtn" (click)="getOPDMedicineByPresciption($event,row)" id="prescriptrowBtn_{{row.prescription_ID}}">
+                                                    <mat-icon>enhanced_encryption</mat-icon>
+                                                    Issue
+                                                </button>
+                                                <mat-spinner [diameter]="25"  class="prescriptionLoader" [ngStyle]="{'display': 'none'}"  id="prescriptrowLoader_{{row.prescription_ID}}"></mat-spinner>
+                                            </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="prescription_No">
+                                                <th mat-header-cell *matHeaderCellDef> Pres No. </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.prescription_No}} </td>
+                                        </ng-container>
+    
+                                        <ng-container matColumnDef="prescDate">
+                                                <th mat-header-cell *matHeaderCellDef> Date </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.prescDate}} </td>
+                                        </ng-container>
+                    
+                                        <ng-container matColumnDef="patient_code">
+                                            <th mat-header-cell *matHeaderCellDef> Type </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.patient_type}} </td>
+                                        </ng-container>
+                    
+                                        <ng-container matColumnDef="patient_name">
+                                            <th mat-header-cell *matHeaderCellDef> Name </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.patient_name}} ({{row.patient_code}}) </td>
+                                        </ng-container>
+                    
+                                        <ng-container matColumnDef="mobile_one">
+                                            <th mat-header-cell *matHeaderCellDef> Mobile </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.mobile_one}} </td>
+                                        </ng-container>
+                    
+                    
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
+                                        <tr mat-row  *matRowDef="let row; columns: displayedColumns;"></tr>
+                                    </table>
+          
+          
+                                    <mat-toolbar class="norecord" *ngIf="!recordsFound">
+                                        <h2>No Records found for today</h2>
+                                    </mat-toolbar>
+
+
+
+                        </mat-tab><!--OPD TAB ENDED-->
+
+                        <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <mat-icon>assignment_turned_in </mat-icon>
+                                   Request From IPD
+                                </ng-template>
+
+
+
+                                <table mat-table [dataSource]="dataSourceIPD" class="mat-elevation-z8 reglisttable" style="width: 100%;" >
+  
+                                        <ng-container matColumnDef="action" >
+                                            <th mat-header-cell *matHeaderCellDef style="width:12%;"> Action </th>
+                                            <td mat-cell *matCellDef="let row" >
+                                                <button type="button" mat-raised-button color="warn" class="prescriptionBtn" (click)="getIPDMedicineByPresciption($event,row)" id="ipdprescriptrowBtn_{{row.prescription_ID}}">
+                                                    <mat-icon>enhanced_encryption</mat-icon>
+                                                    Issue
+                                                </button>
+                                                <mat-spinner [diameter]="25"  class="prescriptionLoader" [ngStyle]="{'display': 'none'}"  id="ipdprescriptrowLoader_{{row.prescription_ID}}"></mat-spinner>
+                                            </td>
+                                        </ng-container>
+                    
+                                       
+                                        <ng-container matColumnDef="prescription_ID">
+                                                <th mat-header-cell *matHeaderCellDef> Pres </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.prescription_ID}} </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="prescDate">
+                                                <th mat-header-cell *matHeaderCellDef> Date </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.prescDate}} </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="patient_code">
+                                            <th mat-header-cell *matHeaderCellDef> Type </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.patient_type}} </td>
+                                        </ng-container>
+                    
+                                        <ng-container matColumnDef="patient_name">
+                                            <th mat-header-cell *matHeaderCellDef> Name </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.patient_name}} ({{row.patient_code}}) </td>
+                                        </ng-container>
+                    
+                                        <ng-container matColumnDef="mobile_one">
+                                            <th mat-header-cell *matHeaderCellDef> Mobile </th>
+                                            <td mat-cell *matCellDef="let row"> {{row.mobile_one}} </td>
+                                        </ng-container>
+                    
+                    
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumnsIPD" ></tr>
+                                        <tr mat-row  *matRowDef="let row; columns: displayedColumnsIPD;"></tr>
+                                    </table>
+          
+                                    <!--
+                                    <mat-toolbar class="" *ngIf="!ipdrecordsFound">
+                                        <h2>No Records found for todagdfgdfy</h2>
+                                    </mat-toolbar>
+                                    -->
+
+                        </mat-tab><!--IPD TAB ENDED-->
+
+
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <mat-icon>assignment_turned_in </mat-icon>
+                                Medicine Issued
+                            </ng-template>
+                            <app-issuedmedicine></app-issuedmedicine>
+  
+
+
+
+                        </mat-tab>
+
+                    </mat-tab-group>
+        
+                      
+  
+              </div><!-- Reg List Tables-->
+
+
+
+              
+
+
+
+          </div> <!--end of flex-->
+      </div>
+
+
+
+         
+
+
+
+
+
+          </div>
+          <!--end of search container-->
+      </div>

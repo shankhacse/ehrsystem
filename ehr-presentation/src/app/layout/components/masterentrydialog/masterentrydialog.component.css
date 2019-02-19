@@ -1,0 +1,18 @@
+#masterEntryDialogPage {
+    margin:-8%;
+}
+#masterEntryDialogPage mat-form-field{
+    width: 96%;
+}
+#masterEntryDialogPage .mat-dialog-title{
+    text-align: center;
+    letter-spacing: 2px;
+    margin-top: 5%;
+}
+
+#masterEntryDialogPage .requiednore{
+    text-align: center;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: #909090;
+}

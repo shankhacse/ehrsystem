@@ -1,0 +1,87 @@
+.blockContent {
+    width: 96%;
+    margin: 0 auto;
+  
+}
+.blockContent h5{
+    letter-spacing: 1px;
+}
+.diagFormContainer {
+    box-shadow: 0px 7px 22px 2px #c0c0c0;
+    margin-bottom: 2%;
+}
+
+.sympregBlock {
+    /*  background: #f7fafc;
+      border-radius: 3px;
+      border: 1px dashed #9c9a9a;
+      padding: 0.5% 0;
+  */
+  
+      background: #fff;
+      border-radius: 3px;
+      border: 0px dashed #9c9a9a;
+       padding: 0% 0;
+       margin-top: 20px;
+     /* box-shadow: 0px 7px 22px 2px #c0c0c0;*/
+  
+  }
+  .mat-input-element:disabled {
+      /* color: rgba(0,0,0,.38); */
+      color: #181818;
+      font-size: 12px;
+      letter-spacing: 1px;
+      font-weight: 500;
+  }
+  
+  .mat-form-field {
+      display: inline-block;
+      position: relative;
+      text-align: left;
+      font-size: 14px;
+      letter-spacing: 1px;
+      
+  }
+  .mat-form-field{
+      font-size:0.8rem;
+  }
+  
+  .mat-form-field-infix {
+      width: auto !important;
+  }
+  .mat-form-field-appearance-legacy .mat-form-field-label {
+  
+      color: #474747;
+      opacity: 1 !important;
+    /*  font-size: 16px !important; */
+  
+  }
+
+  #testSubmitBlock {
+    padding: 1%;
+}
+
+#symptomsPage{
+width: 500px;
+justify-content: center;
+margin-top: 20px;
+text-align: center;
+display: inline-block;
+margin: 0 auto;
+margin-left: 330px;
+}
+
+.inveditBlock{
+    margin-top: 20px;
+}
+
+.toplink {
+    font-size: 0.7rem;
+    /* text-decoration: underline; */
+    letter-spacing: 1px;
+    /* background: white;*/
+    margin-left: 5px;
+    border-radius: 36px;
+    border: 0px solid #d0cbcb;
+    /*color: #827979;*/
+}

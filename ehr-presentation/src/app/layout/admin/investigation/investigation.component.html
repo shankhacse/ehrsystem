@@ -1,0 +1,130 @@
+<div id="investigationPage">
+
+
+        <div class="wraper-container blockContent">
+          <div class="search-container">
+             
+
+          </div>
+
+        </div>
+
+        <div class="testFormContainer">
+            <form [formGroup]="addInvestigationForm" (ngSubmit)="onSubmit(addInvestigationForm.value)">
+
+                   
+
+             <div *ngIf="(investMode=='ADD');else edit_content">
+                           
+                        
+                       
+            <!--test Reg Block-->
+            <section class="invregBlock">
+                    <mat-toolbar>
+
+                            <div style="width:100%;float: right;text-align:right;">
+                                <button mat-raised-button color="primary" class="toplink" (click)="gotoList()">Back To List </button>
+                             
+                            </div>
+                        </mat-toolbar>
+                <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                    <div fxFlex="50%">
+                        <h5 class="form_block_title">Add Test</h5>
+    
+                        <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                            
+                          
+                
+                            <div fxFlex="90%">
+                                <mat-form-field class="fullwidthinp" style="width:100%;">
+                                    <input matInput placeholder="Test name." formControlName="testNameCtrl" autocomplete="off" >
+                                    <mat-error *ngIf="hasError('testNameCtrl', 'required')">Test name is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                
+                           
+                        </div>
+    
+                       
+    
+                      
+                        
+    
+    
+                    </div>
+    
+                    
+                </div>
+    
+                </section>
+                <!--End Of test Reg Block-->
+                 <!--Button Block-->
+            <section id="testSubmitBlock">
+                <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                    <button mat-flat-button color="primary" class="phrmcybtn" type="submit"> Save</button>
+                </div>
+            </section>
+        </div><!-- end of mode check-->
+
+    </form>
+
+        <ng-template #edit_content>
+
+            <form [formGroup]="editInvestigationForm" (ngSubmit)="onSubmitEdit(editInvestigationForm.value)">       
+            <!--test Reg Block-->
+            <section class="invregBlock">
+                    <mat-toolbar>
+
+                            <div style="width:100%;float: right;text-align:right;">
+                                <button mat-raised-button color="primary" class="toplink" (click)="gotoList()">Back To List </button>
+                             
+                            </div>
+                        </mat-toolbar>
+                    <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                        <div fxFlex="50%">
+                            <h5 class="form_block_title">Edit Test</h5>
+        
+                            <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                                
+                                <input matInput placeholder="dfgfg" formControlName="invIdNameCtrl" autocomplete="off" hidden="true"  > 
+                    
+                                <div fxFlex="90%">
+                                    <mat-form-field class="fullwidthinp" >
+                                        <input matInput placeholder="Test name." formControlName="edittestNameCtrl" autocomplete="off" >
+                                        <mat-error *ngIf="hasError2('testNameCtrl', 'required')">Test name is required</mat-error>   
+                                    </mat-form-field>
+                                </div>
+                    
+                               
+                            </div>
+        
+                           
+        
+                          
+                            
+        
+        
+                        </div>
+        
+                        
+                    </div>
+        
+                    </section>
+                    <!--End Of test Reg Block-->
+                     <!--Button Block-->
+                <section id="testSubmitBlock">
+                    <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                        <button mat-flat-button color="primary" class="phrmcybtn" type="submit"> Update</button>
+                    </div>
+                </section>
+
+            </form>
+        </ng-template>
+
+           
+
+        </div>
+   
+    
+  
+  </div>

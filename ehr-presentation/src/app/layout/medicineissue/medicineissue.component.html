@@ -1,0 +1,160 @@
+<div id="medicineIssuePage" class="wraper-container">
+    <div class="search-container">
+        <mat-card>
+
+            <mat-card-content>
+
+                <section class="patientinfo">
+                    <mat-toolbar>
+
+                        <div style="width:100%;float: right;text-align:right;">
+                            <button mat-raised-button color="primary" class="toplink" (click)="backToIpdList()" >Back To List </button>
+                            
+                        </div>
+                    </mat-toolbar>
+                   
+
+                </section>
+
+
+
+
+                <section class="prescription">
+                    <mat-tab-group>
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <mat-icon>assignment_turned_in </mat-icon>
+                                Medicine Issue - Prescription Wise
+                            </ng-template>
+
+                           
+                                <div class="container prescription_block" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center" style="padding-bottom:2%;">
+
+
+                                    <div fxFlex="25%" class="medissuePatientInfo">
+                                        <form [formGroup]="prescriptionMedPatientInfoForm">
+                                          
+                                            <div class="container infocontainer" fxLayout="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                                                <div fxFlex="20%">
+                                                    <mat-form-field class="fullwidthinp">
+                                                        <input matInput placeholder="Prescription / IPD No " formControlName="prescriptionNo" />
+                                                    </mat-form-field>
+                                                </div>
+                                                <div fxFlex="20%">
+                                                    <mat-form-field class="fullwidthinp">
+                                                        <input  type="hidden" formControlName="patientID" />
+                                                        <input matInput placeholder="Patient Code" formControlName="patientCode" />
+                                                    </mat-form-field>
+                                                </div>
+                                                <div fxFlex="20%">
+                                                    <mat-form-field class="fullwidthinp">
+                                                        <input matInput placeholder="Type" formControlName="patientType">
+                                                    </mat-form-field>
+                                                </div>
+                    
+                                                <div fxFlex="20%">
+                                                    <mat-form-field class="fullwidthinp">
+                                                        <input matInput placeholder="Patient Name" formControlName="patientName">
+                                                    </mat-form-field>
+                                                </div>
+                    
+                                                <div fxFlex="20%">
+                                                    <mat-form-field class="fullwidthinp">
+                                                        <input matInput placeholder="Age" formControlName="patientAge">
+                                                    </mat-form-field>
+                                                </div>
+                    
+                                            </div>
+                                        </form>
+                                            
+                    
+                                       
+                                    </div>
+
+                                    <div fxFlex="70%">
+
+                                        <form [formGroup]="prescriptionMedForm" >
+                                            <div class="add_medicines">
+                                               
+                                                <!--Test Table-->
+                                                <table style="width:100%;" class="cutomTbl" cellspacing="0" cellpadding="0" formArrayName="medicineRows">
+                                                    <tr>
+                                                        <th class="prescMedListHead">Medicine</th>
+                                                        <th class="prescMedListHead">Instruction</th>
+                                                        <th class="prescMedListHead">Stock</th>
+                                                        <th class="prescMedListHead">Issue</th>
+                                                        <th class="prescMedListHead">Batch Help<br><small>Batch No - Qty - Exp</small></th>
+                                                    </tr>
+                                                      
+                                                            <tr  *ngFor="let meddata of medicineListsDatas[0]; let i = index "  [formGroupName]="i" >
+                                                                <th>
+                                                                    {{meddata.medicine_name}}
+                                                                    <!-- <input type="hidden" placeholder="" valeu="10" formControlName="medicineHdnID" autocomplete="off" /> -->
+                                                                </th>
+                                                                <th>
+                                                                    <span class="infoLabel">Dosage  :</span>    {{meddata.value}} <br>
+                                                                    <span class="infoLabel">Frequency  :</span> {{meddata.frequency_name}} <br>
+                                                                    <span class="infoLabel">Days       :</span> {{meddata.number_of_days_sick_leave}} 
+                                                                </th>
+                                                                <th>
+                                                                    <mat-form-field >
+                                                                        <input matInput placeholder="" formControlName="stock" autocomplete="off" readonly = true; #stockRef id="stockinput_{{i}}" />
+                                                                    </mat-form-field>
+                                                                </th>
+                                                                <th>
+                                                                    <mat-form-field >
+                                                                        <input class="medissue" matInput placeholder="" formControlName="issue" autocomplete="off"  (keyup)="getbatchInfo(meddata,$event,i,stockRef.value)" autofocus />
+                                                                    </mat-form-field>
+                                                                </th>
+                                                                <th>
+                                                                        <mat-form-field class="batchInfoText">
+                                                                                <textarea class="medbatchinfo" matInput placeholder="" formControlName="batchinfo" id="batchinfo_{{i}}" autocomplete="off"  readonly ></textarea>
+                                                                        </mat-form-field>
+                                                                    <div id="batchinfo1_{{i}}"></div>
+                                                                </th>
+                                                            </tr>
+                                                </table>
+                                            </div>
+                                        </form>
+
+
+                                        <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center" >
+                                    
+                                            <div fxFlex="84%"></div>
+                                            <div fxFlex="10%">
+                                                
+                                                <div style="margin-top:11%;"></div>
+                                                <button mat-flat-button color="primary" class="phrmcybtn" type="button" *ngIf="sendPhrmcyBtnActive" (click) = "issueMedicine()" [disabled]="issueBtnDisable" >Issue Now</button>
+                                               
+                                                <button mat-flat-button color="default" class="phrmcybtn" *ngIf="!sendPhrmcyBtnActive" style="vertical-align: middle;padding: 4px 0;" type="button">
+                                                    <mat-spinner [diameter]="25" color="primary" ></mat-spinner>
+                                                  </button>
+                                            </div>
+                                        </div>
+
+
+                                    </div> <!--End of left -->
+
+                                </div>
+                              
+                                
+
+                         
+
+
+                    
+                        </mat-tab>
+
+                    </mat-tab-group>
+                </section>
+
+
+
+
+
+            </mat-card-content>
+        </mat-card>
+
+    </div>
+    <!--end of search container-->
+</div>

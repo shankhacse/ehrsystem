@@ -1,0 +1,38 @@
+mat-form-field{
+    font-size: 13px;
+}
+
+mat-focused .mat-form-field-label{ color: #ee6e73; } .mat-focused .mat-form-field-underline .mat-form-field-ripple{ background: #ee6e73; }
+
+.mat-radio-group{
+    font-size: 0.8rem;
+}
+.mat-radio-outer-circle {
+    width:16px !important;
+    height:16px !important;
+}
+.mat-radio-inner-circle {
+    width:16px !important;
+    height:16px !important;
+}
+.mat-radio-label-content {
+    padding-right: 8px;
+}
+mat-dialog-actions{
+    float: right;
+}
+.mat-progress-spinner {
+
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+
+}
+
+.validerr {
+    text-align: center;
+    color: rgb(255, 9, 9);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}

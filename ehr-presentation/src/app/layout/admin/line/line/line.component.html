@@ -1,0 +1,104 @@
+
+<div id="linePage">
+
+
+  <div class="wraper-container blockContent">
+    <div class="search-container">
+       
+
+    </div>
+
+  </div>
+
+  <div class="diagFormContainer">
+      <form [formGroup]="addLineForm" (ngSubmit)="onSubmit(addLineForm.value)">
+
+          
+                 
+      <!--test Reg Block-->
+      <section class="lineregBlock">
+              <mat-toolbar>
+                <h5 class="form_block_title">Add Line</h5>
+                      <div style="width:100%;float: right;text-align:right;">
+                          <button mat-raised-button color="primary" class="toplink" (click)="gotoList()" type="button">Back To List </button>
+                       
+                      </div>
+                  </mat-toolbar><br>
+          <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+              <div fxFlex="85%">
+                  
+
+                  <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="11.8%" fxLayoutAlign="center">
+                      
+                   
+
+                      <div fxFlex="100%">
+                        <mat-form-field class="fullwidthinp">
+                          <mat-select placeholder="Division" formControlName="divisionCtrl" >
+                              <mat-option *ngFor="let divisions of divisionList[0]" [value]="divisions.division_code">
+                                  {{divisions.division_name}}
+                              </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                    </div>
+          
+                     
+                  </div>
+
+                  <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="11.8%" fxLayoutAlign="center">
+                      
+                    
+          
+                    <div fxFlex="90%">
+                        <mat-form-field class="fullwidthinp" style="width:100%;">
+                            <input matInput placeholder="Line Code" formControlName="lineCodeCtrl" autocomplete="off" >
+                           
+                        </mat-form-field>
+                    </div>
+
+                    <div fxFlex="90%">
+                      <mat-form-field class="fullwidthinp" style="width:100%;">
+                          <input matInput placeholder="Line Name" formControlName="lineNameCtrl" autocomplete="off" >
+                         
+                      </mat-form-field>
+                  </div>
+
+
+                
+                   
+                </div>
+
+                 
+
+                
+                  
+
+
+              </div>
+
+              
+          </div>
+
+
+          <p style="color:#F00;text-align: left;padding-left: 20px;">{{validFormErr}}</p>
+          </section>
+          <!--End Of test Reg Block-->
+           <!--Button Block-->
+      <section id="testSubmitBlock">
+          <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+              <button mat-flat-button color="primary" class="phrmcybtn" type="submit"> Save</button>
+          </div>
+      </section>
+  <!-- end of mode check-->
+
+</form>
+
+ 
+
+     
+
+  </div>
+
+
+
+</div>

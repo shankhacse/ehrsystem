@@ -1,0 +1,192 @@
+.blockContent {
+    width: 96%;
+    margin: 0 auto;
+  
+}
+.blockContent h5{
+    letter-spacing: 1px;
+}
+.reportuploadContainer {
+    box-shadow: 0px 7px 22px 2px #c0c0c0;
+    margin-bottom: 2%;
+}
+
+.reportupdBlock {
+    /*  background: #f7fafc;
+      border-radius: 3px;
+      border: 1px dashed #9c9a9a;
+      padding: 0.5% 0;
+  */
+  
+      background: #fff;
+      border-radius: 3px;
+      border: 0px dashed #9c9a9a;
+       padding: 0% 0;
+       margin-top: 20px;
+     /* box-shadow: 0px 7px 22px 2px #c0c0c0;*/
+  
+  }
+  .mat-input-element:disabled {
+      /* color: rgba(0,0,0,.38); */
+      color: #181818;
+      font-size: 12px;
+      letter-spacing: 1px;
+      font-weight: 500;
+  }
+  
+  .mat-form-field {
+      display: inline-block;
+      position: relative;
+      text-align: left;
+      font-size: 14px;
+      letter-spacing: 1px;
+      
+  }
+  .mat-form-field{
+      font-size:0.8rem;
+  }
+  
+  .mat-form-field-infix {
+      width: auto !important;
+  }
+  .mat-form-field-appearance-legacy .mat-form-field-label {
+  
+      color: #474747;
+      opacity: 1 !important;
+    /*  font-size: 16px !important; */
+  
+  }
+
+  #testSubmitBlock {
+    padding: 1%;
+}
+
+#grnuploadPage{
+width: 45%;
+justify-content: center;
+margin-top: 35px!important;
+
+margin: 0 auto;
+
+}
+
+.inveditBlock{
+    margin-top: 20px;
+}
+
+.toplink {
+    font-size: 0.7rem;
+    /* text-decoration: underline; */
+    letter-spacing: 1px;
+    /* background: white;*/
+    margin-left: 5px;
+    border-radius: 36px;
+    border: 0px solid #d0cbcb;
+    /*color: #827979;*/
+}
+
+.upload-btn-wrapper {
+    /*position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-top: 8px;
+
+    margin: 3em auto;*/
+    max-width: 300px;
+    background-color: #EDEDED;
+    border: 1px solid #DFDFDF;
+    border-radius: 5px;
+    overflow: hidden;
+   
+    max-height: 37px;
+  }
+  
+  .btn[_ngcontent-c10] {
+    /*border: 2px solid gray;
+    padding: 3px 11px;
+    border-radius: 8px;*/
+    color: #fff;
+    background-color: #03A595;;
+    
+    font-size: 14px;
+    font-weight: bold;
+}
+  
+  .upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor:pointer;
+  }
+
+.req-star-mark
+{
+	color:red;
+	font-size: 15px;
+}
+.uploadsave{
+padding: 5px 15px;
+background-color: #3f51b5;
+color: white;
+font-weight: 300;
+box-shadow: 0 0 0 0 rgba(0,0,0,.2),0 0 0 0 rgba(0,0,0,.14),0 0 0 0 rgba(0,0,0,.12);
+box-sizing: border-box;
+position: relative;
+cursor: pointer;
+outline: 0;
+border: none;
+border-radius: 2px;
+overflow: visible;
+display: inline-block;
+white-space: nowrap;
+text-decoration: none;
+margin-top: 8px;
+}
+
+
+.mat-header-cell {
+    color: rgb(3, 14, 41);
+    letter-spacing: 1px;
+}
+
+tr.mat-header-row {
+    background: #f9f9f9;
+    font-weight: 700;
+}
+
+.mat-cell {
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.reporttables {
+    margin-top: 0.5%;
+    width: 100%;
+}
+input{
+    text-indent: 5px;
+  }
+.form_block_title{
+  color: rgba(107, 59, 59, 0.87);
+}
+
+.req{
+    float: right;
+    font-size: 11px;
+    color: #b04040;
+    font-weight: 300!important;
+}
+.loadingtxt{
+    color: rgba(141, 132, 132, 0.9);
+
+}
+
+.filenamespan{
+    max-width: 176px;
+    overflow: hidden;
+
+    margin: 8px;
+}
+

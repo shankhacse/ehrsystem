@@ -1,0 +1,149 @@
+<!--<app-header></app-header>
+<app-sidebar (collapsedEvent)="receiveCollapsed($event)"></app-sidebar>
+<section class="main-container" [ngClass]="{collapsed: collapedSideBar}">
+    <router-outlet></router-outlet>
+</section>-->
+
+
+<mat-sidenav-container class="sidenav-container" *ngIf="isAdmin">
+    
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport="true"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)"
+    
+    >
+    <mat-toolbar class="primarycolor" >Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink='{{redirectHome}}'><mat-icon>dashboard</mat-icon> Home</a>
+      <mat-nav-list>
+        <mat-list-item (click)="menuTrigger.openMenu()">Get Ready</mat-list-item>
+      </mat-nav-list>
+      <a mat-list-item routerLink="/panel/test"><mat-icon>queue</mat-icon> Test</a>
+      <a mat-list-item routerLink="/panel/diagnosis"><mat-icon>queue</mat-icon> Diagonosis</a>
+      <a mat-list-item routerLink="/panel/symptoms"><mat-icon>queue</mat-icon> Symptoms</a>
+      <a mat-list-item routerLink="/panel/medlist"><mat-icon>queue</mat-icon> Medicine</a>
+      <a mat-list-item routerLink="/panel/divisionlist"><mat-icon>queue</mat-icon> Division</a>
+      <a mat-list-item routerLink="/panel/linelist"><mat-icon>queue</mat-icon> Line</a>
+      <a mat-list-item routerLink="/panel/challanlist"><mat-icon>queue</mat-icon>Challan</a>
+
+      <a mat-list-item routerLink="/panel/excel"><mat-icon>link</mat-icon> Import Excel (Per. Worker)</a>
+      <a mat-list-item routerLink="/panel/patientlist"><mat-icon>link</mat-icon>Patient List</a>
+      <a mat-list-item routerLink="/panel/reportsupload"><mat-icon>link</mat-icon>Report Upload</a>		
+      <a mat-list-item routerLink="/panel/grn"><mat-icon>link</mat-icon>Import GRN Excel</a>
+      <mat-divider></mat-divider>
+      <a mat-list-item routerLink="/panel/registration"><mat-icon>memory</mat-icon> Registration</a>
+      <a mat-list-item routerLink="/panel/doctor"><mat-icon>memory</mat-icon> Doctors Visit</a>
+      
+      <!-- <a mat-list-item routerLink="/panel/forms"><mat-icon>compare</mat-icon> Stock Report</a>
+      <a mat-list-item routerLink="/panel/forms"><mat-icon>notification_important</mat-icon> Other Report</a>
+      <a mat-list-item routerLink="/panel/forms"><mat-icon>domain</mat-icon> Help</a> -->
+      
+    </mat-nav-list>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    
+    
+    <mat-toolbar class="primarycolor">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      
+
+      <span class="fill-remaining-space">
+        <!---->
+        <mat-menu #menu="matMenu" [overlapTrigger]="false">
+        
+         
+         
+          <button mat-menu-item (click)="Logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Logout</span>
+          </button>
+      </mat-menu>
+      </span>
+
+      <span class="fill-remaining-space">Pawoi</span>
+    
+       <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>dashboard</mat-icon>
+        </button>
+
+
+
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
+<mat-sidenav-container class="sidenav-container" *ngIf="!isAdmin">
+  
+     
+      <mat-sidenav-content>
+        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+          <mat-toolbar class="top_header">
+              
+                <div fxFlex="50%">
+                  <img src="assets/logo.png" />
+                </div>
+                <div fxFlex="50%" class="datetime">
+                  
+                  <h3 class="time">{{ time | date:'hh:mm:ss aa'}}</h3>
+                  <h3 class="date">{{ time | date:'dd MMM, yyyy'}}</h3>
+                </div>
+              
+          </mat-toolbar>
+        </div>
+
+
+        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+            <mat-toolbar class="primarycolor" >
+                <mat-icon style="cursor:pointer;" (click)="redirectToHome()">home</mat-icon>
+                <div fxFlex="50%">
+                   
+                    <p class="welcome_title">Welcome {{username}} </p>
+                   
+
+                    <span class="fill-remaining-space">
+                        <mat-menu #menu="matMenu" [overlapTrigger]="false">
+                          <button mat-menu-item (click)="redirectToHome()">
+                            <mat-icon>home</mat-icon>
+                            <span>Home</span>
+                          </button>
+                         <button mat-menu-item (click)="Logout()">
+                            <mat-icon>exit_to_app</mat-icon>
+                            <span>Logout</span>
+                          </button>
+                        </mat-menu>
+                      </span>
+
+                   
+                </div>
+                <div fxFlex="50%" >
+                    <span class="estate_title" style="margin-left: -15%;">Powai Central Hospital</span>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" style="float: right;" >
+                        <mat-icon>person_pin</mat-icon>
+                      </button>
+                </div>
+                
+            </mat-toolbar>
+        </div>
+      
+
+
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  

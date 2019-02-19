@@ -1,0 +1,208 @@
+
+<div id="reportuploadPage">
+
+
+
+  <div class="reportuploadContainer">
+      <form [formGroup]="addReportsuploadForm" (ngSubmit)="onSubmit(addReportsuploadForm.value)">
+
+          
+                 
+      <!--test Reg Block-->
+      <section class="reportupdBlock">
+           
+    <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap  fxLayoutGap="1.5%" fxLayoutAlign="center">
+            <div fxFlex="90%">
+                        <h5 class="form_block_title">Upload Reports
+                          <span class="req">fields marked with * are mandatory</span>
+                        </h5>
+                       
+
+                        <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="11.8%" fxLayoutAlign="center">
+
+                            <div class="fieldsearch" fxFlex="100%" >
+                                
+                                     <div class="ID-search">
+                
+                                            <!-- Start -->
+                                            <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" >
+                                                
+                                                        <div fxFlex="96%">
+                                                          
+                                                                    <mat-form-field class="fullwidthinp" >
+                                                                      
+                                                                    <input matInput placeholder="* Search By  Code / Name " aria-label="Patient" [matAutocomplete]="auto" formControlName="patientAdvSearchCtrl" (keyup)="getPatientListBySearch($event)">
+                                                                
+                        
+                                                                    <mat-autocomplete #auto="matAutocomplete" 
+                                                                        mat-search-text-change="null"
+                                                                        [displayWith]="displayFn.bind(this)"
+                                                                        (optionSelected)="onSelectionChanged($event)"
+                                                                        >
+                                                                        <mat-option *ngFor="let patient of filteredPatients | async" [value]="patient.id" >
+                                                                            <small>{{patient.name}}</small> |
+                                                                            <small>{{patient.code}}</small> 
+                                                                            
+                                                                        </mat-option>
+                                                                        
+                                                                        </mat-autocomplete> 
+                                                                </mat-form-field>
+                                                        </div>                                                    
+                                            </div>
+                                            <!-- End -->
+                                             <!-- Start -->
+                                             <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" >
+                                                
+                                                    <div fxFlex="96%">
+                                                            <mat-radio-group formControlName="prescriptionCtrl"><span class="req-star-mark"><sup>*</sup></span>
+                                                                    <mat-radio-button value="IPD">IPD</mat-radio-button>&nbsp;&nbsp;&nbsp;
+                                                                    <mat-radio-button value="OPD">OPD</mat-radio-button>
+                                                            </mat-radio-group>
+                                                    </div>
+                                              </div>
+
+                                              <!-- End -->
+                                              <br>
+                                               <!-- Start -->
+                                             <div  class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" >
+
+                                                <div fxFlex="50%">
+              
+                                                    <mat-form-field class="fullwidthinp" >
+                                                    <input matInput placeholder="* Search Test " aria-label="test" [matAutocomplete]="auto1" formControlName="testAdvSearchCtrl" (keyup)="getTestListBySearch($event)">
+                                                
+        
+                                                    <mat-autocomplete #auto1="matAutocomplete" 
+                                                        mat-search-text-change="null"
+                                                        [displayWith]="displayTestFn.bind(this)"
+                                                        
+                                                        >
+                                                        <mat-option *ngFor="let test of filteredTests | async" [value]="test.id" >
+                                                            <small>{{test.name}}</small>
+                                                            
+                                                        </mat-option>
+                                                        
+                                                        </mat-autocomplete> 
+                                                </mat-form-field>
+                                        </div>   
+                                                
+                                                 <!--  <div fxFlex="50%">
+                                                            <mat-form-field class="fullwidthinp">
+                                                                    <mat-select placeholder="Select Test" formControlName="testNameCtrl"  (openedChange)="openedChange($event)" >
+                                                                        <mat-option *ngFor="let tests of testsList[0]" [value]="tests.investigation_id">
+                                                                            {{tests.investigation_name}}
+                                                                        </mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>            
+                                                            
+                                                    </div> -->
+                                                     <div fxFlex="10%">
+                                                       
+                                                    </div>
+                                                    <div fxFlex="40%">
+                                                     <div class="upload-btn-wrapper">
+                                               <button class="btn" >Select file and upload</button>
+                 <input type="file" name="reportfile" id="reportfile" (change)="upload($event.target.files)" #fileInput />
+                                                      </div>
+                                                            
+                                                    </div>
+                                                   
+                                              </div>
+
+                                              <!-- End -->
+
+                                             
+
+                                            
+                
+                                    </div>
+                              
+                
+                                        
+                      </div><!--end of fieldsearch-->
+                            
+                            
+                
+
+                            
+                
+                            
+                        </div>
+
+                        
+
+                        
+                        
+
+
+             </div>
+
+              
+  </div>
+                 <p style="color: #D87575;text-align: left;padding-left: 33px;font-size: 13px;">{{validFormErr}}</p>
+                <br>
+          </section>
+
+        
+         
+
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 reporttables">
+
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+              
+                <!-- Position Column -->
+                <ng-container matColumnDef="slno">
+                  <th mat-header-cell *matHeaderCellDef style="width:10%;"> Sl No. </th>
+                  <td mat-cell *matCellDef="let row; let i =index;">{{i+1}}  </td>
+                </ng-container>
+                 <!-- Position Column -->
+                 <ng-container matColumnDef="testdt">
+                  <th mat-header-cell *matHeaderCellDef style="width:10%;">Date </th>
+                  <td mat-cell *matCellDef="let row; let i =index;">{{row.testdt}}  </td>
+                </ng-container>
+              
+                <!-- Name Column -->
+                <ng-container matColumnDef="testName">
+                  <th mat-header-cell *matHeaderCellDef style="width:30%;"> Test Name </th>
+                  <td mat-cell *matCellDef="let row">{{row.testName}}</td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="fileName">
+                  <th mat-header-cell *matHeaderCellDef style="width:30%;">File Name </th>
+                  <td mat-cell *matCellDef="let row">{{row.fileName}} </td>
+                </ng-container>
+
+                 <!-- Name Column -->
+                 <ng-container matColumnDef="reportuploadid">
+                  <th mat-header-cell *matHeaderCellDef style="width:10%;"> Action </th>
+                  <td mat-cell *matCellDef="let row">
+                    <button mat-mini-fab color="warn" (click)="deleteUpload(row.reportuploadid)"   >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                   
+                  </td>
+                </ng-container>
+
+               
+        
+              
+                
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+
+
+</form>
+
+ 
+
+     
+
+  </div>
+
+
+
+</div>

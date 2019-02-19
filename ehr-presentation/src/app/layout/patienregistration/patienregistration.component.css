@@ -1,0 +1,431 @@
+/*.patientregcard{
+  width: 60%;
+  float: left;
+}
+.biometricregcard{
+  width: 30%;
+  float: left;
+}
+*/
+#patientRegPage #patientRegSearch{
+    margin:2% 0;
+  }
+  
+  #patientRegPage .halfwidthInput{
+    width:40%;
+    margin-right:15px;
+  }
+  
+  
+  #patientRegPage .crow{
+  margin-top:1%;
+  }
+  #patientRegPage .cfinput{
+  margin-right:5px; 
+  }
+  #patientRegPage .mat-card-content, #patientRegPage .mat-card-header  {
+    font-size: 13px;
+  }
+  #patientRegPage .mat-card-title, #patientRegPage .mat-card-subtitle {
+    font-size: 1.5rem;
+  }
+  
+  #patientRegPage .fullwidthinp{
+    width:100%;
+  }
+  
+  #patientRegPage table {
+    width: 100%;
+  }
+  #patientRegPage .margingap{
+    margin:1% 0;
+  }
+ #patientRegPage .customforminput{
+    width: 90%;
+    padding: 2.5%;
+    border: 1px solid #b3b3b4;
+    border-radius: 4px;
+    text-indent: 5px;
+  }
+  
+  #patientRegPage .mat-card-actions{
+    text-align:center;
+  }
+  #patientRegPage .reggrid_block{
+    padding: 4px 1%;
+    background: transparent;
+  }
+  #patientRegPage .biometric_img{
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
+    
+  #patientRegPage .reg_big_icon {
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    font-size: 5rem;
+    color:#FFF;
+    margin-top: 7%;
+  }
+
+  #patientRegPage .center-obj{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+  
+  #patientRegPage .biometricregcard > mat-card-actions{
+    text-align: center;
+  }
+  #patientRegPage .card_title{
+    font-weight: 400;
+    letter-spacing: 2px;
+    font-family: Roboto;
+    font-size: 1.2rem;
+    margin:4px;
+  }
+  
+  #patientRegPage mat-toolbar{
+  padding: 7px 10px !important;
+  font-size: 13px;
+  letter-spacing: 1px;
+  border: 1px solid #d7d7d7;
+  border-radius: 3px;
+  height:auto;
+  }
+  #patientRegPage mat-option{
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+
+  #patientRegPage .registration_form_block{
+    box-shadow: 0px 0px 15px 0px #bfbfbf;
+  }
+
+  #patientRegPage .fieldsearch {
+    background:#ececec;
+    padding: 2%;
+    border-radius: 1px;
+  }
+  #patientRegPage .biometricsearch{
+    background: #73940e;
+   /* border-radius: 10px; */
+  }
+  #patientRegPage .addmorepatient{
+    background: #de4040;
+  }
+  #patientRegPage .mat-card-content{
+    background: transparent;
+    border: 0px solid #ececec;
+  }
+  #patientRegPage tr.mat-header-row {
+   
+    background:#ececec;
+}
+
+#patientRegPage .regblockbtn{
+    border-radius: 50px;
+    background: #FFF;
+    font-size: 12px;
+    letter-spacing: 1px;
+    
+  }
+
+
+  #patientRegPage .margincontent{
+    margin-top:1.5%;
+  }
+  #patientRegPage .mat-button.mat-small {
+    min-width: 1%;
+}
+#patientRegPage .center{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+#patientRegPage .mat-card:not([class*=mat-elevation-z]) {
+  
+  box-shadow: 0 0px 0px 0px rgba(0,0,0,.2), 0 0px 0px 0 rgba(0,0,0,.14), 0 0px 0px 0 rgba(0,0,0,.12); 
+}
+#patientRegPage .mat-header-cell {
+  color: rgb(9, 10, 12);
+}
+
+#patientRegPage td.mat-cell, #patientRegPage td.mat-footer-cell, #patientRegPage th.mat-header-cell {
+ 
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: #000;
+  font-weight:500;
+}
+
+#patientRegPage .reg-action > button{
+    
+    width: 18%;
+}
+#patientRegPage .bttn-right{
+    float:right;
+}
+
+#patientRegPage table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 0px solid #ddd;
+}
+
+#patientRegPage table th, #patientRegPage table td {
+    text-align: left;
+    padding-left: 15px;
+}
+
+#patientRegPage #registraionTable{
+    width:100%;
+    background: #a8a8a8;
+   /* border:1px solid #f3f3f3;*/
+}
+#patientRegPage .table_head{
+    background: #0563bf;
+    color:#FFF;
+    font-weight:500;
+    letter-spacing: 1px;
+}
+
+#patientRegPage .customeBtn{
+    border: 0;
+    background: #0e58c8;
+    padding: 6px 17px;
+    border-radius: 14px;
+    color: #FFF;
+}
+
+#patientRegPage .success{
+  background: #03943f;
+}
+
+#patientRegPage .custmbtn{
+  font-size:11px;
+  letter-spacing: 1px;
+  border-radius:50px;
+}
+#patientRegPage .matcustomicon{
+  font-size: 18px;
+  line-height: 22px;
+}
+
+#patientRegPage #registrationTable table{
+  margin-top:-18px;
+}
+#patientRegPage #registrationTable .mat-input-element {
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+#patientRegPage .btnnormal{
+  font-size:12px;
+  font-weight:500;
+  letter-spacing: 2px;
+}
+
+
+
+
+
+/*
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.example-option-img {
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+[dir='rtl'] .example-option-img {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+*/
+#patientRegPage .regactioncol {
+  width:16%;
+}
+
+#patientRegPage .desktopAction {
+  display: inline-block;
+}
+#patientRegPage .responsiveAction {
+  display: none;
+}
+#patientRegPage .responsiveBtn {
+  margin:3px;
+  color:#FFF;
+}
+
+#patientRegPage .mat-elevation-z8{
+  width: 98%;
+  margin:0 auto;
+}
+
+.registernowTooltip {
+  background: #752ee9;
+  font-size: 9px;
+  letter-spacing: 2px;
+
+}
+ .registeredTooltip {
+  background: #008d63;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+ .deleteTooltip {
+  background: #ec2525;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+#patientRegPage .responsiveBioAddPatient {
+  display:none;
+}
+#patientRegPage .desktopBioAddPatient {
+  display:block;
+}
+
+.mat-autocomplete-panel.mat-autocomplete-visible {
+
+  border-bottom-left-radius: 17px !important;
+  border-bottom-right-radius: 17px !important;
+}
+
+
+.search_drop_txt {
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+}
+/*
+.mat-option-text {
+
+  display: inline-block;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+  letter-spacing: 1px;
+
+}
+*/
+
+/*
+  Responsive Css
+*/
+
+@media screen and (max-width: 1160px) {
+  #patientRegPage .regactioncol {
+    width:18%;
+  }
+}
+
+@media screen and (max-width: 1030px) {
+  #patientRegPage .regactioncol {
+    width:22%;
+  }
+
+  #patientRegPage .custmbtn {
+    font-size: 9px;
+  }
+  #patientRegPage .reg-action > button {
+    width: 30%;
+  }
+  #patientRegPage .reg_big_icon {
+    font-size: 4rem;
+  }
+
+}
+
+@media screen and (max-width: 796px) {
+  #patientRegPage .regactioncol {
+    width:24%;
+  }
+
+  #patientRegPage .custmbtn {
+    font-size: 9px;
+  }
+}
+
+@media screen and (max-width: 730px) {
+  #patientRegPage .regactioncol {
+    width:16%;
+  }
+  #patientRegPage .responsiveAction {
+    display: inline-block;
+  }
+  #patientRegPage .desktopAction {
+    display: none;
+  }
+  #patientRegPage .mat-elevation-z8{
+    width: 96%;
+    margin:0 auto;
+    padding:5px;
+  }
+  #patientRegPage .regblockbtn {
+    line-height: 27px;
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 685px) { 
+  #patientRegPage .regactioncol {
+    width:12%;
+  }
+  #patientRegPage .reg_big_icon {
+    font-size: 3.6rem;
+  }
+  #patientRegPage .error_cls {
+    font-size: 0.6rem;
+  }
+  #patientRegPage .regblockbtn {
+    line-height: 27px;
+    font-size: 9px;
+  }
+}
+
+@media screen and (max-width: 599px) { 
+  #patientRegPage .responsiveBioAddPatient {
+   
+    display:inline-block;
+  }
+  #patientRegPage .desktopBioAddPatient {
+    display:none;
+  }
+
+  #patientRegPage .addAndBiometricBlock {
+    width:100%;
+    background: #ececec;
+    margin-bottom: -3px;
+  }
+  #patientRegPage .addAndBiometricBlock button {
+    font-size: 11px;
+    letter-spacing: 1px;
+    
+  }
+  #patientRegPage .regblockbtn {
+    line-height: 34px;
+    font-size: 13px;
+  }
+
+}

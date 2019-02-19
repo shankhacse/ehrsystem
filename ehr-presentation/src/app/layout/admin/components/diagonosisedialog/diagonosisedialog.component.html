@@ -1,0 +1,80 @@
+<div id="diagonosisPage">
+
+
+ 
+
+  <div class="diagFormContainer">
+    
+ 
+
+      <form [formGroup]="editDiagonosisForm" (ngSubmit)="onSubmitEdit(editDiagonosisForm.value)">       
+      <!--test Reg Block-->
+      <section class="invregBlock">
+              <mat-toolbar>
+
+                      <div style="width:100%;float: right;text-align:right;">
+                          <button mat-mini-fab color="warn"   (click)="redirectToComp()" type="button" ><i class="material-icons">
+                                clear
+                                </i></button>
+                       
+                      </div>
+                  </mat-toolbar>
+              <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                  <div fxFlex="50%">
+                      <h5 class="form_block_title">Edit Diagnosis</h5>
+  
+                      <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                          
+                          <input matInput placeholder="dfgfg" formControlName="diagIdCtrl" autocomplete="off" hidden="true"   > 
+              
+                          <div fxFlex="90%">
+                            <mat-form-field class="fullwidthinp" style="width:100%;">
+                                <input matInput placeholder="Diagnosis Name" formControlName="diaNameCtrl" autocomplete="off" >
+                               
+                            </mat-form-field>
+                        </div>
+  
+                        <div fxFlex="90%">
+                          <mat-form-field class="fullwidthinp" style="width:100%;">
+                              <input matInput placeholder="ICD code" formControlName="acdCodeCtrl" autocomplete="off" >
+                              
+                          </mat-form-field>
+                      </div>
+              
+                         
+                      </div>
+  
+                     
+  
+                    
+                      
+  
+  
+                  </div>
+  
+                  
+              </div>
+              <p style="color:#F00;text-align: left;padding-left: 20px;">{{validFormErr}}</p>
+              </section>
+              <!--End Of test Reg Block-->
+               <!--Button Block-->
+          <section id="testSubmitBlock">
+              <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                  <button mat-flat-button color="primary" class="phrmcybtn" type="submit"> Update</button>
+              </div>
+              <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                   
+               
+            </div>
+          </section>
+
+      </form>
+
+
+     
+
+  </div>
+
+
+
+</div>

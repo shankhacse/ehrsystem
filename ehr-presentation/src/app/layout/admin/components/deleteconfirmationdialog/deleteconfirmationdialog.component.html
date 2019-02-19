@@ -1,0 +1,9 @@
+<section>
+  <p style="text-align:center;"><mat-icon class="dialogicon"  [style.color]="iconColor" >{{msgIcon}}</mat-icon></p>
+   <p class="msg" style="text-align:center;">{{msg}}</p>
+   <div class="center" style="width:65%;">
+       <button mat-raised-button color="accent" (click)="cancelDialog()" >No</button> &nbsp;
+       <button mat-raised-button color="primary" (click) = "deleteFromTable(idfordel,tblColumn,delfromTbl)" >Yes</button>
+   </div>
+ </section>
+ 

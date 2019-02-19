@@ -1,0 +1,66 @@
+<div id="masterEntryDialogPage">
+
+    <mat-progress-bar
+    class="dialogFormProgress"
+    [color]="color"
+    [mode]="mode"
+    [value]="value"
+    [bufferValue]="bufferValue" *ngIf="isEnableProgress">
+    </mat-progress-bar>
+
+    <h2 mat-dialog-title > {{heading}}</h2>
+<form [formGroup]="masterEntryForm">
+<ul style="list-style:none;">
+    <li *ngFor="let fields of fieldsArry">
+      <mat-form-field *ngIf="fields.inputtyep == 'text'">
+        <input matInput  placeholder="{{fields.placeholder}}" formControlName="{{fields.ctrlname}}" autocomplete="off">
+      </mat-form-field>
+
+
+      <!--
+      <mat-form-field *ngIf="fields.inputtyep == 'select'">
+        <mat-select placeholder="{{fields.placeholder}}" *ngIf="fields.inputtyep == 'select'">
+          <mat-option ></mat-option>
+        </mat-select>
+      </mat-form-field>
+      -->
+
+    </li>
+
+    <li *ngIf="tablename == 'symptoms'" >
+      <mat-form-field>
+        <mat-select placeholder="Symptom Group" formControlName="symptomGrpCtrl">
+          <mat-option *ngFor="let group of masterDataList_Group[0] " value="{{group.optionID}}">{{group.optionName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </li>
+   
+   
+</ul>
+<p class="requiednore">Note : * Fields are required</p>
+</form>
+
+<!--
+<button (click)="addProperty()">Add Property</button>
+<form [formGroup]="dynamicForm">
+<div formArrayName="properties">
+  <div *ngFor="let fields of fieldsArry" >
+    <input type="text" class="form-control" [formControlName]="{{fields.ctrlname}}">
+  </div>
+</div>
+</form>
+<br>
+<pre>{{dynamicForm.value | json }}</pre>
+-->
+
+ <!--
+<button mat-raised-button (click)="openDialog()">Pick one</button>
+<button  mat-raised-button (click)="closeDialog()" >Cancel</button>
+<button  mat-raised-button (click)="saveMasterEntryData()" >Save</button>
+ -->
+<div mat-dialog-actions style="display:block;text-align: center;">
+  <button mat-raised-button color="warn" (click)="closeDialog()"><mat-icon>cancel</mat-icon> Cancel</button>
+  <button mat-raised-button color="primary" (click)="saveMasterEntryData()" [disabled]="!masterEntryForm.valid"><mat-icon>save</mat-icon> Save</button>
+</div>
+
+</div>

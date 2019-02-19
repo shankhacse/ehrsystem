@@ -1,0 +1,242 @@
+  <!--ng serve --live-reload false-->
+  <div style="float: right;cursor: pointer;" (click)="onNoClick()">
+  <mat-icon>clear</mat-icon>
+  </div>
+  
+  <h2 mat-dialog-title>Add Patient</h2>
+  
+  <form [formGroup]="patientAddForm"  novalidate (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+
+          <div fxFlex="26%">
+            <!--
+              <mat-form-field class="fullwidthinp">
+                  <input matInput placeholder="Patient Code" formControlName="pcodeCtrl"/>
+              </mat-form-field>
+            -->
+              <mat-form-field class="fullwidthinp">
+                <input matInput placeholder="* Patient Name" formControlName="pnameCtrl" autocomplete="off" />
+              </mat-form-field>
+            
+              <!--
+              <mat-form-field class="fullwidthinp">
+                    <input matInput [matDatepicker]="picker1" placeholder="* Date of Birth"  formControlName="dobCtrl" autocomplete="off" [max]="maxDate" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+              -->
+              <mat-form-field class="fullwidthinp">
+                <input matInput  placeholder="* Age" formControlName="dobCtrl" autocomplete="off" maxlength="2">
+              </mat-form-field>
+
+              <span style="font-size: 13px;" style.color = "{{issubmitted && patientAddForm.get('gender').hasError('required') ? '#f42b2b' : '#7e7ea4'}}" >* Gender</span>
+                <div style="padding-bottom: 8px;padding-top:5px;">
+                 
+                    <mat-radio-group  formControlName="gender" required >
+                        <mat-radio-button value="M" > Male&nbsp;&nbsp; </mat-radio-button>
+                        <mat-radio-button value="F" > Female&nbsp;&nbsp; </mat-radio-button>
+                        <mat-radio-button value="O" > Other </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                
+                  
+              <mat-form-field class="fullwidthinp">
+                    <input matInput placeholder="Mobile No"  formControlName="mobileCtrl" autocomplete="off" />
+                </mat-form-field>
+                <mat-form-field class="fullwidthinp">
+                    <input matInput placeholder="Alternate Mobile No"  formControlName="alternatemblCtrl" autocomplete="off" />
+                </mat-form-field>
+          </div>
+          <mat-divider [vertical]="true"></mat-divider>
+
+          <div fxFlex="34%" >
+            
+          
+            <mat-form-field class="fullwidthinp">
+                <input matInput placeholder="Aadhar No" formControlName="aadharCtrl" autocomplete="off" />
+            </mat-form-field>
+
+            <mat-form-field class="fullwidthinp">
+                <mat-select placeholder="Blood Group" [disableOptionCentering]="false" formControlName="bldgrpCtrl">
+                  <mat-option *ngFor="let bloodgrp of bloodGroupList[0]" [value]="bloodgrp.id">
+                    {{bloodgrp.bld_group_code}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+              <span style="font-size: 13px;" style.color = "{{issubmitted && patientAddForm.get('patienttypeCtrl').hasError('required') ? '#f42b2b' : '#7e7ea4'}}" >* Employee Type</span>
+             
+              
+              <div style="padding-bottom: 8px;padding-top: 5px;">
+                <mat-radio-group formControlName="patienttypeCtrl" required>
+                  <mat-radio-button  *ngFor="let ptype of patientTypeList[0]" [value]="ptype" (change)="patientTypeChange($event)">
+                        {{ptype.patient_type}}&nbsp;&nbsp;
+                      </mat-radio-button>
+
+                </mat-radio-group>
+            </div>
+            <!--
+            <mat-form-field class="fullwidthinp">
+                <input matInput placeholder="Associate Id" formControlName="associateCtrl"/>
+            </mat-form-field>
+            -->
+
+            <!--
+            <mat-form-field class="fullwidthinp">
+                <mat-select formControlName ="associateEmplCtrl" placeholder="* Employee" #singleSelect (selectionChange)="getEstateByEmpl($event)">
+                  <ngx-mat-select-search formControlName="associateEmplFilterCtrl"
+                  [placeholderLabel]="'Search'" 
+                  [noEntriesFoundLabel]="'no records found'"
+                 (keyup)="getPatientListBySearch($event)"
+                  ></ngx-mat-select-search>
+                  <mat-option *ngFor="let empl of filteredAssociatedEmpl | async" [value]="empl">
+                    {{empl.code}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+            -->
+            <!--
+            <mat-form-field class="fullwidthinp">
+              <mat-select formControlName ="associateEmplCtrl" placeholder="Employee" #singleSelect (selectionChange)="getEstateByEmpl($event)">
+                <ngx-mat-select-search formControlName="associateEmplFilterCtrl"
+                [placeholderLabel]="'Search'" 
+                [noEntriesFoundLabel]="'no records found'"
+               (keyup)="getPatientListBySearch($event)"
+                ></ngx-mat-select-search>
+                <mat-option *ngFor="let empl of filteredAssociatedEmpl | async" [value]="empl">
+                  {{empl.code}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            -->
+
+            <mat-form-field class="fullwidthinp" >
+              <input matInput placeholder="Associate Employee" aria-label="Patient" [matAutocomplete]="auto" formControlName="patientAdvSearchCtrl"  (keyup)="getPatientListBySearch($event)">
+         
+
+               <mat-autocomplete #auto="matAutocomplete" 
+               [displayWith]="displayFn.bind(this)">
+                  <mat-option *ngFor="let patient of filteredPatients | async" [value]="patient.id"  >
+                    <!-- <img class="example-option-img" aria-hidden [src]="state.flag" height="25"> -->
+                    <small class="search_drop_txt">{{patient.code}}</small> |
+                    <small class="search_drop_txt">{{patient.name}}</small> 
+                  </mat-option>
+               </mat-autocomplete>
+               
+            </mat-form-field>
+            
+            <!--
+            <mat-form-field class="fullwidthinp">
+                <mat-select placeholder="* Relation" formControlName="relationCtrl">
+                  <mat-option *ngFor="let relations of relationsList[0]" [value]="relations.id">
+                    {{relations.relation}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+            -->
+
+            <mat-form-field class="fullwidthinp">
+              <mat-select placeholder="Relation" formControlName="relationCtrl">
+                <mat-option *ngFor="let relations of relationsList[0]" [value]="relations.id">
+                  {{relations.relation}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+           
+        </div>
+
+        <mat-divider [vertical]="true"></mat-divider>
+
+        <div fxFlex="30%">
+           <!--
+            <mat-form-field class="fullwidthinp">
+              <input matInput placeholder="Line No" formControlName="linenoCtrl" autocomplete="off" />
+            </mat-form-field>
+
+            <mat-form-field class="fullwidthinp">
+              <input matInput placeholder="Division No" formControlName="divisionCtrl" autocomplete="off" />
+            </mat-form-field>
+
+            <mat-form-field class="fullwidthinp">
+              <input matInput placeholder="Challan No" formControlName="challannoCtrl" autocomplete="off" />
+            </mat-form-field>
+            -->
+
+            <mat-form-field class="fullwidthinp">
+                <mat-select placeholder="* Estate" formControlName="estateCtrl" >
+                  <mat-option *ngFor="let estate of estateList[0]" [value]="estate.code">
+                    {{estate.name}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="fullwidthinp">
+              <mat-select placeholder="Challan No" formControlName="challannoCtrl" >
+                <mat-option *ngFor="let challan of challanList[0]" [value]="challan.challan_code">
+                  {{challan.name}}
+                </mat-option>
+              </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="fullwidthinp">
+            <mat-select placeholder="Division No" formControlName="divisionCtrl" >
+              <mat-option *ngFor="let division of divisionList[0]" [value]="division.division_code">
+                {{division.division_name}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="fullwidthinp">
+          <mat-select placeholder="Line No" formControlName="linenoCtrl" >
+            <mat-option *ngFor="let line of lineList[0]" [value]="line.line_code">
+              {{line.lie_name}}
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="fullwidthinp">
+        
+        <textarea matInput placeholder="Reason" formControlName="reasonCtrl"></textarea>
+      </mat-form-field>
+
+
+
+        </div>
+    </div>
+
+    <!--
+    <div class="validerr" *ngIf="issubmitted">
+        <div  *ngIf="
+        patientAddForm.get('pnameCtrl').hasError('required') || 
+        patientAddForm.get('dobCtrl').hasError('required') || 
+        patientAddForm.get('gender').hasError('required') || 
+        patientAddForm.get('patienttypeCtrl').hasError('required') ||
+        patientAddForm.get('associateEmplCtrl').hasError('required') || 
+        patientAddForm.get('relationCtrl').hasError('required') || 
+        patientAddForm.get('estateCtrl').hasError('required') " > 
+        Required Fields : Patient Name , Date of Birth , Gender, Patient Type (Dependent or Non-Worker) , Employee , Relation 
+        </div>
+    </div>
+    -->
+
+
+    <div class="validerr" style="color:#7E7D7D;">
+        Note: * Fields are mandatory
+    </div>
+  
+    
+
+    
+     
+    
+
+  </mat-dialog-content>
+  
+  <mat-dialog-actions >
+    <button mat-raised-button color="accent" (click)="onNoClick()" type="button">Cancel</button>
+    <button class="mat-raised-button mat-primary" type="submit" *ngIf="registerButtonActive">Save</button>
+    <mat-spinner [diameter]="25" color="primary" style="margin-left: 10px; margin-top: 6px;" *ngIf="loaderActive" ></mat-spinner>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,86 @@
+
+<div id="symptomsPage">
+
+
+  <div class="wraper-container blockContent">
+    <div class="search-container">
+       
+
+    </div>
+
+  </div>
+
+  <div class="diagFormContainer">
+      <form [formGroup]="addSymptomsForm" (ngSubmit)="onSubmit(addSymptomsForm.value)">
+
+          
+                 
+      <!--test Reg Block-->
+      <section class="sympregBlock">
+              <mat-toolbar>
+
+                      <div style="width:100%;float: right;text-align:right;">
+                          <button mat-raised-button color="primary" class="toplink" (click)="gotoList()" type="button">Back To List </button>
+                       
+                      </div>
+                  </mat-toolbar>
+          <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+              <div fxFlex="50%">
+                  <h5 class="form_block_title">Add Symptoms</h5>
+
+                  <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="11.8%" fxLayoutAlign="center">
+                      
+                    
+          
+                      <div fxFlex="90%">
+                          <mat-form-field class="fullwidthinp" style="width:100%;">
+                              <input matInput placeholder="Symptoms." formControlName="symptomsCtrl" autocomplete="off" >
+                             
+                          </mat-form-field>
+                      </div>
+
+                      <div fxFlex="90%">
+                        <mat-form-field class="fullwidthinp">
+                          <mat-select placeholder="Group" formControlName="groupCtrl" >
+                              <mat-option *ngFor="let groups of groupsList[0]" [value]="groups.id">
+                                  {{groups.name}}
+                              </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                    </div>
+          
+                     
+                  </div>
+
+                 
+
+                
+                  
+
+
+              </div>
+
+              
+          </div>
+          <p style="color:#F00;text-align: left;padding-left: 20px;">{{validFormErr}}</p>
+          </section>
+          <!--End Of test Reg Block-->
+           <!--Button Block-->
+      <section id="testSubmitBlock">
+          <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+              <button mat-flat-button color="primary" class="phrmcybtn" type="submit"> Save</button>
+          </div>
+      </section>
+  <!-- end of mode check-->
+
+</form>
+
+ 
+
+     
+
+  </div>
+
+
+
+</div>

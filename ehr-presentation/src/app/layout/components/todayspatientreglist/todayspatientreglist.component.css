@@ -1,0 +1,17 @@
+table{
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+.customeBtn{
+    border: 0;
+    background: #03925b;
+    padding: 6px 17px;
+    border-radius: 14px;
+    color: #FFF;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}

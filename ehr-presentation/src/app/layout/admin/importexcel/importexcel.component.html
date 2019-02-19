@@ -1,0 +1,93 @@
+
+<div id="grnuploadPage">
+
+
+
+    <div class="reportuploadContainer">
+      
+  
+            
+                   
+        <!--test Reg Block-->
+        <section class="grnuploadBlock">
+  
+             <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap  fxLayoutGap="1.5%" fxLayoutAlign="center">
+              
+              <div fxFlex="90%">
+                  <h5 class="form_block_title">Patient Excel File Import</h5>
+  
+                      <!-- Start -->
+                      <div  class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" >
+  
+                            <div fxFlex="35%">
+                                  <a href="assets/template/patient_import.xlsx" mat-raised-button color="accent" download>
+                               
+                                    <i class="material-icons">
+                                        get_app
+                                        </i>Template
+                                  </a>
+                                 
+                              
+                                 
+                            </div>   
+                            <div fxFlex="60%">
+                              
+                                <div class="upload-btn-wrapper">
+                                  
+                                    <button mat-raised-button class="btn" (click)="fileInput.click()" >Select file</button>&nbsp;<span class="filenamespan"></span>
+      <input accept=".xlsx, .xls" type="file" name="reportfile" id="reportfile" (change)="upload($event.target.files)" #fileInput />
+     
+                                           </div> 
+                            </div>
+                            <div fxFlex="10%">
+                               
+                                    <!-- <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                                        <button mat-flat-button color="primary" class="phrmcybtn" type="submit">
+                                           Upload </button>
+                                    </div> -->
+  
+                                    
+                               
+                                    
+                            </div>
+                           
+                      </div>
+                     <br><br>
+                     <div *ngIf="isLoader" style="text-align:center">
+                        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                        <h3 class="loadingtxt">Lodaing.....</h3>
+                       </div>
+                     
+  
+  
+                      <!-- End -->
+               
+                </div>
+            </div> 
+            
+           
+  
+         
+  
+          
+        <p style="color: #D87575;text-align: left;padding-left: 33px;font-size: 13px;"></p>
+                  <br>
+       </section>
+
+  
+    </div>
+  
+  
+  
+  </div>
+  
+
+
+
+
+
+  
+
+
+
+  

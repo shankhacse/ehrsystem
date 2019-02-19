@@ -1,0 +1,21 @@
+#sickLeavePage .navBtn button {
+    border-radius: 50px;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+#sickLeavePage .pagetitle {
+  font-size: 15px;
+}
+
+#sickLeavePage .btn_approval {
+  padding:1% 0 0 1%;
+
+}
+
+#sickLeavePage .btn_approval button {
+  font-size: 12px;
+  
+}
+#sickLeavePage .custmbtn {
+  font-size: 12px !important;
+}

@@ -1,0 +1,433 @@
+<div class="wraper-container">
+    <div class="search-container">
+        <mat-card>
+
+            <mat-card-content>
+
+                <section class="patientinfo">
+                    <mat-toolbar>
+
+                        <div style="width:100%;float: right;text-align:right;">
+                            <button mat-raised-button color="primary" class="toplink" (click)="gotoList()">Back To List </button>
+                            <button mat-raised-button color="warn" class="toplink" (click)="getOpdPrescHistory()" >Prescription History</button>
+                        </div>
+                    </mat-toolbar>
+                    <form [formGroup]="presciptionHealthForm">
+                        <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                            <div fxFlex="20%">
+                                <mat-form-field class="fullwidthinp">
+                                    <input matInput placeholder="Patient ID" formControlName="patientID">
+                                    <input type="hidden" formControlName="hdnpatientID">
+                                    <input type="hidden" formControlName="hdnregistrationID">
+                                    <input type="hidden" formControlName="hdnpresciptionID">
+                                </mat-form-field>
+                            </div>
+
+                            <div fxFlex="20%">
+                                <mat-form-field class="fullwidthinp">
+                                    <input matInput placeholder="Pres ID" formControlName="prescpID">
+                                </mat-form-field>
+                            </div>
+
+                            <div fxFlex="20%">
+                                <mat-form-field class="fullwidthinp">
+                                    <input matInput placeholder="Type" formControlName="patientType">
+                                </mat-form-field>
+                            </div>
+
+                            <div fxFlex="20%">
+                                <mat-form-field class="fullwidthinp">
+                                    <input matInput placeholder="Patient Name" formControlName="patientName">
+                                </mat-form-field>
+                            </div>
+
+                            <div fxFlex="20%">
+                                <mat-form-field class="fullwidthinp">
+                                    <input matInput placeholder="Age" formControlName="patientAge">
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                        <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                            <div fxFlex="15%">
+                                <mat-form-field class="fullwidthinp">
+                                    <input matInput placeholder="Pulse" formControlName="pulse" autocomplete="off" />
+                                </mat-form-field>
+                            </div>
+
+                            <div fxFlex="15%">
+                                <mat-form-field class="fullwidthinp">
+                                    <input matInput placeholder="Temp (F)" formControlName="tempratute" autocomplete="off">
+                                </mat-form-field>
+                            </div>
+
+                            <div fxFlex="15%">
+                                <mat-form-field class="fullwidthinp">
+                                    <input matInput placeholder="Haemoglobin" formControlName="anaemia" autocomplete="off">
+                                </mat-form-field>
+                            </div>
+
+                            <div fxFlex="15%">
+                                <mat-form-field class="fullwidthinp">
+                                    <input matInput placeholder="BP" formControlName="bp" autocomplete="off">
+                                </mat-form-field>
+                            </div>
+
+                            <div fxFlex="15%">
+                                <mat-form-field class="fullwidthinp">
+                                    <input matInput placeholder="Bilirubin" formControlName="jaundice" autocomplete="off">
+                                </mat-form-field>
+                            </div>
+
+                            <div fxFlex="15%">
+                                <mat-form-field class="fullwidthinp">
+                                    <input matInput placeholder="Odema" formControlName="odema" autocomplete="off">
+                                </mat-form-field>
+                            </div>
+
+                            <div fxFlex="15%">
+                                <mat-form-field class="fullwidthinp">
+                                    <input matInput placeholder="Height" formControlName="height" autocomplete="off">
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex="15%">
+                                <mat-form-field class="fullwidthinp">
+                                    <input matInput placeholder="Weight (Kgs.)" formControlName="weight" autocomplete="off">
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </section>
+
+      
+
+
+                <section class="prescription">
+                    <mat-tab-group [selectedIndex]="selectedTab">
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <mat-icon>assignment_turned_in </mat-icon>
+                                General Consultation
+                            </ng-template>
+
+                            <form (keydown.enter)="$event.preventDefault()" [formGroup]="presciptionForm" (ngSubmit)="onSubmit()">
+                                <div class="container prescription_block" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                                    <div fxFlex="60%">
+
+                                        <!--
+                                        <mat-form-field class="fullwidthinp">
+                                           <mat-select formControlName="symptomsMultiCtrl" placeholder="Signs And Symptoms" [multiple]="true" #multiSelect (selectionChange)="getDiseaseList($event)">
+                                                <ngx-mat-select-search formControlName="symptomsMultiFilterCtrl" [placeholderLabel]="'Search'" [noEntriesFoundLabel]="'no records found'"></ngx-mat-select-search>
+                                                <mat-option *ngFor="let symptom of filteredSymptomMulti | async" [value]="symptom" >
+                                                    {{symptom.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field> -->
+
+                                        
+                                            <mat-form-field class="fullwidthinp" style="width:95%">
+                                                    <mat-select formControlName="symptomsMultiCtrl" placeholder="Signs And Symptoms" [multiple]="true" #multiSelect (selectionChange)="getDiseaseList($event)">
+                                                        <ngx-mat-select-search formControlName="symptomsMultiFilterCtrl" [placeholderLabel]="'Search'" [noEntriesFoundLabel]=" 'No Records Found' " ></ngx-mat-select-search>
+                                                        <mat-option *ngFor="let symptom of filteredSymptomMulti | async" [value]="symptom" >
+                                                            {{symptom.name}} 
+                                                        </mat-option>
+                                                    </mat-select>
+                                            </mat-form-field>
+
+                                            <div style="width:5%;float: right;margin-top: 4px;">
+                                                    <button mat-icon-button type="button"  (click)="openSignSymptomsEntryDialog()"  matTooltip="+ Add Symptom">
+                                                            <mat-icon aria-label="Signs">plus_one</mat-icon>
+                                                    </button>
+                                            </div>
+
+                                  
+ 
+
+                                        <mat-form-field class="fullwidthinp" style="width:95%">
+                                            <mat-select formControlName="diagnosisMultiCtrl" placeholder="Diagnosis List" [multiple]="true" #multiSelect (selectionChange)="getMedicine($event)">
+                                                <ngx-mat-select-search formControlName="diagnosisMultiFilterCtrl" [placeholderLabel]="'Search'" [noEntriesFoundLabel]="'no records found'"></ngx-mat-select-search>
+                                                <mat-option *ngFor="let diagnosis of filteredDiagnosisMulti | async" [value]="diagnosis">
+                                                    {{diagnosis.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <div style="width:5%;float: right;margin-top: 4px;">
+                                                <button mat-icon-button type="button" color="warn" (click)="openDiagnosisEntryDialog()" matTooltip="+ Add Diagnosis">
+                                                        <mat-icon aria-label="Diagnosis">plus_one</mat-icon>
+                                                </button>
+                                        </div>
+
+
+                                       
+                                        <h4 class="blockheading">Add Medicines</h4>
+                                        <p style="color:#F00;text-align: right;">{{medicineError}}</p>
+
+                                        <div class="add_medicines">
+                                            
+
+                                            <!--Test Table-->
+                                            <table style="width:100%;" class="cutomTbl" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <!--<th>Date</th>-->
+                                                    <th>Medicine</th>
+                                                    <th>Dosage</th>
+                                                    <th>Frequency</th>
+                                                    <th>Days</th>
+                                                    <th>Action</th>
+
+                                                </tr>
+                                                <tr>
+                                                    <!--
+                                                    <th>
+                                                        <mat-form-field style="width: 90px;">
+                                                            <input matInput [matDatepicker]="picker1" placeholder="" formControlName="date">
+                                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                                            <mat-datepicker #picker1></mat-datepicker>
+                                                        </mat-form-field>
+                                                    </th>-->
+                                                    <th>
+                                                        <mat-select formControlName="medicineCtrl" placeholder="Medicine" #singleSelect style="width: 155px;" (selectionChange)="getOtherDependent($event)">
+                                                            <ngx-mat-select-search formControlName="medicineFilterCtrl" [placeholderLabel]="'Search'" [noEntriesFoundLabel]="'no records found'"></ngx-mat-select-search>
+                                                            <mat-option *ngFor="let medicine of filteredMedicines | async" [value]="medicine">
+                                                                {{medicine.name}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </th>
+                                                    <th>
+                                                        <mat-select formControlName="dosageCtrl" placeholder="Dosage" #singleSelect style="width: 155px;">
+                                                            <ngx-mat-select-search formControlName="dosageFilterCtrl" [placeholderLabel]="'Search'" [noEntriesFoundLabel]="'no records found'"></ngx-mat-select-search>
+                                                            <mat-option *ngFor="let dosage of filteredDosages | async" [value]="dosage">
+                                                                {{dosage.value}}
+                                                            </mat-option>
+                                                        </mat-select>
+
+                                                    </th>
+                                                    <th>
+                                                        <mat-select formControlName="instructionCtrl" placeholder="Frequncy" #singleSelect style="width: 155px;">
+                                                            <ngx-mat-select-search formControlName="instructionFilterCtrl" [placeholderLabel]="'Search'" [noEntriesFoundLabel]="'no records found'"></ngx-mat-select-search>
+                                                            <mat-option *ngFor="let frequency of filteredInstruction | async" [value]="frequency">
+                                                                {{frequency.frequency}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </th>
+                                                    <th>
+                                                        <mat-form-field style="width:70%;">
+                                                            <input matInput placeholder="" formControlName="daysCtrl" autocomplete="off" />
+                                                        </mat-form-field>
+                                                    </th>
+                                                    <th>
+                                                        <button type="button" mat-mini-fab color="primary" type="button" (click)="addMedicine()"><mat-icon class="addicon">add_circle</mat-icon></button>
+                                                    </th>
+
+                                                </tr>
+
+
+                                                <tr *ngFor="let addedmed of addedMeddata; let i = index ">
+                                                    <!--<td>{{addedmed.datetd | date:'dd/MM/yyyy'}}</td>-->
+                                                    <td>{{addedmed.medicinetd.name}}</td>
+                                                    <td>{{addedmed.dosagetd.value}}</td>
+                                                    <td>{{addedmed.unittd.frequency}}</td>
+                                                    <td>{{addedmed.daystd}}</td>
+                                                    <td>
+                                                        <button mat-icon-button (click)="removeData(i)" color="warn" type="button">
+                                                                <mat-icon >clear</mat-icon>
+                                                        </button>
+                                                    </td>
+
+                                                </tr>
+                                            </table>
+
+
+                                        </div>
+
+
+                                    </div>
+
+                                    <mat-divider [vertical]="true"></mat-divider>
+
+                                    <div fxFlex="35%">
+                                        <h4 class="blockheading">Add Tests
+                                                <!--<div style="width:5%;float: right;margin-top: 4px;">
+                                                        <button mat-icon-button type="button" color="warn" (click)="openInvestigationEntryDialog()" matTooltip="+ Add Test">
+                                                                <mat-icon aria-label="Diagnosis">plus_one</mat-icon>
+                                                        </button>
+                                                </div>-->
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <span (click)="openInvestigationEntryDialog()" matTooltip="+ New Test" color="warn" style="color: #FF2616;font-size: 12px;cursor:pointer;">+ New Test</span>  
+                                        </h4>
+                                        <p style="color:#F00;text-align: right;">{{testReportError}}</p>
+                                        <div class="patient_investigation">
+
+                       
+
+                                            <table style="width:100%;" class="cutomTbl" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <!--<th>Date</th>-->
+                                                    <th>Test</th>
+                                                    <th>Action</th>
+                                                </tr>
+
+                                                <tr>
+                                                    <!--
+                                                    <th style="width: 30%;">
+                                                        <mat-form-field>
+                                                            <input matInput [matDatepicker]="picker2" placeholder="" formControlName="investigationDt">
+                                                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                                            <mat-datepicker #picker2></mat-datepicker>
+                                                        </mat-form-field>
+                                                    </th>
+                                                    -->
+
+                                                    <th style="width: 60%;">
+                                                        <mat-select formControlName="reportsCtrl" placeholder="Select Test" #singleSelect (selectionChange)="clearTestError($event)">
+                                                            <ngx-mat-select-search formControlName="reportsFilterCtrl" [placeholderLabel]="'Search'" [noEntriesFoundLabel]="'no records found'"></ngx-mat-select-search>
+                                                            <mat-option *ngFor="let reports of filteredReports | async" [value]="reports">
+                                                                {{reports.name}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </th>
+
+                                                    <th style="width: 10%;">
+                                                        <button type="button" mat-mini-fab color="primary" (click)="addInvestigation()"><mat-icon class="addicon" >add_circle</mat-icon></button>
+                                                    </th>
+
+                                                </tr>
+
+                                                <tr *ngFor="let addedinv of addedInvestigations;">
+                                                   <!-- <td>{{addedinv.invdate | date:'dd/MM/yyyy' }}</td>-->
+                                                    <td>{{addedinv.reports.name}}</td>
+
+                                                    <td>
+                                                        <button mat-icon-button color="warn" type="button" (click)="removeMedReports(i)"><mat-icon >clear</mat-icon></button>
+                                                    </td>
+
+                                                </tr>
+
+
+
+                                            </table>
+
+                                            
+
+                                        </div>
+
+                                        
+
+                                        <!--
+                                        <h4 class="blockheading">Report Upload</h4>
+                                        <div class="upld_actionbtn">
+                                            <button mat-stroked-button color="primary" style="margin-right:1%;">
+                                                    <mat-icon>attachment</mat-icon> Upload Files 
+                                            </button>
+                                            <button mat-stroked-button color="warn">View Report</button>
+                                        </div>
+                                        -->
+
+                                        <br>
+                                        <mat-form-field class="fullwidthinp">
+                                            <textarea matInput placeholder="Final Summary" formControlName="finalsummryCtrl"></textarea>
+                                        </mat-form-field>
+
+
+
+
+
+                                        <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                                            <div fxFlex="30%">
+                                                <mat-checkbox formControlName="sickCtrl" (change)="enableSickDay($event)" >Sick</mat-checkbox>
+                                            </div>
+                                            <div fxFlex="70%">
+                                                <mat-form-field>
+                                                    <input matInput placeholder="Days" formControlName="sickdaysCtrl" (input)="clearFormValidErr($event)" autocomplete="off"/>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center" style="margin-top:1%;">
+                                            <div fxFlex="30%">
+                                                <mat-checkbox formControlName="approvalCtrl">Accident Approval </mat-checkbox>
+                                            </div>
+                                            <div fxFlex="70%">
+                                              
+
+                                                <mat-checkbox formControlName="admitCtrl" (change)="validateRecomChkBox($event,'ADMIT')" >Admit&nbsp;&nbsp;</mat-checkbox>
+                                                <mat-checkbox formControlName="observCtrl" (change)="validateRecomChkBox($event,'OBSERVATION')" >Observation</mat-checkbox>
+                                            </div>
+                                        </div>
+
+                                        <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                                            <div fxFlex="30%">
+                                                <mat-checkbox formControlName="isReffHospital"  (change)="enableReffHospital($event)">Referral Hospital</mat-checkbox>
+                                            </div>
+                                            <div fxFlex="70%">
+                                                <mat-form-field style="width:100%;" >
+                                                    <mat-select formControlName="reffHospitalCtrl" placeholder="" #singleSelect >
+                                                        <ngx-mat-select-search formControlName="reffHospitalFilterCtrl" [placeholderLabel]="'Search'" [noEntriesFoundLabel]="'no records found'"></ngx-mat-select-search>
+                                                       
+                                                        <mat-option *ngFor="let reports of filteredHospitals | async" [value]="reports">
+                                                            {{reports.name}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                    </mat-form-field>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                              
+                                <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center" style="padding-bottom: 2%;">
+                                    
+                                    <div fxFlex="80%"></div>
+                                    <div fxFlex="20%">
+                                        <p style="color:#F00;text-align: right;padding-right: 10px;">{{validFormErr}}</p>
+                                        <button mat-flat-button color="warn" class="" type="button" (click)="openNewFormConfirmationDialog();">+ New</button>
+                                        <button mat-flat-button color="primary" class="phrmcybtn" type="submit" *ngIf="sendPhrmcyBtnActive" >Save</button>
+                                       
+                                        <button mat-flat-button color="default" class="phrmcybtn" *ngIf="!sendPhrmcyBtnActive" style="vertical-align: middle;padding: 4px 0;" type="button">
+                                            <mat-spinner [diameter]="25" color="primary" ></mat-spinner>
+                                          </button>
+                                    </div>
+                                </div>
+
+                            </form>
+
+
+                    
+                        </mat-tab>
+
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <mat-icon>face</mat-icon>
+                                Pregnancy
+                            </ng-template>
+                            <app-pregnancy [presciptionHealthForm]="presciptionHealthForm"></app-pregnancy>
+                        </mat-tab>
+
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <mat-icon>note_add</mat-icon>
+                                Vaccination
+                            </ng-template>
+                            <app-childvaccination [presciptionHealthForm]="presciptionHealthForm"></app-childvaccination>
+                        </mat-tab>
+                    </mat-tab-group>
+                </section>
+
+
+
+
+
+            </mat-card-content>
+        </mat-card>
+
+    </div>
+    <!--end of search container-->
+</div>
+

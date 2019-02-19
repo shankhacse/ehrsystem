@@ -1,0 +1,381 @@
+<<<<<<< HEAD
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+        <div class="searchandregBlock" fxFlex="60%">
+
+                <mat-card class="patientregcard">
+                        <mat-card-header>
+                            <div mat-card-avatar>
+                                <mat-icon>perm_contact_calendar</mat-icon>
+                            </div>
+                            <mat-card-title class="card_title">OPD Registration</mat-card-title>
+                        </mat-card-header>
+                        
+                         <mat-card-content>
+                            <form class="patientRegFormCls">
+                                    <mat-toolbar> Search  Patients</mat-toolbar>
+                    
+                                <section id="patientRegSearch">
+                                   <mat-form-field class="halfwidthInput">
+                                        <input matInput placeholder="Search Patient ID" aria-label="employee" [matAutocomplete]="auto"
+                                            [formControl]="patientCtrl">
+                                        <mat-autocomplete #auto="matAutocomplete">
+                                            <mat-option *ngFor="let patient of filteredStates | async" [value]="patient.name">
+                                                <span>{{patient.emplcode}}</span>
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                    
+                                    <mat-form-field  class="halfwidthInput">
+                                            <input matInput [matDatepicker]="picker1" placeholder="Registration Date" [formControl]="date">
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                        </mat-form-field>
+                    
+                                    <mat-checkbox (change)="enableAdvanceSearch($event)" >Enable Advance Search</mat-checkbox>
+                    
+                                    <p *ngIf="enableAdvancesearch">
+                                        <mat-form-field appearance="outline" class="cfinput">
+                                            <mat-label>Name</mat-label>
+                                            <input matInput placeholder="">
+                                        </mat-form-field>
+                                      
+                                        <mat-form-field appearance="outline" class="cfinput">
+                                            <mat-label>Mobile No</mat-label>
+                                            <input matInput placeholder="">
+                                        </mat-form-field>
+
+                                        <mat-form-field appearance="outline" class="cfinput">
+                                                <mat-label>Patient ID</mat-label>
+                                                <input matInput placeholder="">
+                                        </mat-form-field>
+                                        <button mat-mini-fab color="primary"> <mat-icon>search</mat-icon> </button>
+                    
+                                    </p>
+                    
+                    
+                                   
+                                </section>
+                                <!--end of patient registration search-->
+                    
+                    
+                                <section id="patientInfo">
+                                        <mat-toolbar> Patient Information</mat-toolbar>
+                                        <div class="margingap"></div>
+                                    <div class="container crow" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                                            <div fxFlex="33%">
+                                               <input type="text" placeholder="Name" class="customforminput"/>
+                                            </div>
+                                            <div fxFlex="33%">
+                                                <input type="text" placeholder="Gender" class="customforminput"/>
+                                            </div>
+                                            <div fxFlex="33%">
+                                                <input type="text" placeholder="DOB" class="customforminput"/>
+                                            </div>
+                                    </div>
+
+                                    <div class="container crow" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                                        <div fxFlex="33%">
+                                           <input type="text" placeholder="Blood Group" class="customforminput"/>
+                                        </div>
+                                        <div fxFlex="33%">
+                                            <input type="text" placeholder="Patient Type" class="customforminput"/>
+                                        </div>
+                                        <div fxFlex="33%">
+                                            <input type="text" placeholder="Relation" class="customforminput"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="container crow" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                                        <div fxFlex="33%">
+                                           <input type="text" placeholder="Line Number" class="customforminput"/>
+                                        </div>
+                                        <div fxFlex="33%">
+                                            <input type="text" placeholder="Division Number" class="customforminput"/>
+                                        </div>
+                                        <div fxFlex="33%">
+                                            <input type="text" placeholder="Challan Number" class="customforminput"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="container crow" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                                        <div fxFlex="33%">
+                                           <input type="text" placeholder="Estate" class="customforminput"/>
+                                        </div>
+                                        <div fxFlex="33%">
+                                           
+                                         </div>
+                                         <div fxFlex="33%">
+                                           
+                                         </div>
+                                        
+                                    </div>
+                                </section>
+                                <mat-card-actions>
+                                        <button mat-raised-button color="primary" >Register</button>
+                                </mat-card-actions>
+                            </form>
+                    
+                    
+                            
+                        </mat-card-content>
+                    </mat-card>
+
+        </div> <!-- end of searchandregBlock-->
+        <div class="listBlock" fxFlex="36%">
+
+                <mat-card class="biometricregcard">
+                        <mat-card-header>
+                            <div mat-card-avatar>
+                                <mat-icon>perm_contact_calendar</mat-icon>
+                            </div>
+                            <mat-card-title class="card_title">Biometric Registration</mat-card-title>
+                        </mat-card-header>
+                    
+                      <mat-card-content>
+                            <img src="assets/fingerprint_scan.png" alt="image" class="biometric_img">
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <button mat-raised-button color="primary" >Scan & Register</button>
+                         </mat-card-actions>
+                        
+                    </mat-card>
+
+
+
+
+
+
+
+
+                    <mat-card class="biometricregcard">
+                        <mat-card-header>
+                            <div mat-card-avatar>
+                                <mat-icon>perm_contact_calendar</mat-icon>
+                            </div>
+                            <mat-card-title class="card_title">Today's Registration</mat-card-title>
+                        </mat-card-header>
+                    
+                      <mat-card-content>
+                            <section id="patientRegLists">
+                                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                    
+                                            <!--- Note that these columns can be defined in any order.
+                                                  The actual rendered columns are set as a property on the row definition" -->
+                                          
+                                            <!-- Position Column -->
+                                            <ng-container matColumnDef="position">
+                                              <th mat-header-cell *matHeaderCellDef> No. </th>
+                                              <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                                            </ng-container>
+                                          
+                                            <!-- Name Column -->
+                                            <ng-container matColumnDef="name">
+                                              <th mat-header-cell *matHeaderCellDef> Name </th>
+                                              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                                            </ng-container>
+                                          
+                                            <!-- Weight Column -->
+                                            <ng-container matColumnDef="weight">
+                                              <th mat-header-cell *matHeaderCellDef> Mobile </th>
+                                              <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                                            </ng-container>
+                                          
+                                            <!-- Symbol Column -->
+                                            <ng-container matColumnDef="symbol">
+                                              <th mat-header-cell *matHeaderCellDef> Type </th>
+                                              <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                                            </ng-container>
+                                          
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                          </table>
+                                          
+                            </section>
+                        </mat-card-content>
+                        
+                    </mat-card>
+=======
+<mat-card class="patientregcard">
+    <mat-card-header>
+        <div mat-card-avatar>
+            <mat-icon>perm_contact_calendar</mat-icon>
+        </div>
+        <mat-card-title>OPD Registration</mat-card-title>
+      
+    </mat-card-header>
+
+   
+
+    <mat-card-content>
+        <form class="patientRegFormCls">
+                <mat-toolbar> Serach  Patients</mat-toolbar>
+
+            <section id="patientRegSearch">
+               
+
+                <mat-form-field class="halfwidthInput">
+                    <input matInput placeholder="Search Patient ID" aria-label="employee" [matAutocomplete]="auto"
+                        [formControl]="patientCtrl">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let patient of patientLst | async" [value]="patient.patient_id">
+                            <span>{{patient.employee_id}}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                <mat-form-field  class="halfwidthInput">
+                        <input matInput [matDatepicker]="picker1" placeholder="Registration Date" [formControl]="date">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+
+                <mat-checkbox>Enable Advance Search</mat-checkbox>
+
+                <p class="">
+                    <mat-form-field appearance="outline" class="cfinput">
+                        <mat-label>Name</mat-label>
+                        <input matInput placeholder="">
+                    </mat-form-field>
+                  
+                    <mat-form-field appearance="outline" class="cfinput">
+                        <mat-label>Employee ID</mat-label>
+                        <input matInput placeholder="">
+                    </mat-form-field>
+
+                
+
+                    <button mat-mini-fab color="primary"> <mat-icon>search</mat-icon> </button>
+
+                </p>
+
+
+               
+            </section>
+            <!--end of patient registration search-->
+
+
+            <section id="patientInfo">
+                    <mat-toolbar> Patient Information</mat-toolbar>
+                <p class="">
+                    <mat-form-field appearance="outline" class="cfinput">
+                        <mat-label>Name</mat-label>
+                        <input matInput placeholder="">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="cfinput">
+                        <mat-label>Sex</mat-label>
+                        <input matInput placeholder="">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="cfinput">
+                        <mat-label>DOB</mat-label>
+                        <input matInput placeholder="">
+                    </mat-form-field>
+                </p>
+
+
+                <p class="crow">
+                    <mat-form-field appearance="outline" class="cfinput">
+                        <mat-label>Blood Group</mat-label>
+                        <input matInput placeholder="">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="cfinput">
+                        <mat-label>Patient Type</mat-label>
+                        <input matInput placeholder="">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="cfinput">
+                        <mat-label>Relation</mat-label>
+                        <input matInput placeholder="">
+                    </mat-form-field>
+                </p>
+                <p class="crow">
+                    <mat-form-field appearance="outline" class="cfinput">
+                        <mat-label>Line Number</mat-label>
+                        <input matInput placeholder="">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="cfinput">
+                        <mat-label>Division No.</mat-label>
+                        <input matInput placeholder="">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="cfinput">
+                        <mat-label>Challan No.</mat-label>
+                        <input matInput placeholder="">
+                    </mat-form-field>
+                </p>
+                <p class="crow">
+                    <mat-form-field appearance="outline" class="cfinput">
+                        <mat-label>Estate</mat-label>
+                        <input matInput placeholder="">
+                    </mat-form-field>
+
+                </p>
+            </section>
+            <mat-card-actions>
+                    <button mat-raised-button color="primary">Register</button>
+            </mat-card-actions>
+        </form>
+
+
+        <!--Listing-->
+
+        <section id="patientRegLists">
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                        <!--- Note that these columns can be defined in any order.
+                              The actual rendered columns are set as a property on the row definition" -->
+                      
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="position">
+                          <th mat-header-cell *matHeaderCellDef> No. </th>
+                          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                        </ng-container>
+                      
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name">
+                          <th mat-header-cell *matHeaderCellDef> Name </th>
+                          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+                      
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="weight">
+                          <th mat-header-cell *matHeaderCellDef> Weight </th>
+                          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                        </ng-container>
+                      
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="symbol">
+                          <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                        </ng-container>
+                      
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      </table>
+                      
+        </section>
+
+
+    </mat-card-content>
+
+ 
+
+</mat-card>
+
+<mat-card class="biometricregcard">
+    <mat-card-header>
+        <div mat-card-avatar>
+            <mat-icon>perm_contact_calendar</mat-icon>
+        </div>
+        <mat-card-title>Bio Materic</mat-card-title>
+        <mat-card-subtitle>Destasd</mat-card-subtitle>
+    </mat-card-header>
+>>>>>>> 6a5e72163f70a678fe16ce2b1001c520ae4b31fc
+
+        </div>
+</div>
+
+
+
+    
+   

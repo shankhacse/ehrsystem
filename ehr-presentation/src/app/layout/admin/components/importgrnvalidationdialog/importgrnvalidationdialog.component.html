@@ -1,0 +1,46 @@
+<div style="width:100%;float: right;text-align:right;padding-bottom: 12px;">
+    <button mat-mini-fab color="warn"   (click)="redirectToComp()" type="button" ><i class="material-icons">
+          clear
+          </i></button>
+ 
+</div>
+<div class="wrapper"> 
+<table class="table table-striped mat-elevation-z8"  >
+  <thead>
+    <tr style="background-color: #373e77; color: #f3f1ed;">
+      <th width="5%">Sl</th>
+      <th width="15%">Date</th>
+      <th width="20%">Supplier</th>
+      <th width="20%">Medicine</th>
+      <th width="15%">Batch</th>
+      <th width="15%">Expiry Date</th>
+      <th width="5%" aline="center">Quantity</th>
+     
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let excelrow of grnList; let i = index">
+      <td align='center'>{{i+1}}</td>
+      <td>{{excelrow.date.value}}</td>
+      <td>{{excelrow.supplier.value}}</td>
+      <td matTooltip="{{excelrow.medicine.cell}}" [ngClass]="{'errorcell' : excelrow.medicine.error}">{{excelrow.medicine.value}}</td>
+      <td>{{excelrow.batch.value}}</td>
+      <td>{{excelrow.expiry.value}}</td>
+      <td>{{excelrow.quantity.value}}</td>
+       
+   
+    
+    </tr>
+   
+  </tbody>
+</table>
+
+</div>
+<p style="color:#F00;text-align: left;padding-left: 20px;">{{validFormErr}}</p>
+<section id="SubmitBlock">
+    <div *ngIf="this.isButtonVisible" (click)="this.isButtonVisible = false" class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+        <button  mat-flat-button color="primary" class="phrmcybtn" type="button" (click)="saveData()"> Save</button>
+    </div>
+  
+  
+  </section>

@@ -1,0 +1,29 @@
+table {
+  font-size: 15px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  
+  }
+  
+  table, th, td {
+    border: 1px solid #499f9c;
+    padding: 1px;
+  }
+td{
+  padding: 1px;
+}
+  .errorcell{
+    border:2px solid #dc6b7e !important;
+  }
+
+  .errorfree{
+    border:2px solid #5daf7f !important;
+  }
+
+  #SubmitBlock {
+    padding: 1%;
+    margin-top: 20px;
+}
+
+
+

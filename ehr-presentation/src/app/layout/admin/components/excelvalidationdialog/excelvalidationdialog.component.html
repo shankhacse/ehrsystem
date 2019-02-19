@@ -1,0 +1,75 @@
+
+<mat-toolbar>
+
+    <div style="width:100%;float: right;text-align:right;">
+     
+      
+      <button mat-mini-fab color="warn"   (click)="redirectToComp()" type="button" ><i class="material-icons">
+          clear
+          </i></button>
+     
+    </div>
+</mat-toolbar>
+<table class="table table-striped mat-elevation-z8" style="font-size: 11px;
+letter-spacing: 1px;" >
+  <thead>
+    <tr style="background-color: #5361c6; color: #f3f1ed;">
+      <th>Sl No.</th>
+      <th>Garden Code</th>
+      <th>Employee Code</th>
+      <th>Employee Name</th>
+      <th>Type</th>
+      <th>DR Type</th>
+      <th>Sex</th>
+      <th>Phone No</th>
+      <th>Mobile No</th>
+      <th>Challan No</th>
+      <th>Current Status</th>
+      <th>Date of Birth</th>
+      <th>Division No</th> 
+      <th>Line No</th>
+      <th>House No</th>
+      
+      
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let excelrow of employeeList; let i = index">
+      <td align='center'>{{i+1}}</td>
+      <td matTooltip="{{excelrow.garden_code.cell}}" [ngClass]="{'errorcell' : excelrow.garden_code.error}">{{excelrow.garden_code.value}}</td>
+      <td>{{excelrow.employee_code.value}}</td>
+      <td>{{excelrow.employee_name.value}}</td>
+      <td>{{excelrow.type.value}}</td>
+      <td>{{excelrow.dr_type.value}}</td>
+      <td>{{excelrow.sex.value}}</td>
+      <td>{{excelrow.phno.value}}</td>
+      <td>{{excelrow.mobilephno.value}}</td>
+      <td>{{excelrow.challan.value}}</td>
+      <td>{{excelrow.current_status.value}}</td>
+      <td>{{excelrow.dob.value}}</td>
+      <td>{{excelrow.division.value}}</td>
+      <td>{{excelrow.line.value}}</td>
+      <td>{{excelrow.houseno.value}}</td>
+            
+    
+    </tr>
+   
+  </tbody>
+</table>
+
+<section id="SubmitBlock">
+  <div *ngIf="this.isButtonVisible" (click)="this.isButtonVisible = false" class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+      <button  mat-flat-button color="primary" class="phrmcybtn" type="button" (click)="saveData()"> Save</button>
+  </div>
+
+
+</section>
+
+<section id="SubmitBlock" *ngIf="this.msg" (click)="this.msg = false">
+
+   
+
+
+
+</section>

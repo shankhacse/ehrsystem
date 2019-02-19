@@ -1,0 +1,1 @@
+ALTER TABLE `ehrdata`.`opd_prescription` ADD COLUMN `sick_leave_apprv` ENUM('N','Y') DEFAULT 'N' NULL AFTER `no_of_days_sick`; 

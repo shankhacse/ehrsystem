@@ -1,0 +1,12 @@
+.mat-icon{
+    width:auto !important;
+}
+.dialogicon{
+    font-size: 5rem;
+}
+.msg{
+    text-align: center;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    margin-top: -15px;
+}

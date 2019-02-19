@@ -1,0 +1,302 @@
+<!--
+<div id="sickLeaveAprovalPage" class="wraper-container">
+        <div class="search-container">
+
+        <mat-card style="padding:0;">
+           
+            <mat-card-content >
+                <div class="container"
+            fxLayout
+            fxLayout.xs="column"
+            fxLayoutAlign="center"
+            fxLayoutGap="10px"
+            fxLayoutGap.xs="0">
+        <div class="item item-1" fxFlex="100%">
+                
+                <mat-toolbar>
+                   
+                        <span>Sick leave - Approval </span>
+
+                   
+                        <span class="example-fill-remaining-space"></span>
+                    
+                        <span>
+                                <button mat-raised-button color="primary" class="customeBtn" (click)=goTodaysRegistration()>
+                                        Back to Registration
+                                </button>
+                        </span>
+
+
+                </mat-toolbar>
+                
+
+            
+
+
+
+
+
+            <div class="mat-elevation-z8" style="width: 96%;" >
+
+                    <div class="container"
+                    fxLayout
+                    fxLayout.xs="column"
+                    fxLayoutAlign="center"
+                    fxLayoutGap="10px"
+                    fxLayoutGap.xs="0">
+                    <div class="item item-1" fxFlex="2%"></div>   
+                <div class="item item-1" fxFlex="48%">
+                   
+                </div>
+                <div class="item item-1" fxFlex="15%">
+                
+                    <p>
+                        
+                        <button mat-flat-button class="custm-btn"
+                                matBadge="{{sickLeaveApprovalCount}}" matBadgePosition="before" matBadgeColor="accent">
+                                Approved
+                        </button>
+                    </p>  
+                    
+                </div>
+
+                <div class="item item-1" fxFlex="15%">
+                    <p>
+                        
+                        <button mat-flat-button class="custm-btn-blue"
+                        matBadge="{{totalTodaysRegCount}}" matBadgePosition="before" matBadgeColor="accent">
+                        Total appeal
+                        </button>
+                    </p>
+                </div>
+                <div class="item item-2" fxFlex="20%" fxFlexOrder="3">
+                        <mat-form-field>
+                                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                        </mat-form-field>
+                </div>
+                
+            </div>
+
+
+
+                    
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 reglisttable" *ngIf="recordsFound">
+            
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell *matCellDef="let row">
+                        <a mat-raised-button color="accent" (click)="sickApprove(row.opd_prescription_id,row.sick_leave_apprv)" *ngIf="row.is_approve=='N'" class="custm-btn-blue">
+                            <mat-icon>arrow_forward</mat-icon>
+                            Approve
+                        </a>
+                       
+
+                        <a mat-raised-button color="accent" (click)="sickApprove(row.opd_prescription_id,row.sick_leave_apprv)" *ngIf="row.is_approve=='Y'" class="custm-btn">
+                            <mat-icon>done</mat-icon>
+                            Approved
+                        </a>
+
+
+
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="patient_code">
+                    <th mat-header-cell *matHeaderCellDef> Patient ID </th>
+                    <td mat-cell *matCellDef="let row"> {{row.patient_code}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="patient_name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let row"> {{row.patient_name}} </td>
+                </ng-container>
+
+              
+
+                <ng-container matColumnDef="gender">
+                    <th mat-header-cell *matHeaderCellDef> Gender </th>
+                    <td mat-cell *matCellDef="let row"> {{row.gender}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="division_number">
+                    <th mat-header-cell *matHeaderCellDef> Division No </th>
+                    <td mat-cell *matCellDef="let row"> {{row.division_number}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="challan_number">
+                    <th mat-header-cell *matHeaderCellDef> Challan No</th>
+                    <td mat-cell *matCellDef="let row"> {{row.challan_number}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="line_number">
+                    <th mat-header-cell *matHeaderCellDef> Line No </th>
+                    <td mat-cell *matCellDef="let row"> {{row.line_number}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="mobile_one">
+                    <th mat-header-cell *matHeaderCellDef> Mobile </th>
+                    <td mat-cell *matCellDef="let row"> {{row.mobile_one}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="no_of_days_sick">
+                    <th mat-header-cell *matHeaderCellDef> Sick Leave </th>
+                    <td mat-cell *matCellDef="let row"> {{row.no_of_days_sick}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            
+            <mat-paginator [pageSizeOptions]="[100, 150, 200]" showFirstLastButtons></mat-paginator>
+            </div>
+
+        </div>
+        
+        </div>
+            </mat-card-content>
+        </mat-card>
+        </div>
+    </div>
+
+-->
+
+
+
+
+
+
+    <!---------*********************************************************************************************************************************-->
+
+    <div id="sickLeavePage" class="wraper-container">
+        <div class="search-container">
+            
+            <mat-toolbar style="background: transparent;"> 
+                    <h5 class="card_title pagetitle" > Sick Leave Approval</h5>
+                    <div style="width:100%;text-align:right;" class="navBtn">
+                        <button mat-raised-button color="primary" class="toplink" (click)="backToList()" >Back To List</button>
+                    </div>
+            </mat-toolbar>
+
+    <section >
+  
+             
+                  <div  style="width: 96%;margin:0 auto;" class="mat-elevation-z8">
+  
+                          <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" >
+                                  <div fxFlex="80%">
+                                      <!-- 
+                                        <mat-form-field>
+                                                <input  matInput [matDatepicker]="picker" placeholder="" [formControl]="date">
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                        -->
+                                        <div class="btn_approval" >
+                                            <button mat-raised-button color="primary" class="custmbtn" matBadge="{{sickLeaveApprovalCount}}" matBadgePosition="after" matBadgeColor="primary" >
+                                                Approved 
+                                            </button>
+                                            &nbsp;&nbsp;
+
+                                            <button mat-raised-button color="accent" class="custmbtn" matBadge="{{totalTodaysRegCount}}" matBadgePosition="after" matBadgeColor="accent" >
+                                                Total
+                                            </button>
+                                        </div>
+
+                                  </div>
+                                  <div fxFlex="20%">
+                                      <mat-form-field class="fullwidthinp">
+                                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                                      </mat-form-field>
+                                  </div>
+                          </div>
+
+                          
+
+
+                          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 reglisttable" *ngIf="recordsFound" style="width:100%;">
+            
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        <button mat-raised-button color="accent" (click)="sickApprove(row.unique_id,row.is_approved)" *ngIf="row.is_approved=='N'" class="custm-btn-blue">
+                                            Approve  
+                                            <mat-icon>arrow_forward</mat-icon>
+                                        </button>
+                                        <!-- <mat-spinner [diameter]="25"  *ngIf="!isButtonActive"></mat-spinner> -->
+                
+                                        <button mat-raised-button style="background:#03943f;color:#FFF;" (click)="sickApprove(row.unique_id,row.is_approved)" *ngIf="row.is_approved=='Y'" >
+                                            Approved
+                                            <mat-icon>done</mat-icon>
+                                        </button>
+                
+                
+                
+                                    </td>
+                                </ng-container>
+                
+                                <ng-container matColumnDef="patient_code">
+                                    <th mat-header-cell *matHeaderCellDef> Patient ID </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.patient_code}} </td>
+                                </ng-container>
+                
+                                <ng-container matColumnDef="patient_name">
+                                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.patient_name}} </td>
+                                </ng-container>
+                
+                                <!-- <ng-container matColumnDef="birthdate">
+                                    <th mat-header-cell *matHeaderCellDef> DOB </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.birthdate}} </td>
+                                </ng-container> -->
+                
+                                <ng-container matColumnDef="gender">
+                                    <th mat-header-cell *matHeaderCellDef> Gender </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.gender}} </td>
+                                </ng-container>
+                
+                                <ng-container matColumnDef="division_number">
+                                    <th mat-header-cell *matHeaderCellDef> Division No </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.division_number}} </td>
+                                </ng-container>
+                
+                                <ng-container matColumnDef="challan_number">
+                                    <th mat-header-cell *matHeaderCellDef> Challan No</th>
+                                    <td mat-cell *matCellDef="let row"> {{row.challan_number}} </td>
+                                </ng-container>
+                
+                                <ng-container matColumnDef="line_number">
+                                    <th mat-header-cell *matHeaderCellDef> Line No </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.line_number}} </td>
+                                </ng-container>
+                
+                                <ng-container matColumnDef="mobile_one">
+                                    <th mat-header-cell *matHeaderCellDef> Mobile </th>
+                                    <td mat-cell *matCellDef="let row"> {{row.mobile_one}} </td>
+                                </ng-container>
+                
+                      
+                
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+             
+                  
+                  
+                  
+                      <mat-paginator [pageSizeOptions]="[50, 100, 200]" showFirstLastButtons></mat-paginator>
+                  </div>
+  
+  </section>
+      </div>
+      </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

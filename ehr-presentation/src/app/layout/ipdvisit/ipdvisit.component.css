@@ -1,0 +1,130 @@
+#ipdVisitPage .navBtn button{
+    border-radius: 50px;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.blockContent {
+    width: 96%;
+    margin: 0 auto;
+  
+}
+.blockContent h5{
+    letter-spacing: 1px;
+}
+.ipdFormContainer {
+    box-shadow: 0px 7px 22px 2px #c0c0c0;
+    margin-bottom: 2%;
+}
+
+.ipdregBlock {
+  /*  background: #f7fafc;
+    border-radius: 3px;
+    border: 1px dashed #9c9a9a;
+    padding: 0.5% 0;
+*/
+
+    background: #fff;
+    border-radius: 3px;
+    border: 0px dashed #9c9a9a;
+     padding: 0% 0;
+   /* box-shadow: 0px 7px 22px 2px #c0c0c0;*/
+
+}
+
+#ipdVisitToolbar h5 {
+    font-family: Verdana;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+.mat-input-element:disabled {
+    /* color: rgba(0,0,0,.38); */
+    color: #181818;
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+.mat-form-field {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    font-size: 14px;
+    letter-spacing: 1px;
+    
+}
+.mat-form-field{
+    font-size:0.8rem;
+}
+
+.mat-form-field-infix {
+    width: auto !important;
+}
+.mat-form-field-appearance-legacy .mat-form-field-label {
+
+    color: #474747;
+    opacity: 1 !important;
+  /*  font-size: 16px !important; */
+
+}
+
+.cutomTbl tr th {
+    /* padding: 1px 3px;
+     text-align: left;
+     border-bottom: 1px solid #dfe0e0;
+     font-weight: 500;
+     background: transparent;*/
+     
+     padding: 3px 3px;
+     text-align: left;
+     border-bottom: 1px solid #d8d8d8;
+     font-weight: 500;
+     background: #f0f0f0;
+     height: 26px;
+     padding-right: 9px;
+     padding-left: 5px;
+     font-size: 0.8rem;
+ }
+ 
+ .cutomTbl tr td {
+     padding: 0px 3px;
+     text-align: left;
+     border-bottom: 1px solid #dfe0e0;
+     color: black;
+     font-size: 0.8rem;
+ }
+
+ #medicinTestBlock {
+    margin-top: 0%;
+    padding: 0 1%;
+    background: #fff;
+ }
+
+ #genInstructBlock { 
+   /* margin-top:3%;*/
+  
+    padding: 0 1%;
+    padding-top:3%;
+    background: #fff;
+ }
+ #ipdSubmitBlock {
+     padding: 1%;
+ }
+
+ .mat-form-field-label {
+    -webkit-transform: translateY(-1.28125em) scale(.90) perspective(100px) translateZ(.001px) !important;
+    transform: translateY(-1.28125em) scale(.90) perspective(100px) translateZ(.001px) !important;
+    -ms-transform: translateY(-1.28125em) scale(.90) !important;
+}
+.dtlerr {
+    color:#F00;
+    font-size: 13px;
+    
+}
+textarea {
+    resize: none;
+} 
+.form_block_title {
+    margin-left: 20px;
+}
