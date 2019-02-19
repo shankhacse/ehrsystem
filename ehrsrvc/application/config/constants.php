@@ -91,6 +91,7 @@ define('HTTP_AUTH_FAIL',400);
 define('HTTP_INSERT',500);
 define('HTTP_UPDATE',501);
 define('HTTP_LOGIN',100);
+define('HTTP_DUPLICATE',222);
 
 
 define('MEDICINE_TYPE',
