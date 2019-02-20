@@ -392,9 +392,13 @@ export class PatientadddialogComponent implements OnInit , OnDestroy {
   
     console.log(this.patientAddForm.get("dobCtrl").value);
     
-    var dob=new Date().toJSON(this.patientAddForm.get("dobCtrl").value);
-   // var dob=this.patientAddForm.get("dobCtrl");
-    console.log(dob);
+    
+    var dateofbirth = new Date(this.patientAddForm.get("dobCtrl").value);
+   // var test= dateofbirth.toLocaleString();
+   // console.log('test'+test)
+    var dob=dateofbirth.toJSON(dateofbirth);
+  //  var dob=this.patientAddForm.get("dobCtrl");
+    console.log("dob:"+dob);
     if(this.patientAddForm.invalid) {
       console.log("Validation Required");
     }
@@ -402,7 +406,7 @@ export class PatientadddialogComponent implements OnInit , OnDestroy {
 
       if(this.validateOnRegType()){
      // this.patientAddForm.controls['estateCtrl'].enable(); 
-      this.registerButtonActive = false;
+     // this.registerButtonActive = false;
       this.loaderActive = true;
       let response;
       this.patientService.addNewPatient(this.patientAddForm.value,dob).then(data => {
@@ -519,7 +523,14 @@ if(this.patientAddForm.get("dobCtrl").value==""){
   return validForm;
 }
 
+numberOnly(event): boolean {
+  const charCode = (event.which) ? event.which : event.keyCode;
+  if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+    return false;
+  }
+  return true;
 
+}
   
 
 }// end of class

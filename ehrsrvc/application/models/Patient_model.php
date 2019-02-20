@@ -385,9 +385,18 @@ class Patient_model extends CI_Model
                 $relationID = $patientdata->relationCtrl;
             }
 
+            $patient_code=NULL;
+            if($request->dob!='' &&  $employeeid!=''){
+               // echo date("d-m-Y", strtotime($request->dob));
+               // echo "T".$employeeid;
+
+                $patient_code=$employeeid."/".date("d-m-Y", strtotime($request->dob));
+            }
+
+           
 
             $patient_data = [
-                "patients.patient_code" => NULL,
+                "patients.patient_code" => $patient_code,
                 "patients.patient_name" => trim(htmlspecialchars($pname)),
                 "patients.patient_type_id" => $ptypeid,
                 "patients.line_number" => trim(htmlspecialchars($lineno)),
