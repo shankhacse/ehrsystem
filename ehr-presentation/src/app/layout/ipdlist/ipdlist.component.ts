@@ -37,21 +37,27 @@ export class IpdlistComponent implements OnInit {
   displayedColumns: string[] = [
   'action',
   'admission_dt',
-  'patient_code',
+  'associate_permworker_code',
+  'patient_gender',
+  'patient_type',
   'patient_name',
-  'mobile_one',
+  'patient_age',
   'bed_no',
-  'room_no'
+  'room_no',
+  'provision_diagnosis'
 ];
 
 dischargeDisplayedColumns: string[] = [
   'action',
   'admission_dt',
-  'patient_code',
+  'associate_permworker_code',
+  'patient_gender',
+  'patient_type',
   'patient_name',
-  'mobile_one',
+  'patient_age',
   'bed_no',
-  'room_no'
+  'room_no',
+  'provision_diagnosis'
 ];
 
 

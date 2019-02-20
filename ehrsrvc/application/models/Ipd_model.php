@@ -18,10 +18,18 @@ class Ipd_model extends CI_Model{
 			$todaydt = date("Y-m-d H:i:s");
 			
 			$formMasterData = $request->fdata;
-			$selectedPatient = $formMasterData->choosePatientCtrl;
+			//$selectedPatient = $formMasterData->choosePatientCtrl;
+
+			
 			
 			$roomNo = $formMasterData->roomNoCtrl;
 			$bedNo = $formMasterData->bedNoCtrl;
+			$gender=$formMasterData->genderCtrl;
+			$age=$formMasterData->ageCtrl;
+			$patient_name=$formMasterData->patinetNameCtrl;
+			$blood_grp=$formMasterData->bldgrpCtrl;
+			$permworker_id=$formMasterData->patientAdvSearchCtrl;
+			$patientType=$formMasterData->patientTypeCtrl;
 			$general_exm = (trim(htmlspecialchars($formMasterData->generalExaminationCtrl)));
 			$systemic_exm = (trim(htmlspecialchars($formMasterData->systemicExaminationCtrl)));
 			$provision_exm = (trim(htmlspecialchars($formMasterData->provisionalExaminationCtrl)));
@@ -35,19 +43,20 @@ class Ipd_model extends CI_Model{
             *  update patients table for blood group
             *  Blood Group Info
 			*/
-		
+		// commenter on 20.02.2019 by shankha
+			/*
 			if(isset($formMasterData->bldgrpCtrl)) {
 
 					$bloodGrp = $formMasterData->bldgrpCtrl;
 					$updData = ["patients.blood_group" => $bloodGrp];
                     $this->db->where('patients.patient_id', $selectedPatient->patient_id);
 					$this->db->update('patients', $updData);
-			}
+			} */
 			
 			$ipd_master_data = [
 				"hospital_id" => $hospital_id,
 				"admission_date" => date('Y-m-d H:i:s',strtotime($formMasterData->admissionDtCtrl)),
-				"patient_id" => $selectedPatient->patient_id,
+				"patient_id" => NULL, // change to null on 20.02.2019
 				"doctor_id" => $doctor_id,
 				"room_no" => $roomNo,
 				"bed_no" => $bedNo,
@@ -60,13 +69,16 @@ class Ipd_model extends CI_Model{
 				"systemic_examination" => $systemic_exm,
 				"provision_diagnosis" => $provision_exm,
 				"final_digonosis" => $final_dignosis,
-				"patient_name" => NULL,
-				"patient_age" => NULL,
-				"patient_gender" => NULL,
-				"patient_blood_grp" => NULL,
-				"associate_permworker_id" => NULL,
+				"patient_name" => $patient_name,
+				"patient_age" => $age,
+				"patient_gender" => $gender,
+				"patient_blood_grp" => $blood_grp,
+				"associate_permworker_id" => $permworker_id,
+				"patient_type" => $patientType,
 				"servertag" => getServerTag()
 			];
+			
+			/*
 			echo "From HHTP";
 			echo "<br>";
 			pre($request);
@@ -79,6 +91,7 @@ class Ipd_model extends CI_Model{
 			pre($ipd_master_data);
 			
 			exit;
+			*/
 			
 			$this->db->insert('ipd_patient_master', $ipd_master_data); 
 			$ipd_inserted_id = $this->db->insert_id();
@@ -108,7 +121,7 @@ class Ipd_model extends CI_Model{
 			
 			
 			$healthProfileArry = [
-				"patient_id" => $selectedPatient->patient_id,
+				"patient_id" =>NUll, // set to null on 20.02.2019
 				"date" => date('Y-m-d',strtotime($formMasterData->admissionDtCtrl)),
 				"prescription_addmission_id" => $ipd_uniq_id,
 				"opd_ipd_flag" => "I",
@@ -502,11 +515,16 @@ class Ipd_model extends CI_Model{
 		]; 
 		
 		$query = $this->db->select("
-							patient_type.patient_type,
+						  /*patient_type.patient_type,
 							patients.patient_name,
-							patients.mobile_one , 
-							patients.patient_code,
+							patients.mobile_one , */
+							patients.patient_code as associate_permworker_code,
 							patients.patient_id,
+							ipd_patient_master.patient_name,
+							  ipd_patient_master.patient_type,
+							  ipd_patient_master.patient_age,
+							  ipd_patient_master.patient_gender,
+							  ipd_patient_master.provision_diagnosis,
 							/* ipd_patient_master.admission_id AS ipdID, */
 							ipd_patient_master.unique_id AS ipdID,
 							ipd_patient_master.room_no,
@@ -514,7 +532,8 @@ class Ipd_model extends CI_Model{
 							DATE_FORMAT(ipd_patient_master.admission_date,'%d-%m-%Y') AS admission_dt
 							",FALSE)
                           ->from("ipd_patient_master") 
-						  ->join("patients" , "patients.patient_id = ipd_patient_master.patient_id" , "INNER")
+						 /* ->join("patients" , "patients.patient_id = ipd_patient_master.patient_id" , "LEFT")*/
+						  ->join("patients" , "patients.patient_id = ipd_patient_master.associate_permworker_id" , "LEFT")
 						  ->join("patient_type" , "patient_type.patient_type_id = patients.patient_type_id" , "LEFT")
 						  ->where($where)
 						  ->get();
@@ -553,11 +572,17 @@ class Ipd_model extends CI_Model{
 	    ];
 	    
 	    $query = $this->db->select("
-							patient_type.patient_type,
+							
+							/*patient_type.patient_type,
 							patients.patient_name,
-							patients.mobile_one ,
-							patients.patient_code,
+							patients.mobile_one , */
+							patients.patient_code as associate_permworker_code,
 							patients.patient_id,
+							  ipd_patient_master.patient_name,
+							  ipd_patient_master.patient_type,
+							  ipd_patient_master.patient_age,
+							  ipd_patient_master.patient_gender,
+							  ipd_patient_master.provision_diagnosis,
 						/*	ipd_patient_master.admission_id AS ipdID, */
 							ipd_patient_master.unique_id AS ipdID,
 							ipd_patient_master.room_no,
@@ -565,7 +590,8 @@ class Ipd_model extends CI_Model{
 							DATE_FORMAT(ipd_patient_master.admission_date,'%d-%m-%Y') AS admission_dt
 							",FALSE)
 							->from("ipd_patient_master")
-							->join("patients" , "patients.patient_id = ipd_patient_master.patient_id" , "INNER")
+							/* ->join("patients" , "patients.patient_id = ipd_patient_master.patient_id" , "LEFT")*/
+							->join("patients" , "patients.patient_id = ipd_patient_master.associate_permworker_id" , "LEFT")
 							->join("patient_type" , "patient_type.patient_type_id = patients.patient_type_id" , "LEFT")
 							->where($where)
 							->where("ipd_patient_master.discharge_date IS NOT NULL")

@@ -112,20 +112,14 @@
             
                         <div fxFlex="30%">
                             <mat-form-field class="fullwidthinp">
-                                    <input matInput placeholder="* Age" formControlName="ageCtrl" autocomplete="off">
+                                    <input matInput placeholder="* Age" formControlName="ageCtrl" autocomplete="off" (keypress)="numberOnly($event)">
                             </mat-form-field>
                         </div>
                     </div>
 
 
 
-                    <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
-                            <div fxFlex="93%">
-                                    <mat-form-field class="fullwidthinp">
-                                        <input matInput placeholder="* Patient Name" formControlName="patinetNameCtrl" autocomplete="off" >
-                                    </mat-form-field>
-                            </div>
-                    </div>
+                
 
 
 
@@ -153,7 +147,7 @@
                                             <input matInput placeholder="* Permament Worker" aria-label="Patient" [matAutocomplete]="auto" formControlName="patientAdvSearchCtrl"  (keyup)="getPatientListBySearch($event)">
                                        
                               
-                                             <mat-autocomplete #auto="matAutocomplete" 
+                                             <mat-autocomplete #auto="matAutocomplete"  (optionSelected)='getPatientByType()'
                                              [displayWith]="displayFn.bind(this)">
                                                 <mat-option *ngFor="let patient of filteredPatients | async" [value]="patient.id"  >
                                                   <!-- <img class="example-option-img" aria-hidden [src]="state.flag" height="25"> -->
@@ -178,6 +172,27 @@
                                 -->
                              
                             </div>
+
+                            <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+
+                               <div fxFlex="30%">
+                                  
+                                            <mat-form-field class="fullwidthinp">
+                                                <mat-select placeholder="* Patient Type" formControlName="patientTypeCtrl" (selectionChange)="getPatientByType()">
+                                                    <mat-option  value="DEPENDENT">Dependent</mat-option>
+                                                    <mat-option  value="NONWORKER">Non-Worker</mat-option>
+                                                    <mat-option  value="SELF">Self</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        
+                                </div>
+                                <div fxFlex="62%">
+                                        <mat-form-field class="fullwidthinp">
+                                            <input matInput placeholder="* Patient Name" formControlName="patinetNameCtrl" autocomplete="off" >
+                                        </mat-form-field>
+                                </div>
+                             
+                        </div>
                     
 
 
@@ -446,7 +461,7 @@
                     </div>
                 </div>
             </section>
-
+            <p style="color: #C34E4E;text-align: left;padding-left: 59px;">{{validFormErr}}</p><br>
             <!--Button Block-->
             <section id="ipdSubmitBlock">
                 <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">

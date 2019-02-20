@@ -94,6 +94,7 @@ export class IpdregistrationComponent implements OnInit {
   medicineError:string = "";
   testReportError:string = "";
   validFormErr:string = "";
+  patientSelf:string = "";
 
   filteredPatients: Observable<PatientInfo[]>;
   patientinfo:PatientInfo[] = [];
@@ -109,11 +110,12 @@ export class IpdregistrationComponent implements OnInit {
       relationCtrl: new FormControl(''),  
       symptomsMultiCtrl: new FormControl(''),
       choosePatientCtrl: new FormControl(''), */ 
-      genderCtrl : new FormControl(''),
-      ageCtrl : new FormControl(''),
+      genderCtrl : new FormControl('', Validators.required),
+      patientTypeCtrl : new FormControl('', Validators.required),
+      ageCtrl : new FormControl('', Validators.required),
       bldgrpCtrl: new FormControl(''),
-      patientAdvSearchCtrl : new FormControl(''),
-      patinetNameCtrl: new FormControl(''),
+      patientAdvSearchCtrl : new FormControl('', Validators.required),
+      patinetNameCtrl: new FormControl('', Validators.required),
       bpSystolicCtrl: new FormControl(''),
       bpDiastolicCtrl: new FormControl(''),
       haemoglobinCtrl: new FormControl(''),
@@ -533,6 +535,7 @@ export class IpdregistrationComponent implements OnInit {
 
       //this.sendPhrmcyBtnActive = false;
      
+      if(this.validateOnRegType()){
         let response;
         this.ipdService.insertIntoIPD(formdata,this.addedMeddata,this.addedInvestigations).then(data => {
           response = data;
@@ -550,6 +553,9 @@ export class IpdregistrationComponent implements OnInit {
         error => {
             console.log("There is some error on submitting...");
         });
+
+
+      }//end of validation
   
 
   }
@@ -778,4 +784,115 @@ export class IpdregistrationComponent implements OnInit {
   }
 
 
+
+  getPatientByType() {
+    // console.log(event.value.code);
+  
+   let patientType = this.ipdRegistrationForm.get('patientTypeCtrl').value;;
+  
+   console.log(patientType);
+   let patientid = this.ipdRegistrationForm.get('patientAdvSearchCtrl').value;
+
+  
+   if(patientType=='SELF' && patientid!=''){
+    this.getPatientDetails(patientid);
+   
+
+   }else{
+    this.ipdRegistrationForm.patchValue({
+      patinetNameCtrl:''
+     
+    });
+
+   }
+ 
+
+
+
 }
+
+
+getPatientDetails(pcode){
+  let dataval;
+  let bldgrouplist;
+  this.patientService.getPatientInfoByPatientID(pcode).then(data => {
+    dataval = data;
+    console.log(dataval.result.patient_name);
+    this.patientSelf=dataval.result.patient_name;
+    this.ipdRegistrationForm.patchValue({
+      patinetNameCtrl:this.patientSelf
+     
+    });
+    
+  },
+  error => {
+   console.log("There is some error in Patient Details...");
+ });
+}
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  
+  }
+
+
+
+/* validation on Registration Type */
+
+validateOnRegType(){
+  this.validFormErr = "";
+  let validForm = false;
+
+ 
+  
+  if(this.ipdRegistrationForm.get("genderCtrl").value==""){
+        this.validFormErr = "Error : Gender is required";
+        return validForm = false;
+      
+  }
+  if(this.ipdRegistrationForm.get("ageCtrl").value==""){
+    this.validFormErr = "Error : Age is required";
+    return validForm = false;
+  
+  }
+
+  if(this.ipdRegistrationForm.get("patinetNameCtrl").value==""){
+    this.validFormErr = "Error : Patient Name is required";
+    return validForm = false;
+  
+  }
+
+  if(this.ipdRegistrationForm.get("patientTypeCtrl").value==""){
+    this.validFormErr = "Error : Patient Type is required";
+    return validForm = false;
+  
+  }
+
+  if(this.ipdRegistrationForm.get("patientAdvSearchCtrl").value==""){
+    this.validFormErr = "Error : Permament Worker is required";
+    return validForm = false;
+  
+  }
+
+
+
+
+
+
+
+  validForm = true;
+ 
+  return validForm;
+}
+
+
+onChangePatientType(deviceValue) {
+  console.log(deviceValue);
+}
+
+
+}// end of class

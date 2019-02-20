@@ -529,4 +529,4 @@ $config['proxy_ips'] = '';
 */
 
 $config['enc_secrete_key'] = '7lglzCn9kVcGfckWf6jZBJuLGAPwPm3rnti5nxhfDy0=';
-$config['server_tag'] ='S';
+$config['server_tag'] ='L';
