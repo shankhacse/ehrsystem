@@ -131,9 +131,9 @@ export class PatientService {
         });
     }
 
-    addNewPatient(formValue){
+    addNewPatient(formValue,dob){
     
-      let myData = JSON.stringify({values:formValue});
+      let myData = JSON.stringify({values:formValue,dob:dob});
        return new Promise(resolve => {
           this.http.post(this.global.addnewPatient_URL,myData).subscribe(data => {
             resolve(data);

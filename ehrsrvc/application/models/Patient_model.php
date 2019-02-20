@@ -322,6 +322,8 @@ class Patient_model extends CI_Model
             */
 
             $patientdata = $request->values;
+
+            //pre($request->dob);
             $patienttypCtrl = $patientdata->patienttypeCtrl;
 
             $pname = $patientdata->pnameCtrl;
@@ -392,7 +394,8 @@ class Patient_model extends CI_Model
                 "patients.division_number" => trim(htmlspecialchars($divisionno)),
                 "patients.challan_number" => trim(htmlspecialchars($challanno)),
                 "patients.estate" => $estate,
-                "patients.age" => trim(htmlspecialchars($patientdata->dobCtrl)), 
+                "patients.dob" => trim(htmlspecialchars($request->dob)), 
+                "patients.age" => trim(htmlspecialchars($patientdata->ageCtrl)), 
                 "patients.gender" => trim(htmlspecialchars($gender)),
                 "patients.employee_id" => $employeeid,
                 "patients.adhar" => trim(htmlspecialchars($aadhar)),

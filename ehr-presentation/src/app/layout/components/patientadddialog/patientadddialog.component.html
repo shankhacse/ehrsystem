@@ -8,6 +8,19 @@
   <form [formGroup]="patientAddForm"  novalidate (ngSubmit)="onSubmit()">
   <mat-dialog-content>
       <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+          <div fxFlex="60%">
+              <span style="font-size: 13px;" style.color = "{{issubmitted && patientAddForm.get('regType').hasError('required') ? '#f42b2b' : '#7e7ea4'}}" >* Reg. Type&nbsp;&nbsp;</span>
+              <mat-radio-group  formControlName="regType" required >
+                  <mat-radio-button value="CONSULTATION" > General Consultation&nbsp;&nbsp; </mat-radio-button>
+                  <mat-radio-button value="PREGNANCY" > Pregnancy&nbsp;&nbsp; </mat-radio-button>
+                  <mat-radio-button value="VACCINATION" > Vaccination </mat-radio-button>
+              </mat-radio-group>
+  
+          </div>
+          <div fxFlex="35%">
+          </div>
+      </div> <br>
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
 
           <div fxFlex="26%">
             <!--
@@ -19,15 +32,15 @@
                 <input matInput placeholder="* Patient Name" formControlName="pnameCtrl" autocomplete="off" />
               </mat-form-field>
             
-              <!--
+          
               <mat-form-field class="fullwidthinp">
                     <input matInput [matDatepicker]="picker1" placeholder="* Date of Birth"  formControlName="dobCtrl" autocomplete="off" [max]="maxDate" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
               </mat-form-field>
-              -->
+            
               <mat-form-field class="fullwidthinp">
-                <input matInput  placeholder="* Age" formControlName="dobCtrl" autocomplete="off" maxlength="2">
+                <input matInput  placeholder="* Age" formControlName="ageCtrl" autocomplete="off" maxlength="2">
               </mat-form-field>
 
               <span style="font-size: 13px;" style.color = "{{issubmitted && patientAddForm.get('gender').hasError('required') ? '#f42b2b' : '#7e7ea4'}}" >* Gender</span>
@@ -233,7 +246,7 @@
     
 
   </mat-dialog-content>
-  
+  <p style="color: #C34E4E;text-align: left;padding-left: 59px;">{{validFormErr}}</p>
   <mat-dialog-actions >
     <button mat-raised-button color="accent" (click)="onNoClick()" type="button">Cancel</button>
     <button class="mat-raised-button mat-primary" type="submit" *ngIf="registerButtonActive">Save</button>

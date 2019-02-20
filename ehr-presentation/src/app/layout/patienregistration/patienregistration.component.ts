@@ -60,6 +60,7 @@ export class PatienregistrationComponent implements OnInit ,OnDestroy {
   
 
 
+
  
   //patientAdvSearchCtrl = new FormControl();
   filteredPatients: Observable<PatientInfo[]>;
@@ -108,7 +109,7 @@ export class PatienregistrationComponent implements OnInit ,OnDestroy {
 
   todaysRegTblColumn: string[] = [
     'action',
-    //'regtype',
+    'regtype',
     'patient_code',
    // 'patient_name',
    // 'birthdate',
@@ -155,10 +156,12 @@ export class PatienregistrationComponent implements OnInit ,OnDestroy {
   patientLst: string[];
   selected = null;
   @ViewChild('singleSelect') singleSelect: MatSelect; 
+ 
+ 
 
   //isAadharDisable:boolean = false;
   
-  
+  validFormErr:string = "";
 
   constructor(private zone:NgZone,private patientService:PatientService,private _global:GlobalconstantService,public dialog: MatDialog,private registerService: RegistrationService ) {
     
@@ -193,6 +196,7 @@ export class PatienregistrationComponent implements OnInit ,OnDestroy {
 
 
      this.IDsearchForm = new FormGroup({
+      regTypeCtrl:new FormControl(''),
       patientID: new FormControl(''),
       pcodeFilterCtrl: new FormControl(''),
       patientAadhar: new FormControl(''),
@@ -208,16 +212,16 @@ export class PatienregistrationComponent implements OnInit ,OnDestroy {
       patientNameFilterCtrl: new FormControl('')
       });
 
-      /*
+
     this.patientTblRegForm = new FormGroup({
       regpcodeCtrl : new FormControl(''),
       registrationTypeCtrl : new FormControl('')
     });
-    */
-
+ 
+/*
     this.patientTblRegForm = new FormGroup({
       regpcodeCtrl : new FormControl('')
-    });
+    });*/
 
 
 
@@ -431,7 +435,7 @@ displayFn(id) {
       this.todaysregistrationList.push(regdata);
       this.todaysRegTblColumn = [
                           'action',
-                        //  'regtype',
+                          'regtype',
                           'patient_code',
                         /*  'patient_name',
                           'birthdate',
@@ -471,7 +475,7 @@ searchPatient(){
     searchType = 'BASIC';
     
   }
-
+  if(this.validateOnRegType()){
   this.patientService.checkIsRegisteredToday(searchData,searchType).then(data => {
     response = data;
     isExist = response.isexist ;
@@ -537,10 +541,13 @@ searchPatient(){
           });
      
           this.patientTblRegForm.patchValue({
-            regpcodeCtrl: pdata.patient_id
+            regpcodeCtrl: pdata.patient_id,
+            registrationTypeCtrl: this.IDsearchForm.get("regTypeCtrl").value
           });
 
           this.enableregister = true;
+          this.registerPtc();
+   
        });
         
        } 
@@ -559,8 +566,9 @@ searchPatient(){
     error => {
      console.log('There is some error on submitting...');
     });
-   
-  
+
+    
+  }// end of validation
  
  }
 
@@ -720,8 +728,10 @@ searchPatient(){
   
   
         this.patientTblRegForm.patchValue({
-          regpcodeCtrl: result.patientcode
+          regpcodeCtrl: result.patientcode,
+          registrationTypeCtrl:result.regType
         });
+        this.registerPtc();
       }
 
     });
@@ -982,6 +992,31 @@ searchPatient(){
     }
   }
 
+
+
+
+
+/* validation on Registration Type */
+
+validateOnRegType(){
+  this.validFormErr = "";
+  let validForm = false;
+  
+  if(this.IDsearchForm.get("regTypeCtrl").value==""){
+        this.validFormErr = "Error : Registration Type is required";
+        return validForm = false;
+      
+  }
+
+
+
+  validForm = true;
+ 
+  return validForm;
+}
+
+
+
   
 
-}
+}// end of class

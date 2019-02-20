@@ -79,9 +79,9 @@ class Registration_model extends CI_Model{
 			$formvalue = $request->values;
 			//$pcode = $formvalue->regpcodeCtrl;
 			$patientid = $formvalue->regpcodeCtrl;
-			// $regType = $formvalue->registrationTypeCtrl;
+			$regType = $formvalue->registrationTypeCtrl;
 
-			
+		
 				
 			// $patientid = $this->patient->getPatientByCode($pcode)->patient_id;
 			
@@ -89,15 +89,15 @@ class Registration_model extends CI_Model{
 					"hospital_id" => $hospital_id,
 					"date_of_registration" => $regdate,
 					"patient_id" => (trim(htmlspecialchars($patientid))),
-				//	"registration_type" => trim(htmlspecialchars($regType)),
-					"registration_type" => NULL ,
+					"registration_type" => trim(htmlspecialchars($regType)),
 					"served_flag" => "N",
 					"servertag" => getServerTag()
 				];
 			
 			$this->db->insert('registration', $reg_data);
 			$inserted_id = $this->db->insert_id();
-			
+	
+
 
 			// Update Table 
 			$where = [

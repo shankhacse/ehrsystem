@@ -30,6 +30,21 @@
                         <form [formGroup]="IDsearchForm" >
                           <div class="ID-search">
 
+                              <!-- Start -->
+                              <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" >
+                                
+                                    <div fxFlex="60%">
+                                            <span style="font-size: 13px;" >* Reg. Type&nbsp;&nbsp;</span>
+                                            <mat-radio-group  formControlName="regTypeCtrl" required >
+                                                <mat-radio-button value="CONSULTATION" > General Consultation&nbsp;&nbsp; </mat-radio-button>
+                                                <mat-radio-button value="PREGNANCY" > Pregnancy&nbsp;&nbsp; </mat-radio-button>
+                                                <mat-radio-button value="VACCINATION" > Vaccination </mat-radio-button>
+                                            </mat-radio-group>
+                                
+                                        </div>
+                            </div><br>
+                            <!-- End -->
+
                             <!-- Start -->
                             <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" >
                                 
@@ -164,7 +179,7 @@
                             <mat-spinner [diameter]="40" *ngIf="searchLoader" class="center-obj"></mat-spinner>
                         </div>
 
-
+                        <p style="color: #C34E4E;text-align: left;padding-left: 59px;">{{validFormErr}}</p>
                         <div id="err_block">
                             <p class="error_cls" *ngIf="isRegAlreadyDone_Err" style="margin:10px auto;margin-bottom:0px">This Patient is already registered for today.
                                 <button mat-icon-button (click)="removeError()" >
@@ -259,8 +274,8 @@
                             </th>
                         </ng-container>
 
-                        <!--
-                        <ng-container matColumnDef="reg-type" >
+                
+                       <!-- <ng-container matColumnDef="reg-type" >
                             <th mat-header-cell *matHeaderCellDef>
                                 <mat-form-field >
                                     <mat-select placeholder="Select Reg. Type" formControlName="registrationTypeCtrl" (selectionChange)="regTypeChange($event)">
@@ -270,13 +285,14 @@
                                     </mat-select>
                                   </mat-form-field>
                             </th>
-                        </ng-container>
-                        -->
+                        </ng-container>  -->
+                        
                        
                         <ng-container matColumnDef="reg-patientid" >
                             <th mat-header-cell *matHeaderCellDef> {{tblPatientName}} <br>{{tblPatientID}}
                                
                                     <input type="hidden" formControlName="regpcodeCtrl">
+                                    <input type="hidden" formControlName="registrationTypeCtrl">
                                 
                             </th>
                         </ng-container>

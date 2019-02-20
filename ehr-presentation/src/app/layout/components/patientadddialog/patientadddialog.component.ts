@@ -56,6 +56,10 @@ export class PatientadddialogComponent implements OnInit , OnDestroy {
   loaderActive = false;
   issubmitted = false;
   maxDate:Date = new Date();
+  dobCtrl:string = "";
+  
+
+  validFormErr:string = "";
 
   date = new FormControl(new Date());
   serializedDate = new FormControl((new Date()).toISOString());
@@ -67,9 +71,11 @@ export class PatientadddialogComponent implements OnInit , OnDestroy {
 
     this.patientAddForm = new FormGroup({
      /* pcodeCtrl: new FormControl(''), */
+      regType: new FormControl('' , Validators.required ),
       pnameCtrl: new FormControl('' , Validators.required ),
-    /*  dobCtrl: new FormControl('' , Validators.required), */
-      dobCtrl: new FormControl('', Validators.required),
+      ageCtrl: new FormControl(''), 
+      dobCtrl: new FormControl(''),
+     /* dobCtrl: new FormControl('', Validators.required),*/
       gender : new FormControl('' , Validators.required),
       mobileCtrl: new FormControl(''),
       alternatemblCtrl: new FormControl(''),
@@ -383,15 +389,23 @@ export class PatientadddialogComponent implements OnInit , OnDestroy {
     console.log("Form Value "+this.patientAddForm.value);
     console.log(this.patientAddForm.value);
     console.log(this.patientAddForm.invalid);
+  
+    console.log(this.patientAddForm.get("dobCtrl").value);
+    
+    var dob=new Date().toJSON(this.patientAddForm.get("dobCtrl").value);
+   // var dob=this.patientAddForm.get("dobCtrl");
+    console.log(dob);
     if(this.patientAddForm.invalid) {
       console.log("Validation Required");
     }
     else{
+
+      if(this.validateOnRegType()){
      // this.patientAddForm.controls['estateCtrl'].enable(); 
       this.registerButtonActive = false;
       this.loaderActive = true;
       let response;
-      this.patientService.addNewPatient(this.patientAddForm.value).then(data => {
+      this.patientService.addNewPatient(this.patientAddForm.value,dob).then(data => {
         response = data;
         if(response.msg_status==200){
           let data = {
@@ -404,7 +418,8 @@ export class PatientadddialogComponent implements OnInit , OnDestroy {
            "challan" : this.patientAddForm.get("challannoCtrl").value,
            "line" : this.patientAddForm.get("linenoCtrl").value,
            "mobile" : this.patientAddForm.get("mobileCtrl").value,
-           "aadhar" : this.patientAddForm.get("aadharCtrl").value
+           "aadhar" : this.patientAddForm.get("aadharCtrl").value,
+           "regType" : this.patientAddForm.get("regType").value
           }
           this.dialogRef.close(data);
   
@@ -417,6 +432,9 @@ export class PatientadddialogComponent implements OnInit , OnDestroy {
          error => {
            console.log("There is some error on submitting...");
        });
+
+      }//end of validation
+
     }
 
 }
@@ -434,6 +452,74 @@ openConfirmationDialog() {
 }
 
 
+/* validation on Registration Type */
+
+validateOnRegType(){
+  this.validFormErr = "";
+  let validForm = false;
   
+  if(this.patientAddForm.get("regType").value==""){
+        this.validFormErr = "Error : Registration Type is required";
+        return validForm = false;
+      
+  }
+
+  if(this.patientAddForm.get("regType").value=="PREGNANCY"){
+   
+        if(this.patientAddForm.get("patientAdvSearchCtrl").value==""){
+          this.validFormErr = "Error : Associate Employee is required";
+          return validForm = false;
+        
+        }
+
+        if(this.patientAddForm.get("relationCtrl").value==""){
+          this.validFormErr = "Error : Relation is required";
+          return validForm = false;
+        
+        }
+
+ }
+
+ if(this.patientAddForm.get("regType").value=="VACCINATION"){
+
+      if(this.patientAddForm.get("patientAdvSearchCtrl").value==""){
+        this.validFormErr = "Error : Associate Employee is required";
+        return validForm = false;
+      
+      }
+
+      if(this.patientAddForm.get("relationCtrl").value==""){
+        this.validFormErr = "Error : Relation is required";
+        return validForm = false;
+      
+      }
+
+      if(this.patientAddForm.get("dobCtrl").value==""){
+        this.validFormErr = "Error : Date of Birth is required";
+        return validForm = false;
+      
+      }
 
 }
+
+if(this.patientAddForm.get("dobCtrl").value==""){
+  
+    if(this.patientAddForm.get("ageCtrl").value==""){
+      this.validFormErr = "Error : Age or Date of Birth is required";
+      return validForm = false;
+    
+    }
+
+}
+
+
+
+  validForm = true;
+ 
+  return validForm;
+}
+
+
+  
+
+}// end of class
