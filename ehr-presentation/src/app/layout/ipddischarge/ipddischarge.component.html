@@ -22,6 +22,9 @@
                     <h5 class="form_block_title">Patient Info</h5>
 
                     <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                            <input type="hidden" formControlName="ipdRowIDCtrl" autocomplete="off"  >
+                            <input type="hidden" formControlName="patientID" autocomplete="off"  >
+                            <input type="hidden" formControlName="patientHelathProfileID" autocomplete="off"  >
                         
                         <div fxFlex="30%">
                             <mat-form-field class="fullwidthinp">
@@ -30,13 +33,22 @@
                                 <mat-datepicker #picker1></mat-datepicker>
                             </mat-form-field>
                         </div>
-            
                         <div fxFlex="30%">
+                                <mat-form-field class="fullwidthinp" >
+                                    <input matInput placeholder="Room No." formControlName="roomNoCtrl" autocomplete="off" >
+                                </mat-form-field>
+                            </div>
+                
+                            <div fxFlex="30%">
+                                <mat-form-field class="fullwidthinp">
+                                    <input matInput placeholder="Bed No." formControlName="bedNoCtrl" autocomplete="off" >
+                                </mat-form-field>
+                            </div>
+            
+                        <!-- <div fxFlex="30%">
                             <mat-form-field class="fullwidthinp" >
                                 <input matInput placeholder="Patine Name" formControlName="patientNameCtrl" autocomplete="off"  >
-                                <input type="hidden" formControlName="ipdRowIDCtrl" autocomplete="off"  >
-                                <input type="hidden" formControlName="patientID" autocomplete="off"  >
-                                <input type="hidden" formControlName="patientHelathProfileID" autocomplete="off"  >
+                                
                             </mat-form-field>
                         </div>
             
@@ -44,18 +56,26 @@
                             <mat-form-field class="fullwidthinp">
                                 <input matInput placeholder="DOB" formControlName="dobCtrl" autocomplete="off"  >
                             </mat-form-field>
-                        </div>
+                        </div> -->
                     </div>
 
 
 
                     <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
-                        <div fxFlex="30%">
+                        <!-- <div fxFlex="30%">
                             <mat-form-field class="fullwidthinp">
                                 <input matInput placeholder="Employee Code" formControlName="emplCodeCtrl" autocomplete="off" >
                             </mat-form-field>
+                        </div> -->
+                        <div fxFlex="30%">
+                                <mat-form-field class="fullwidthinp">
+                                    <mat-select placeholder="* Gender" formControlName="genderCtrl">
+                                        <mat-option  value="M">Male</mat-option>
+                                        <mat-option  value="F">Female</mat-option>
+                                        <mat-option  value="O">Other</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
                         </div>
-            
                         <div fxFlex="30%">
                             <mat-form-field class="fullwidthinp">
                                 <mat-select placeholder="Blood Group" formControlName="bldgrpCtrl" >
@@ -67,10 +87,48 @@
                         </div>
             
                         <div fxFlex="30%">
-                            
-                        </div>
+                                <mat-form-field class="fullwidthinp">
+                                        <input matInput placeholder="* Age" formControlName="ageCtrl" autocomplete="off">
+                                </mat-form-field>
+                            </div>
                     </div>
-                    
+                    <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                               
+    
+                            <div fxFlex="93%">
+                        
+
+                                <mat-form-field class="fullwidthinp" >
+                                        <input matInput placeholder="* Permament Worker" aria-label="Patient" [matAutocomplete]="auto" formControlName="patientAdvSearchCtrl">
+                                
+                        
+                                    
+                                        
+                                </mat-form-field>
+
+
+                            </div>                  
+                     </div>
+                     <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+
+                            <div fxFlex="30%">
+                               
+                                         <mat-form-field class="fullwidthinp">
+                                             <mat-select placeholder="* Patient Type" formControlName="patientTypeCtrl" >
+                                                 <mat-option  value="DEPENDENT">Dependent</mat-option>
+                                                 <mat-option  value="NONWORKER">Non-Worker</mat-option>
+                                                 <mat-option  value="SELF">Self</mat-option>
+                                             </mat-select>
+                                         </mat-form-field>
+                                     
+                             </div>
+                             <div fxFlex="62%">
+                                     <mat-form-field class="fullwidthinp">
+                                         <input matInput placeholder="* Patient Name" formControlName="patinetNameCtrl" autocomplete="off" >
+                                     </mat-form-field>
+                             </div>
+                          
+                     </div>
 
 
                 </div>
@@ -80,15 +138,14 @@
                     <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
                         <div fxFlex="30%">
                             <mat-form-field class="fullwidthinp">
-                                <input matInput placeholder="BP" formControlName="bpCtrl" autocomplete="off">
+                                <input matInput placeholder="BP(S)" formControlName="bpCtrl" autocomplete="off">
                             </mat-form-field>
                         </div>
-
                         <div fxFlex="30%">
-                            <mat-form-field class="fullwidthinp">
-                                <input matInput placeholder="Haemoglobin" formControlName="haemoglobinCtrl" autocomplete="off">
-                            </mat-form-field>
-                        </div>
+                                <mat-form-field class="fullwidthinp">
+                                    <input matInput placeholder="BP(D)" formControlName="bpDiastolicCtrl" autocomplete="off">
+                                </mat-form-field>
+                          </div>
 
                         <div fxFlex="30%">
                             <mat-form-field class="fullwidthinp">
@@ -105,6 +162,22 @@
                         </div>
 
                         <div fxFlex="30%">
+                                <mat-form-field class="fullwidthinp">
+                                    <input matInput placeholder="Blood Sugar(R)" formControlName="bldsugarRCtrl"  autocomplete="off">
+                                </mat-form-field>
+                            </div>
+
+                        <div fxFlex="30%">
+                                    <mat-form-field class="fullwidthinp">
+                                        <input matInput placeholder="Haemoglobin" formControlName="haemoglobinCtrl" autocomplete="off">
+                                    </mat-form-field>
+                         </div>
+                    </div>
+
+                    <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+
+
+                        <div fxFlex="30%">
                             <mat-form-field class="fullwidthinp">
                                 <input matInput placeholder="Jaundice" formControlName="jaundiceCtrl"  autocomplete="off">
                             </mat-form-field>
@@ -115,27 +188,36 @@
                                 <input matInput placeholder="Temprature" formControlName="tempCtrl"  autocomplete="off">
                             </mat-form-field>
                         </div>
-                    </div>
-
-                    <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
                         <div fxFlex="30%">
                             <mat-form-field class="fullwidthinp">
                                 <input matInput placeholder="Height (Inch.)" formControlName="heightCtrl"  autocomplete="off">
                             </mat-form-field>
                         </div>
 
-                        <div fxFlex="30%">
-                            <mat-form-field class="fullwidthinp">
-                                <input matInput placeholder="Weight (In Kgs.)" formControlName="weightCtrl" autocomplete="off" >
-                            </mat-form-field>
-                        </div>
-
-                        <div fxFlex="30%">
-                            <mat-form-field class="fullwidthinp">
-                                <input matInput placeholder="Odema" formControlName="odemaCtrl"  autocomplete="off">
-                            </mat-form-field>
-                        </div>
+                      
                     </div>
+
+                    <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+
+
+                          	
+						   <div fxFlex="30%">
+                                <mat-form-field class="fullwidthinp">
+                                    <input matInput placeholder="Weight (In Kgs.)" formControlName="weightCtrl" autocomplete="off" >
+                                </mat-form-field>
+                            </div>
+    
+                            <div fxFlex="30%">
+                                <mat-form-field class="fullwidthinp">
+                                    <input matInput placeholder="Odema" formControlName="odemaCtrl"  autocomplete="off">
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex="30%">
+                             
+                            </div>
+    
+                          
+                        </div>
 
                 </div>
             </div>

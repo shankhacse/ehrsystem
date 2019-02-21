@@ -100,7 +100,7 @@
 
     <table width="100%" border="0" class="smallFont" style="border-bottom:0px solid #000;">
         <tr>
-            <td align="center" style="text-decoration:underline;padding:3px;">Discharge Certificate</td>
+            <td align="center" style="text-decoration:underline;padding:3px;font-size:18px;">Discharge Certificate</td>
         </tr>
     </table>
 
@@ -112,6 +112,7 @@
 				<!--<br><span style="font-family: sans-serif; font-size:9px; font-weight:normal;">11/A ABC XYZ</span>-->
 			</td>
             <td width="30%" align="right"><span style="font-family: 'Open Sans',helvetica,arial,sans-serif; font-size:9px; ">Print Date : <?php echo date("d/m/Y");?></span></td>
+			
         </tr>
 	</table>
 
@@ -121,7 +122,7 @@
 	
 	<table width="100%" class="noborder" border="0" align="" class="smallFont">
 		<tr>
-			<td width="20%"><span class="boldstyle">Doctor :</span> <?php echo $doctorname; ?></td>
+			<td width="40%"><span class="boldstyle">Doctor :</span> <?php echo $doctorname; ?></td>
 			<td align="right" class="boldstyle"><i><?php echo $prescData['patienthealthProfileData']->prescno; ?></i></td>
 		</tr>
 		
@@ -129,11 +130,21 @@
 
 	<div style="border:0px solid #ececec;clear:both;"></div>
 
-	<table width="100%" class="noborder" border="0" align="" class="smallFont">
+	<table width="100%" class="noborder" border="0" align="" class="smallFont" border="2">
 		<tr>
-			<td width="20%" class="boldstyle"><?php echo $prescData['patienthealthProfileData']->patient_name; ?> (<?php echo $prescData['patienthealthProfileData']->patient_code; ?>)</td>
+			<td width="20%" class="boldstyle">Patient:<?php echo $prescData['patienthealthProfileData']->patient_name; ?> <?php //echo $prescData['patienthealthProfileData']->patient_code; ?></td>
+			<td width="30%" align="right"><span style="font-family: 'Open Sans',helvetica,arial,sans-serif; font-size:9px; ">Discharge Date :<?php echo date("d/m/Y", strtotime($prescData['patienthealthProfileData']->discharge_date)); ?></span></td>
 			
 		</tr>
+
+		<tr>
+			<td width="20%" class="boldstyle">Patient Type:<?php echo $prescData['patienthealthProfileData']->patient_type; ?> </td>
+		</tr>
+		<tr>
+		<td width="20%" class="boldstyle">Permament Worker:<?php echo $prescData['patienthealthProfileData']->associate_permworker_name; ?>(<?php echo $prescData['patienthealthProfileData']->parmenant_worker_code; ?>) </td>
+		
+		</tr>
+		
         <!--
 		<tr>
 			<td width="20%">Male (29 Yrs.)</td>

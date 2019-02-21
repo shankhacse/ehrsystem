@@ -35,8 +35,17 @@ class Ipd_model extends CI_Model{
 			$provision_exm = (trim(htmlspecialchars($formMasterData->provisionalExaminationCtrl)));
 			$final_dignosis = (trim(htmlspecialchars($formMasterData->finalDiagnosisCtrl)));
 
-			
+			 // added on 20.02.2019
+			if($patientType=='SELF'){
+				$patient_id=$permworker_id;
 
+			}else{
+				$patient_id=NULL;
+			}
+
+			if($blood_grp==''){
+				$blood_grp=NULL;
+			}
 			
 
 			/**
@@ -56,7 +65,7 @@ class Ipd_model extends CI_Model{
 			$ipd_master_data = [
 				"hospital_id" => $hospital_id,
 				"admission_date" => date('Y-m-d H:i:s',strtotime($formMasterData->admissionDtCtrl)),
-				"patient_id" => NULL, // change to null on 20.02.2019
+				"patient_id" => $patient_id,
 				"doctor_id" => $doctor_id,
 				"room_no" => $roomNo,
 				"bed_no" => $bedNo,
@@ -121,7 +130,7 @@ class Ipd_model extends CI_Model{
 			
 			
 			$healthProfileArry = [
-				"patient_id" =>NUll, // set to null on 20.02.2019
+				"patient_id" =>$patient_id, 
 				"date" => date('Y-m-d',strtotime($formMasterData->admissionDtCtrl)),
 				"prescription_addmission_id" => $ipd_uniq_id,
 				"opd_ipd_flag" => "I",
@@ -189,7 +198,8 @@ class Ipd_model extends CI_Model{
 			
 			$temp = trim($formMasterData->tempCtrl);
 			$anemia = trim($formMasterData->haemoglobinCtrl);
-			$bp = trim($formMasterData->bpCtrl);
+			$bp = trim($formMasterData->bpCtrl);//systolic bp
+			$bp_diastolic = trim($formMasterData->bpDiastolicCtrl); //diastolic bp
 			$jaundice = trim($formMasterData->jaundiceCtrl);
 			$odema = trim($formMasterData->odemaCtrl);
 			$height = trim($formMasterData->heightCtrl);
@@ -197,22 +207,36 @@ class Ipd_model extends CI_Model{
 			$blood_sugar_f = trim($formMasterData->bldsugarFCtrl);
 			$blood_sugar_pp = trim($formMasterData->bldsugarPPCtrl);
 			$doctor_comment =  (trim(htmlspecialchars($formMasterData->doctorCommentCtrl)));
+			$blood_sugar_random = trim($formMasterData->bldsugarRCtrl);
 			
 			$ipd_row_id =  trim($formMasterData->ipdRowIDCtrl); 
 			$patient_id = trim($formMasterData->patientID); 
 
+			// added on 21.02.2019
 			
+			
+
+			if(isset($formMasterData->bldgrpCtrl)) {
+				$bloodGrp = $formMasterData->bldgrpCtrl;
+				$updData = ["ipd_patient_master.patient_blood_grp" => $bloodGrp];
+				$this->db->where('ipd_patient_master.unique_id', $ipd_row_id);
+				$this->db->update('ipd_patient_master', $updData);
+			} 
+
+
+		
 			/**
             *  update patients table for blood group
             *  Blood Group Info
 			*/
-		
+			// commented on 21.02.2019
+		/*
 			if(isset($formMasterData->bldgrpCtrl)) {
 				$bloodGrp = $formMasterData->bldgrpCtrl;
 				$updData = ["patients.blood_group" => $bloodGrp];
 				$this->db->where('patients.patient_id', $patient_id);
 				$this->db->update('patients', $updData);
-			}
+			} */
 
 			
 			$healthProfileArry = [
@@ -224,12 +248,14 @@ class Ipd_model extends CI_Model{
 				"temp" => $temp,
 				"anemia" => $anemia, // haemoglobin 
 				"bp" => $bp,
+				"bp_diastolic" => $bp_diastolic,
 				"jaundice" => $jaundice,
 				"odema" => $odema,
 				"height" => $height,
 				"weight" => $weight,
 				"blood_sugar_f" => $blood_sugar_f,
 				"blood_sugar_pp" => $blood_sugar_pp,
+				"blood_sugar_random" => $blood_sugar_random,
 				"comment" => $doctor_comment,
 				"servertag" => getServerTag(),
 				"hospital_id" => $hospital_id
@@ -285,13 +311,15 @@ class Ipd_model extends CI_Model{
 	        
 	        $temp = trim($formMasterData->tempCtrl);
 	        $anemia = trim($formMasterData->haemoglobinCtrl);
-	        $bp = trim($formMasterData->bpCtrl);
+			$bp = trim($formMasterData->bpCtrl);
+			$bp_diastolic = trim($formMasterData->bpDiastolicCtrl); //diastolic bp
 	        $jaundice = trim($formMasterData->jaundiceCtrl);
 	        $odema = trim($formMasterData->odemaCtrl);
 	        $height = trim($formMasterData->heightCtrl);
 	        $weight = trim($formMasterData->weightCtrl);
 	        $blood_sugar_f = trim($formMasterData->bldsugarFCtrl);
-	        $blood_sugar_pp = trim($formMasterData->bldsugarPPCtrl);
+			$blood_sugar_pp = trim($formMasterData->bldsugarPPCtrl);
+			$blood_sugar_random = trim($formMasterData->bldsugarRCtrl);
 	       
 	        
 	        $ipd_row_id =  trim($formMasterData->ipdRowIDCtrl);
@@ -307,19 +335,27 @@ class Ipd_model extends CI_Model{
 	        $finalDiagnos = trim(htmlspecialchars($formMasterData->finalCommentCtrl));
 	        
 			$referal_hospital_id = $formMasterData->reffHospitalCtrl;
+
+
+			if(isset($formMasterData->bldgrpCtrl)) {
+				$bloodGrp = $formMasterData->bldgrpCtrl;
+				$updData = ["ipd_patient_master.patient_blood_grp" => $bloodGrp];
+				$this->db->where('ipd_patient_master.unique_id', $ipd_row_id);
+				$this->db->update('ipd_patient_master', $updData);
+			} 
 			
 
 			/**
             *  update patients table for blood group
             *  Blood Group Info
 			*/
-		
-			if(isset($formMasterData->bldgrpCtrl)) {
+		// commented on 21.02.2019
+			/*if(isset($formMasterData->bldgrpCtrl)) {
 				$bloodGrp = $formMasterData->bldgrpCtrl;
 				$updData = ["patients.blood_group" => $bloodGrp];
 				$this->db->where('patients.patient_id', $patient_id);
 				$this->db->update('patients', $updData);
-			}
+			} */
 	        
 	           
 	        $ipd_master_upd = [
@@ -344,13 +380,15 @@ class Ipd_model extends CI_Model{
 	            "pulse" => NULL,
 	            "temp" => $temp,
 	            "anemia" => $anemia, // haemoglobin
-	            "bp" => $bp,
+				"bp" => $bp,
+				"bp_diastolic" => $bp_diastolic,
 	            "jaundice" => $jaundice,
 	            "odema" => $odema,
 	            "height" => $height,
 	            "weight" => $weight,
 	            "blood_sugar_f" => $blood_sugar_f,
-	            "blood_sugar_pp" => $blood_sugar_pp,
+				"blood_sugar_pp" => $blood_sugar_pp,
+				"blood_sugar_random" => $blood_sugar_random,
 				"comment" => NULL,
 				"servertag" => getServerTag(),
 				"hospital_id" => $hospital_id
@@ -494,6 +532,7 @@ class Ipd_model extends CI_Model{
      * @author Mithilesh Routh
      * @return $data
      * @desc get medicine by diagnosis list
+	 * @ modified on 20.02.2019
      */
 	
 	public function getIPDListByDt($request,$hospital_id) {
@@ -613,17 +652,19 @@ class Ipd_model extends CI_Model{
 		];
 		$query = $this->db->select("`patients`.`patient_id` as patientid,
 									patients.`patient_code`,
-									patients.`patient_name`,
+									/*patients.`patient_name`,
+									patients.`gender`,
+									patients.`blood_group`,*/
 									patients.`line_number`,
 									patients.`division_number`,
 									patients.`challan_number`,
 									patients.`estate`,
 									DATE_FORMAT(patients.`dob` , '%d-%m-%Y') AS dob_dt ,
-									patients.`gender`,
+									
 									patients.`employee_id`,
 									patients.`adhar`,
 									patients.`mobile_one`,
-									patients.`blood_group`,
+									
 									
 									ipd_patient_master.discharge_flag,
 									ipd_patient_master.room_no,
@@ -635,7 +676,9 @@ class Ipd_model extends CI_Model{
                                     ipd_patient_master.final_digonosis,
                                     ipd_patient_master.discharge_summary,
                                     ipd_patient_master.instruction,
-                                    ipd_patient_master.referral_id,
+									ipd_patient_master.referral_id,
+
+								
 									
 									patient_health_profile.`patient_health_profile_id`,
 									patient_health_profile.unique_id AS health_profile_uid,
@@ -643,18 +686,31 @@ class Ipd_model extends CI_Model{
 									patient_health_profile.temp,
 									patient_health_profile.`anemia`,
 									patient_health_profile.bp,
+									patient_health_profile.bp_diastolic,
 									patient_health_profile.`jaundice`,
 									patient_health_profile.`odema`,
 									patient_health_profile.`height`,
 									patient_health_profile.`weight`,
 									patient_health_profile.`blood_sugar_pp`,
 									patient_health_profile.`blood_sugar_f`,
+									patient_health_profile.`blood_sugar_random`,
 									patient_health_profile.`comment` AS doctorcomment,
-									patient_health_profile.`prescription_addmission_id`
+									patient_health_profile.`prescription_addmission_id`,
+									/* added on 20.02.2018*/
+									ipd_patient_master.room_no,
+									ipd_patient_master.bed_no,
+									ipd_patient_master.patient_name,
+									ipd_patient_master.patient_age,
+									ipd_patient_master.patient_gender,
+									ipd_patient_master.patient_blood_grp,
+									ipd_patient_master.patient_type,
+									patients.patient_name as associate_permworker_name
+
 									" , FALSE)
 							 ->from("ipd_patient_master") 
 							 ->join("patient_health_profile","patient_health_profile.prescription_addmission_id = ipd_patient_master.unique_id AND `patient_health_profile`.`opd_ipd_flag` = 'I' ","LEFT")
-							 ->join("patients","patients.patient_id = ipd_patient_master.patient_id","LEFT")
+							/* ->join("patients","patients.patient_id = ipd_patient_master.patient_id","LEFT")*/
+							 ->join("patients" , "patients.patient_id = ipd_patient_master.associate_permworker_id" , "LEFT")
 							 ->where($where)
 							 ->order_by("patient_health_profile.patient_health_profile_id","DESC")
 							 ->limit(1)
@@ -836,12 +892,13 @@ class Ipd_model extends CI_Model{
 
 		$query = $this->db->select("
 								  `patients`.`patient_id` as patientid,
-									patients.`patient_code`,
-									patients.`patient_name`,
+								/*  patients.`patient_code`,
+									patients.`patient_name`,*/
 									opd_prescription.`symptom_list`,
 									opd_prescription.`diagonised_list`,
 									ipd_patient_master.instruction,
 									ipd_patient_master.discharge_summary,
+									ipd_patient_master.discharge_date,
 									ipd_patient_master.final_digonosis,
 									DATE_FORMAT(ipd_patient_master.next_checkup_dt,'%d/%m/%Y') AS nextChkupDtDt,
 									CASE 
@@ -849,12 +906,18 @@ class Ipd_model extends CI_Model{
 									WHEN opd_prescription.id IS NOT NULL THEN opd_prescription.`opd_prescription_id`
 									END AS prescno,
 									patient_health_profile.*,
-									patient_health_profile.unique_id as health_profile_uid
+									patient_health_profile.unique_id as health_profile_uid,
+
+									ipd_patient_master.patient_name,
+									ipd_patient_master.patient_type,
+									patients.patient_name as associate_permworker_name,
+									patients.patient_code as parmenant_worker_code
 									" , FALSE)
 							 ->from("patient_health_profile") 
 							 ->join("ipd_patient_master","patient_health_profile.prescription_addmission_id = ipd_patient_master.admission_id AND patient_health_profile.opd_ipd_flag = 'I'","LEFT")
 							 ->join("opd_prescription","opd_prescription.unique_id = patient_health_profile.prescription_addmission_id AND patient_health_profile.opd_ipd_flag = 'O'","LEFT")
-							 ->join("patients","patients.patient_id = patient_health_profile.patient_id","INNER")
+							/* ->join("patients","patients.patient_id = patient_health_profile.patient_id","INNER")*/
+							 ->join("patients" , "patients.patient_id = ipd_patient_master.associate_permworker_id" , "LEFT")
 							 ->where($where)
 							 ->order_by("patient_health_profile.date","DESC")
 							 ->limit(1)
