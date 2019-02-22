@@ -813,4 +813,23 @@ getPatientListData(dr_type) {
 }
 
 
+/*---------------------------------- 22 February 2019 ------------------------------------ */
+  /**
+ * @author Shankha Ghosh
+ * @param formval 
+ * @description get sick Approval list by date range
+ */
+
+
+getIssuedSickApprovalByDate(formdata){
+  let datas = JSON.stringify({data:formdata});
+  return new Promise(resolve => {
+    this.http.post(this.global.sickleaveregisterList_URL,datas).subscribe(data => {
+      resolve(data);
+    }, err => {
+      console.log(err);
+    });
+ });
+}
+
 }

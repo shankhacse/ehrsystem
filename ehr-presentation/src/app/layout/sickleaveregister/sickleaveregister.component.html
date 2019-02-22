@@ -1,0 +1,150 @@
+<div class="wraper-container">
+  <div class="search-container">
+
+
+  
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+          <div class="sickleavesearchTabs" fxFlex="90%">
+              <mat-toolbar style="background: transparent;"> 
+                 
+                  </mat-toolbar>
+
+              <div class="reglisttables" >
+               
+
+                    <mat-tab-group>
+                     
+
+                      <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon>assignment_turned_in </mat-icon>
+                            Sick Leave List
+                        </ng-template>
+                    
+                        <section class="blockContent">
+                          <form [formGroup]="issuedSickleaveSearchForm" (ngSubmit)="onSubmit()" >
+                            <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                        
+                              <div fxFlex="30%">
+                                  
+                              </div>
+                        
+                              <div fxFlex="20%">
+                                <mat-form-field class="fullwidthinp">
+                                    <input matInput [matDatepicker]="fromDtPick" placeholder="From Date" formControlName="searchFromDateCtrl" autocomplete="off"  >
+                                    <mat-datepicker-toggle matSuffix [for]="fromDtPick"></mat-datepicker-toggle>
+                                    <mat-datepicker #fromDtPick></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        
+                              <div fxFlex="20%">
+                                  <mat-form-field class="fullwidthinp">
+                                      <input matInput [matDatepicker]="toDtPick" placeholder="To Date" formControlName="searchToDateCtrl" autocomplete="off" readonly >
+                                      <mat-datepicker-toggle matSuffix [for]="toDtPick"></mat-datepicker-toggle>
+                                      <mat-datepicker #toDtPick></mat-datepicker>
+                                  </mat-form-field>
+                              </div>
+                        
+                              <div fxFlex="10%">
+                                  <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                                      <button mat-flat-button color="primary" class="phrmcybtn" type="submit" > <i class="material-icons">
+                                          youtube_searched_for </i> Search</button>
+                                  </div>
+                                 
+                              </div>
+                        
+                              <div fxFlex="20%">
+                                  
+                              </div>
+                              
+                            </div>
+                          </form>
+                        </section>
+
+
+                        <section>
+                            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width:100%">
+                                <ng-container matColumnDef="slno">
+                                    <th mat-header-cell *matHeaderCellDef style="width:10%;"> Sl No. </th>
+                                    <td mat-cell *matCellDef="let row; let i =index;">{{i+1}}  </td>
+                                  </ng-container>
+                                <ng-container matColumnDef="applydate">
+                                  <th mat-header-cell *matHeaderCellDef> Apply On </th>
+                                  <td mat-cell *matCellDef="let element"> {{element.applydate}} </td>apvdate
+                                </ng-container>
+                                <ng-container matColumnDef="approvedate">
+                                    <th mat-header-cell *matHeaderCellDef> Apply On </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.approvedate}} </td>apvdate
+                                  </ng-container>
+                                <ng-container matColumnDef="patientID">
+                                  <th mat-header-cell *matHeaderCellDef> Patient ID </th>
+                                  <td mat-cell *matCellDef="let element"> {{element.patient_code}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="name">
+                                  <th mat-header-cell *matHeaderCellDef> Name </th>
+                                  <td mat-cell *matCellDef="let element">{{element.patient_name}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="challanno" style="background:red;">
+                                  <th mat-header-cell *matHeaderCellDef> Challan No </th>
+                                  <td mat-cell *matCellDef="let element">{{element.challan_number}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="division" style="background:red;">
+                                    <th mat-header-cell *matHeaderCellDef> Division No </th>
+                                    <td mat-cell *matCellDef="let element">{{element.division_number}} </td>
+                                  </ng-container>
+                                <ng-container matColumnDef="lineno" style="background:red;">
+                                    <th mat-header-cell *matHeaderCellDef> Line No </th>
+                                    <td mat-cell *matCellDef="let element">{{element.line_number}} </td>
+                                  </ng-container>
+                                  <ng-container matColumnDef="noofdays" style="background:red;">
+                                      <th mat-header-cell *matHeaderCellDef> No of Days</th>
+                                      <td mat-cell *matCellDef="let element"> 1</td>
+                                    </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                
+                               
+                            </table>
+                            <div class="paginatordiv">
+                                <mat-paginator 
+                                [pageSize]="10"
+                                [pageSizeOptions]="[10,25,50, 100, 200]"  
+                                showFirstLastButtons>
+                               </mat-paginator>
+          
+                            </div>
+                        </section>
+                        
+                        <!-- <section *ngIf="!issuedRecordFound">
+                          <h2 style="font-size: 16px;letter-spacing: 3px;text-indent: 14px;">No Records Found</h2>
+                        </section> -->
+
+
+
+
+                    </mat-tab>
+
+
+                      
+
+                    </mat-tab-group>
+        
+                      
+  
+              </div><!-- Reg List Tables-->
+
+
+          </div> <!--end of flex-->
+      </div>
+
+
+
+         
+
+
+
+
+
+          </div>
+          <!--end of search container-->
+      </div>

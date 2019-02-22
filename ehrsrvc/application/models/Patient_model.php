@@ -808,4 +808,45 @@ class Patient_model extends CI_Model
 
 
 
-}
+
+     /**
+     * get list of sick leave register list
+     *
+     * @author Shankha
+     * @date 22/02/2019
+     */
+    public function getSickleaveregisterList($request, $hospital_id)
+    {
+        $resultdata = [];
+        $formData = $request->data;
+	
+		 $from_date = $formData->searchFromDateCtrl;
+         $to_date = $formData->searchToDateCtrl;
+        
+      
+
+
+        $where = [
+            
+             "patient_sickleave_detail.is_approved" => 'Y'
+        ]; 
+
+        $query = $this->db->select("
+                        patient_sickleave_detail.*,
+                        DATE_FORMAT(patient_sickleave_detail.applied_for_date,'%d-%m-%Y') as applydate,
+                        DATE_FORMAT(patient_sickleave_detail.approved_on,'%d-%m-%Y') as approvedate,
+                        patients.*")
+            ->from("patient_sickleave_detail")
+            ->join("patients", "patient_sickleave_detail.patient_id=patients.patient_id", "LEFT")
+            ->where('DATE_FORMAT(patient_sickleave_detail.applied_for_date,"%Y-%m-%d") BETWEEN "'. date('Y-m-d', strtotime($from_date)). '" AND "'. date('Y-m-d', strtotime($to_date)).'"')
+            ->where($where)
+            ->get();
+#q();
+
+        if ($query->num_rows() > 0) {
+            $resultdata = $query->result();
+        }
+        return $resultdata;
+    }
+
+}// ens of class

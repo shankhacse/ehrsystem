@@ -43,6 +43,7 @@ const routes: Routes = [
            
 
             { path:'sickapproval', loadChildren:'./sickleaveapproval/sickleaveapproval.module#sickleaveapprovalModule'} ,  
+            { path:'sickleaveregister', loadChildren:'./sickleaveregister/sickleaveregister.module#SickleaveregisterModule'} , 
             { path:'prescriptionlist', loadChildren:'./pharmacymedicinelist/pharmacymedicinelist.module#PharmacymedicinelistModule'} , 
             { path:'medicineissue', loadChildren:'./medicineissue/medicineissue.module#MedicineissueModule'},
             { path:'reportsupload', loadChildren:'./admin/reportsupload/reportsupload.module#ReportsuploadModule'},

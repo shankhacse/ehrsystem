@@ -20,6 +20,8 @@ import { DismisswithpromptdialogComponent } from './components/dismisswithprompt
 import { DeleteconfirmationdialogComponent } from './admin/components/deleteconfirmationdialog/deleteconfirmationdialog.component';
 
 
+
+
 @NgModule({
     imports: [
         CommonModule,
@@ -29,7 +31,7 @@ import { DeleteconfirmationdialogComponent } from './admin/components/deleteconf
         ReactiveFormsModule
        
     ],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, OkdialogComponent , SuccessdialogComponent , ConfirmationdischargeComponent, MasterentrydialogComponent,SuccessdialogwithprintComponent,PrescriptionprintComponent, DismisswithpromptdialogComponent,DeleteconfirmationdialogComponent],
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, OkdialogComponent , SuccessdialogComponent , ConfirmationdischargeComponent, MasterentrydialogComponent,SuccessdialogwithprintComponent,PrescriptionprintComponent, DismisswithpromptdialogComponent,DeleteconfirmationdialogComponent, ],
    
     entryComponents : [SuccessdialogComponent , ConfirmationdischargeComponent , MasterentrydialogComponent,SuccessdialogwithprintComponent,PrescriptionprintComponent,DismisswithpromptdialogComponent,DeleteconfirmationdialogComponent ]
  
