@@ -29,6 +29,8 @@ export class SickleaveregisterComponent implements OnInit {
 
   sickleaveList=[];
 
+  
+
   constructor(
     private router:Router, private commonService:CommonService, private symptomdiseaseService:SymptomdiseaseService , private datashareService:DatashareService , private patientService:PatientService , public dialog: MatDialog , private ipdService:IpdService
   ) {
@@ -74,5 +76,7 @@ export class SickleaveregisterComponent implements OnInit {
    });
 
   }
+
+
 
 }// end of class
