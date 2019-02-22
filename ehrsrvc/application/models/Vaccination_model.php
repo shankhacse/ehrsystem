@@ -99,7 +99,8 @@ class Vaccination_model extends CI_Model{
             
             $pcode = $healthPrf->hdnpatientID;
             
-            $patientid = $this->patient->getPatientByCode($pcode)->patient_id;
+            //$patientid = $this->patient->getPatientByCode($pcode)->patient_id;
+            $patientid = $healthPrf->hdnpatientID;
             $opdPrecesptionID = $this->opd->getLatestPrescriptionID($hospital_id);
             
             $registrationID = $healthPrf->hdnregistrationID;
@@ -107,11 +108,16 @@ class Vaccination_model extends CI_Model{
             $pulse = $healthPrf->pulse;
             $tempratute = $healthPrf->tempratute;
             $anaemia = $healthPrf->anaemia;
-            $bp = $healthPrf->bp;
+            $bp = $healthPrf->bp; // used as systolic
             $jaundice = $healthPrf->jaundice;
             $odema = $healthPrf->odema;
             $height = $healthPrf->height;
             $weight = $healthPrf->weight;
+
+            $bpdiastolic = $healthPrf->bpDiastolicCtrl; 
+            $sugarFasting = $healthPrf->bldsugarFCtrl; 
+            $sugarPP = $healthPrf->bldsugarPPCtrl; 
+            $sugarRandom = $healthPrf->bldsugarRCtrl; 
             
             // Additional Comment
             $add_data = $request->additionalData;
@@ -155,11 +161,15 @@ class Vaccination_model extends CI_Model{
                 "pulse" => $pulse,
                 "temp" => $tempratute,
                 "anemia" => $anaemia,
-                "bp" => $bp,
+                "bp" => $bp, // used as systolic
                 "jaundice" => $jaundice,
                 "odema" => $odema,
                 "height" => $height,
                 "weight" => $weight,
+                "bp_diastolic" => $bpdiastolic,
+				"blood_sugar_f" => $sugarFasting,
+				"blood_sugar_pp" => $sugarPP,
+				"blood_sugar_random" => $sugarRandom,
                 "comment" => NULL,
                 "servertag" => getServerTag(),                 
                 "hospital_id" => $hospital_id

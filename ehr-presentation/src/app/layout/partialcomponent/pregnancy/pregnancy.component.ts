@@ -573,6 +573,7 @@ savePregnancy() {
              localStorage.removeItem("patientid_preg");
              localStorage.removeItem("tpcd");
              localStorage.removeItem("regid");
+             localStorage.removeItem("regtype");
             // this.openDialog();
             this.openDialogWithPdfPreview(presdata.prescription,presdata.healthprfl,'O','PREGNANCY');
             
@@ -635,7 +636,7 @@ savePregnancy() {
         msg : 'OPD Saved Successfully',
         msgicon : 'check_circle',
         iconcolor: '#1d8c3d',
-        btnurl : 'panel/todaysreg',
+        btnurl : 'panel/todaysnewreg',
         savedIdRef  : idinfo
         }
     });

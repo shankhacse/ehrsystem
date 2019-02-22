@@ -272,6 +272,8 @@ export class ChildvaccinationComponent implements OnInit {
              localStorage.removeItem("patientid_vacc");
              localStorage.removeItem("tpcd");
              localStorage.removeItem("regid");
+             localStorage.removeItem("regtype");
+
              
              //this.openDialog();
              this.openDialogWithPdfPreview(presdata.prescription,presdata.healthprfl,'O','VACCINATION');
@@ -339,7 +341,7 @@ export class ChildvaccinationComponent implements OnInit {
         msg : 'OPD Saved Successfully',
         msgicon : 'check_circle',
         iconcolor: '#1d8c3d',
-        btnurl : 'panel/todaysreg',
+        btnurl : 'panel/todaysnewreg',
         savedIdRef  : idinfo
         }
     });

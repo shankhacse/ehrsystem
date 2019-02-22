@@ -1,0 +1,278 @@
+<div id="opdPrepPage" class="wraper-container">
+  <div class="search-container">
+
+    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+        
+      <div class="patientsearchTabs" fxFlex="96%">
+                <mat-toolbar style="background: transparent;"> 
+                    <h4 class="card_title"> Today's Registration</h4>
+                </mat-toolbar>
+                  
+                  
+
+              <mat-tab-group (selectedTabChange)="tabChanged($event)">
+
+                  <mat-tab>
+                      <ng-template mat-tab-label>
+                          <mat-icon>how_to_reg</mat-icon>
+                          <span matBadge="{{consultCount}}" matBadgeOverlap="false" matBadgeColor="warn">General Consultation</span>
+                      </ng-template>
+                  </mat-tab>
+
+                  <mat-tab>
+                      <ng-template mat-tab-label>
+                          <mat-icon class="example-tab-icon">insert_chart</mat-icon>
+                          <span matBadge="{{pregnancyCount}}" matBadgeOverlap="false" matBadgeColor="warn"> Pregnancy</span>
+                      </ng-template>
+                  </mat-tab>
+
+                  <mat-tab>
+                      <ng-template mat-tab-label>
+                          <mat-icon class="example-tab-icon">nature_people</mat-icon>
+                          <span matBadge="{{vaccinationCount}}" matBadgeOverlap="false" matBadgeColor="warn"> Vaccination</span>
+                      </ng-template>
+                  </mat-tab>
+                 
+
+                  <mat-tab>
+                      <ng-template mat-tab-label>
+                          <mat-icon class="example-tab-icon">visibility</mat-icon>
+                          Attended
+                      </ng-template>
+                  </mat-tab>
+
+              </mat-tab-group>
+
+
+              <div class="reglisttables" *ngIf="openReglistBlock">
+                      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 reglisttable" style="width: 100%;" *ngIf="recordsFound">
+  
+                              <ng-container matColumnDef="action">
+                                  <th mat-header-cell *matHeaderCellDef> Action </th>
+                                  <td mat-cell *matCellDef="let row">
+                                      <a mat-raised-button color="warn" class="opdIssueBtn" (click)="getPresciption(row)"  id="opdIssueBtn_{{row.registration_id}}">
+                                          <mat-icon>enhanced_encryption</mat-icon>
+                                          Open
+                                      </a>
+                                      <mat-spinner [diameter]="25"  style="display:none;" id="opdIssueLoader_{{row.registration_id}}" ></mat-spinner>
+
+                                      <!--
+
+                                          <a mat-raised-button color="warn" (click)="getPresciption(row)" *ngIf="isButtonActive" id="opdIssueBtn_{{row.registration_id}}">
+                                          <mat-icon>enhanced_encryption</mat-icon>
+                                          Open
+                                      </a>
+                                      <mat-spinner [diameter]="25"  *ngIf="!isButtonActive" id="opdIssueLoader_{{row.registration_id}}" ></mat-spinner>
+
+                                      -->
+                                  </td>
+                              </ng-container>
+                              
+                              <!--
+                              <ng-container matColumnDef="reg_type">
+                                  <th mat-header-cell *matHeaderCellDef> Reg Type </th>
+                                  <td mat-cell *matCellDef="let row"> {{row.reg_type}} </td>
+                              </ng-container>
+                              -->
+
+                              <ng-container matColumnDef="patient_code">
+                                  <th mat-header-cell *matHeaderCellDef> Patient ID </th>
+                                  <td mat-cell *matCellDef="let row"> {{row.patient_code}} </td>
+                              </ng-container>
+          
+                              <ng-container matColumnDef="patient_name">
+                                  <th mat-header-cell *matHeaderCellDef> Name </th>
+                                  <td mat-cell *matCellDef="let row"> {{row.patient_name}} </td>
+                              </ng-container>
+          
+                              <ng-container matColumnDef="birthdate">
+                                  <th mat-header-cell *matHeaderCellDef> DOB </th>
+                                  <td mat-cell *matCellDef="let row"> {{row.birthdate}} </td>
+                              </ng-container>
+          
+                              <ng-container matColumnDef="gender">
+                                  <th mat-header-cell *matHeaderCellDef> Gender </th>
+                                  <td mat-cell *matCellDef="let row"> {{row.gender}} </td>
+                              </ng-container>
+          
+                              <ng-container matColumnDef="division_number">
+                                  <th mat-header-cell *matHeaderCellDef> Division No </th>
+                                  <td mat-cell *matCellDef="let row"> {{row.division_number}} </td>
+                              </ng-container>
+          
+                              <ng-container matColumnDef="challan_number">
+                                  <th mat-header-cell *matHeaderCellDef> Challan No</th>
+                                  <td mat-cell *matCellDef="let row"> {{row.challan_number}} </td>
+                              </ng-container>
+          
+                              <ng-container matColumnDef="line_number">
+                                  <th mat-header-cell *matHeaderCellDef> Line No </th>
+                                  <td mat-cell *matCellDef="let row"> {{row.line_number}} </td>
+                              </ng-container>
+          
+                              <ng-container matColumnDef="mobile_one">
+                                  <th mat-header-cell *matHeaderCellDef> Mobile </th>
+                                  <td mat-cell *matCellDef="let row"> {{row.mobile_one}} </td>
+                              </ng-container>
+          
+                              <ng-container matColumnDef="adhar">
+                                  <th mat-header-cell *matHeaderCellDef> Aadhar </th>
+                                  <td mat-cell *matCellDef="let row"> {{row.adhar}} </td>
+                              </ng-container>
+          
+                              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                          </table>
+
+
+                          <mat-toolbar class="norecord" *ngIf="!recordsFound">
+                              <h2>No Records found for today</h2>
+                          </mat-toolbar>
+  
+              </div><!-- Reg List Tables-->
+
+
+
+
+              <!--Visited Start -->
+              <div class="visitedtables"  *ngIf="!openReglistBlock">
+                  
+                      <mat-accordion class="example-headers-align">
+                              <mat-expansion-panel  (opened)="setStep(0)" hideToggle (click)="firstTab(1)">
+
+                                <mat-expansion-panel-header>
+                                  <mat-panel-title>
+                                      <mat-icon>done</mat-icon> General Consultation 
+                                  </mat-panel-title>
+                                  <div class="custombadge" style="background: #142ba8;">{{consultCountVisited}}</div>
+                                </mat-expansion-panel-header>
+                            
+                               
+                                  <table style="width:98%;" class="cutomTbl" cellspacing="0" cellpadding="0" border="0">
+                                      <tr>
+                                          <th>Patient ID</th>
+                                          <th>Name</th>
+                                          <th>DOB</th>
+                                          <th>Gender</th>
+                                          <th>Division </th>
+                                          <th>Challan </th>
+                                          <th>Line </th>
+                                          <th>Mobile </th>
+                                          <th>Aadhar </th>
+                                          <th>Status </th>
+                                      </tr>
+
+                                      <tr *ngFor="let allregVisited of todaysregistrationList[0]; let i = index ">
+                                          <td>{{allregVisited.patient_code}}</td>
+                                          <td>{{allregVisited.patient_name}}</td>
+                                          <td>{{allregVisited.birthdate}}</td>
+                                          <td>{{allregVisited.gender}}</td>
+                                          <td>{{allregVisited.division_number}}</td>
+                                          <td>{{allregVisited.challan_number}}</td>
+                                          <td>{{allregVisited.line_number}}</td>
+                                          <td>{{allregVisited.mobile_one}}</td>
+                                          <td>{{allregVisited.adhar}}</td>
+                                          <td>
+                                              <button mat-mini-fab>
+                                                  <mat-icon>done</mat-icon>
+                                              </button>
+                                          </td>
+                                        
+                                      </tr>
+                                  </table>
+  
+                              </mat-expansion-panel> <!--end of 1-->
+                            
+                              <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+                                <mat-expansion-panel-header>
+                                  <mat-panel-title>
+                                          <mat-icon class="example-tab-icon">insert_chart</mat-icon>
+                                          Pregnancy
+                                  </mat-panel-title>
+                                  <div class="custombadge" style="background: #2f47c8;">{{pregnancyCountVisited}}</div>
+                                </mat-expansion-panel-header>
+                                <table style="width:98%;" class="cutomTbl" cellspacing="0" cellpadding="0" border="0">
+                                      <tr>
+                                          <th>Patient ID</th>
+                                          <th>Name</th>
+                                          <th>DOB</th>
+                                          <th>Gender</th>
+                                          <th>Division </th>
+                                          <th>Challan </th>
+                                          <th>Line </th>
+                                          <th>Mobile </th>
+                                          <th>Aadhar </th>
+                                          <th>Status </th>
+                                      </tr>
+
+                                      <tr *ngFor="let permVisited of todaysregistrationList[0];  ">
+                                          <td>{{permVisited.patient_code}}</td>
+                                          <td>{{permVisited.patient_name}}</td>
+                                          <td>{{permVisited.birthdate}}</td>
+                                          <td>{{permVisited.gender}}</td>
+                                          <td>{{permVisited.division_number}}</td>
+                                          <td>{{permVisited.challan_number}}</td>
+                                          <td>{{permVisited.line_number}}</td>
+                                          <td>{{permVisited.mobile_one}}</td>
+                                          <td>{{permVisited.adhar}}</td>
+                                          <td>
+                                              <button mat-mini-fab>
+                                                  <mat-icon>done</mat-icon>
+                                              </button>
+                                          </td>
+                                        
+                                      </tr>
+                                  </table>
+  
+                              </mat-expansion-panel>
+                            
+                              <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+                                <mat-expansion-panel-header>
+                                  <mat-panel-title>
+                                          <mat-icon class="example-tab-icon">nature_people</mat-icon>
+                                          Vaccination
+                                  </mat-panel-title>
+                                  <div class="custombadge" style="background: #4960da;">{{vaccinationCountVisited}}</div>
+                                </mat-expansion-panel-header>
+                            
+                                <table style="width:98%;" class="cutomTbl" cellspacing="0" cellpadding="0" border="0">
+                                      <tr>
+                                          <th>Patient ID</th>
+                                          <th>Name</th>
+                                          <th>DOB</th>
+                                          <th>Gender</th>
+                                          <th>Division </th>
+                                          <th>Challan </th>
+                                          <th>Line </th>
+                                          <th>Mobile </th>
+                                          <th>Aadhar </th>
+                                          <th>Status </th>
+                                      </tr>
+
+                                      <tr *ngFor="let tempVisited of todaysregistrationList[0];  ">
+                                          <td>{{tempVisited.patient_code}}</td>
+                                          <td>{{tempVisited.patient_name}}</td>
+                                          <td>{{tempVisited.birthdate}}</td>
+                                          <td>{{tempVisited.gender}}</td>
+                                          <td>{{tempVisited.division_number}}</td>
+                                          <td>{{tempVisited.challan_number}}</td>
+                                          <td>{{tempVisited.line_number}}</td>
+                                          <td>{{tempVisited.mobile_one}}</td>
+                                          <td>{{tempVisited.adhar}}</td>
+                                          <td>
+                                              <button mat-mini-fab>
+                                                  <mat-icon>done</mat-icon>
+                                              </button>
+                                          </td>
+                                        
+                                      </tr>
+                                  </table>
+
+                              </mat-expansion-panel>
+                    </mat-accordion>
+            </div><!-- visited Expansen List -->
+          </div> <!--end of flex-->
+
+      </div>
+  </div>
+</div>

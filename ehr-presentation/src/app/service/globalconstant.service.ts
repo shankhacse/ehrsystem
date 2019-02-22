@@ -11,13 +11,14 @@ export class GlobalconstantService {
   //private APIURL = "http://192.168.2.10/ehrsystem/ehrsrvc/";
   //private APIURL = "http://127.0.0.1:8011/ehrsystem/ehrsrvc/";
   //private APIURL = "http://127.0.0.1/ehrsystem/ehrsrvc/";
-   private APIURL = "http://127.0.0.1:8088/ehrsystem/ehrsrvc/";
+  // private APIURL = "http://127.0.0.1:8088/ehrsystem/ehrsrvc/";
   // private APIURL = "http://127.0.0.1/ehr/ehrsrvc/";
   //private APIURL =  "http://13.234.41.243/devehrsystem/ehrsrvc/";
   //private APIURL = "http://medewise.com/medehr/";
   // private APIURL = "http://softhought.com/medewise/ehrsrvc/";
 
   //private APIURL =  "http://13.234.41.243/ehr/ehrsrvc/";
+  private APIURL = "http://127.0.0.1/ehrsystem/ehrsrvc/";
   private APIKEY = "24ecdccb1258eaacfd441e012ac034392403c692";
 
   // URL INFO
@@ -67,6 +68,7 @@ export class GlobalconstantService {
   public insertOPD_URL = this.APIURL+"opd/insertIntoOpd";
 
   public todaysRegDoct_URL = this.APIURL+"registration/getTodaysRegDoct";
+  public todaysRegByRegType_URL = this.APIURL+"registration/todaysRegByRegType";
 
   //sick leave approval
   public sickApprovalList_URL = this.APIURL +"patient/getSickApprovedList";

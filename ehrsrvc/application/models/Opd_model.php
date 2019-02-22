@@ -98,6 +98,10 @@ class Opd_model extends CI_Model{
 									patient_health_profile.`odema`,
 									patient_health_profile.`height`,
 									patient_health_profile.`weight`,
+									patient_health_profile.`blood_sugar_random`,
+									patient_health_profile.`bp_diastolic`,
+									patient_health_profile.`blood_sugar_pp`,
+									patient_health_profile.`blood_sugar_f`,
 									patient_health_profile.`prescription_addmission_id`,
 									patient_health_profile.unique_id AS health_profile_uid,
 									opd_prescription.*,
@@ -149,6 +153,11 @@ class Opd_model extends CI_Model{
 			$odema = $healthPrf->odema;
 			$height = $healthPrf->height;
 			$weight = $healthPrf->weight;
+
+			$bpdiastolic = $healthPrf->bpDiastolicCtrl; 
+			$sugarFasting = $healthPrf->bldsugarFCtrl; 
+			$sugarPP = $healthPrf->bldsugarPPCtrl; 
+			$sugarRandom = $healthPrf->bldsugarRCtrl; 
 			
 			
 			
@@ -225,11 +234,15 @@ class Opd_model extends CI_Model{
 				"pulse" => $pulse,
 				"temp" => $tempratute,
 				"anemia" => $anaemia,
-				"bp" => $bp,
+				"bp" => $bp, // bp systolic
 				"jaundice" => $jaundice,
 				"odema" => $odema,
 				"height" => $height,
 				"weight" => $weight,
+				"bp_diastolic" => $bpdiastolic,
+				"blood_sugar_f" => $sugarFasting,
+				"blood_sugar_pp" => $sugarPP,
+				"blood_sugar_random" => $sugarRandom,
 				"comment" => NULL,
 				"servertag" => getServerTag(),
 				"hospital_id" => $hospital_id

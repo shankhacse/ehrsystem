@@ -326,5 +326,68 @@ class Registration_model extends CI_Model{
     }
 	
 
+
+	/**
+     * @name todaysRegByRegType
+     * @author Mithilesh Routh
+     * @return $data
+     * @desc get all todays registration data for doctors
+     */
+
+    public function todaysRegByRegType($hospitalid,$request)
+    {
+        $resultdata = [];
+		$today = date("Y-m-d");
+		
+		$type = $request->type;
+		$serve = $request->serve;
+		
+		$conditional_where = [];
+
+		$conditional_where = [
+			"registration.served_flag" => $serve,
+			"registration.registration_type" => $type
+		];
+
+
+		
+		
+		$where = [
+			"DATE_FORMAT(registration.date_of_registration,'%Y-%m-%d')" => $today,
+			"registration.hospital_id" => $hospitalid,
+			"registration.is_deleted" => 'N'
+		];
+	
+		$query = $this->db->select("
+									/* registration.registration_id,*/
+									registration.unique_id AS registration_id,
+									registration.registration_type AS reg_type,
+									patients.patient_code,
+                                    patients.patient_id,
+									patients.patient_name,
+									DATE_FORMAT(patients.`dob`,'%d-%m-%Y') As birthdate,
+									patients.gender,
+									patients.division_number,
+									patients.challan_number,
+									patients.line_number,
+									patients.mobile_one,
+									patients.adhar
+								",FALSE)
+                         ->from("registration") 
+						 ->join("patients","patients.patient_id = registration.patient_id","INNER")
+						 ->join("patient_type","patient_type.patient_type_id = patients.patient_type_id","INNER")
+						 ->where($where)
+						 ->where($conditional_where)
+						 ->order_by('registration.date_of_registration')
+                         ->get();
+						 
+						// echo $this->db->last_query();
+		
+        if($query->num_rows()>0) {
+            $resultdata=$query->result();
+            }
+        return $resultdata;
+    }
+
     
 }

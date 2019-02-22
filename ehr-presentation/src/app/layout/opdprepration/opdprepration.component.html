@@ -48,6 +48,7 @@
                             </div>
 
                         </div>
+
                         <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
                             <div fxFlex="15%">
                                 <mat-form-field class="fullwidthinp">
@@ -67,18 +68,21 @@
                                 </mat-form-field>
                             </div>
 
-                            <div fxFlex="15%">
-                                <mat-form-field class="fullwidthinp">
-                                    <input matInput placeholder="BP" formControlName="bp" autocomplete="off">
-                                </mat-form-field>
-                            </div>
+                    
 
                             <div fxFlex="15%">
-                                <mat-form-field class="fullwidthinp">
-                                    <input matInput placeholder="Bilirubin" formControlName="jaundice" autocomplete="off">
-                                </mat-form-field>
+                                    <mat-form-field class="fullwidthinp">
+                                            <input matInput placeholder="BP(S)" formControlName="bp" autocomplete="off">
+                                    </mat-form-field>
+                                </div>
+
+                            <div fxFlex="15%">
+                                    <mat-form-field class="fullwidthinp">
+                                        <input matInput placeholder="BP(D)" formControlName="bpDiastolicCtrl" autocomplete="off">
+                                    </mat-form-field>
                             </div>
 
+                           
                             <div fxFlex="15%">
                                 <mat-form-field class="fullwidthinp">
                                     <input matInput placeholder="Odema" formControlName="odema" autocomplete="off">
@@ -95,7 +99,42 @@
                                     <input matInput placeholder="Weight (Kgs.)" formControlName="weight" autocomplete="off">
                                 </mat-form-field>
                             </div>
+                        </div>
 
+
+
+                        <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                                
+    
+                                <div fxFlex="15%">
+                                    <mat-form-field class="fullwidthinp">
+                                            <input matInput placeholder="Blood Sugar(F)" formControlName="bldsugarFCtrl"  autocomplete="off">
+                                    </mat-form-field>
+                                </div>
+    
+                                <div fxFlex="15%">
+                                    <mat-form-field class="fullwidthinp">
+                                            <input matInput placeholder="Blood Sugar(PP)" formControlName="bldsugarPPCtrl"  autocomplete="off">
+                                    </mat-form-field>
+                                </div>
+    
+                                <div fxFlex="15%">
+                                    <mat-form-field class="fullwidthinp">
+                                            <input matInput placeholder="Blood Sugar(R)" formControlName="bldsugarRCtrl"  autocomplete="off">
+                                    </mat-form-field>
+                                </div>
+
+                                <div fxFlex="15%">
+                                        <mat-form-field class="fullwidthinp">
+                                            <input matInput placeholder="Bilirubin" formControlName="jaundice" autocomplete="off">
+                                        </mat-form-field>
+                                </div>
+
+                                <div fxFlex="15%"></div>
+                                <div fxFlex="15%"></div>
+                                <div fxFlex="15%"></div>
+                                <div fxFlex="15%"></div>
+        
                         </div>
 
                     </form>
@@ -107,7 +146,7 @@
 
                 <section class="prescription">
                     <mat-tab-group [selectedIndex]="selectedTab">
-                        <mat-tab>
+                        <mat-tab #tab [disabled]='disableConsultTAB'>
                             <ng-template mat-tab-label>
                                 <mat-icon>assignment_turned_in </mat-icon>
                                 General Consultation
@@ -402,7 +441,7 @@
                     
                         </mat-tab>
 
-                        <mat-tab>
+                        <mat-tab #tab [disabled]='disablePregnancyTAB'>
                             <ng-template mat-tab-label>
                                 <mat-icon>face</mat-icon>
                                 Pregnancy
@@ -410,7 +449,7 @@
                             <app-pregnancy [presciptionHealthForm]="presciptionHealthForm"></app-pregnancy>
                         </mat-tab>
 
-                        <mat-tab>
+                        <mat-tab #tab [disabled]='disableVaccinationTAB'>
                             <ng-template mat-tab-label>
                                 <mat-icon>note_add</mat-icon>
                                 Vaccination

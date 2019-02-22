@@ -114,6 +114,10 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
 
 
   public selectedTab = 0;
+  disableConsultTAB = false;
+  disablePregnancyTAB = true;
+  disableVaccinationTAB = true;
+
   patientData ;
   PatientID = null;
   PatientName = null;
@@ -184,11 +188,16 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
         pulse: new FormControl(''),
         tempratute: new FormControl(''),
         anaemia: new FormControl(''),
-        bp: new FormControl(''),
+        bp: new FormControl(''), // used as BP Systolic
         jaundice: new FormControl(''),
         odema: new FormControl(''),
         height: new FormControl(''),
-        weight: new FormControl('')
+        weight: new FormControl(''),
+
+        bpDiastolicCtrl: new FormControl(''),
+        bldsugarFCtrl: new FormControl(''),
+        bldsugarPPCtrl: new FormControl(''),
+        bldsugarRCtrl: new FormControl('')
       
       });
 
@@ -201,6 +210,7 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
       localStorage.setItem("tpcd", this.patientObj.patient_code);
       localStorage.setItem("regid", this.patientObj.registration_id);
       localStorage.setItem("consult_pid", this.patientObj.patient_id); // added later
+      localStorage.setItem("regtype", this.patientObj.reg_type); // added later
     }
    
     this.localStrgPcode = localStorage.getItem("tpcd");
@@ -265,12 +275,32 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
 
-      /*
+     
       let regType = localStorage.getItem("regtype");
-      if(regType == "CONSULTATION") { this.selectedTab = 0;}
-      if(regType == "PREGNANCY") { this.selectedTab = 1;}
-      if(regType == "VACCINATION") { this.selectedTab = 2;}
-      */
+      if(regType == "CONSULTATION") { 
+        this.selectedTab = 0;
+        this.disableConsultTAB = false;
+        this.disablePregnancyTAB = true;
+        this.disableVaccinationTAB = true;
+      }
+      if(regType == "PREGNANCY") {
+
+        this.selectedTab = 1;
+        this.disableConsultTAB = true;
+        this.disablePregnancyTAB = false;
+        this.disableVaccinationTAB = true;
+
+      }
+      if(regType == "VACCINATION") { 
+        this.selectedTab = 2;
+        
+        this.disableConsultTAB = true;
+        this.disablePregnancyTAB = true;
+        this.disableVaccinationTAB = false;
+
+      }
+  
+     
 
 
       this.getSymptoms();
@@ -347,7 +377,11 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
             jaundice: pdata.jaundice,
             odema: pdata.odema,
             height: pdata.height,
-            weight: pdata.weight
+            weight: pdata.weight,
+            bpDiastolicCtrl: pdata.bp_diastolic,
+            bldsugarFCtrl: pdata.blood_sugar_f,
+            bldsugarPPCtrl: pdata.blood_sugar_pp,
+            bldsugarRCtrl: pdata.blood_sugar_random
         });
 
 
@@ -749,10 +783,7 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
           this.sendPhrmcyBtnActive = true;
         if(response.msg_status == 200) {
           let presdata =  response.result;
-        //  console.log(presdata);
-
-        //  console.log("presdata.prescription"+presdata.prescription);
-        //  console.log("presdata.healthprfl"+presdata.healthprfl);
+          
           localStorage.removeItem("regtype");
           localStorage.removeItem("tpcd");
           localStorage.removeItem("regid");
@@ -1074,7 +1105,7 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
 
 
     gotoList(){
-      this.router.navigateByUrl('panel/todaysreg');
+      this.router.navigateByUrl('panel/todaysnewreg');
     }
 
     openDialog() {
@@ -1085,7 +1116,7 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
           msg : 'OPD Saved Successfully',
           msgicon : 'check_circle',
           iconcolor: '#1d8c3d',
-          btnurl : 'panel/todaysreg'
+          btnurl : 'panel/todaysnewreg'
           }
       });
     
@@ -1102,7 +1133,7 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
           msg : 'OPD Saved Successfully',
           msgicon : 'check_circle',
           iconcolor: '#1d8c3d',
-          btnurl : 'panel/todaysreg'
+          btnurl : 'panel/todaysnewreg'
           }
       });
     
@@ -1267,7 +1298,7 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
           msg : 'OPD Saved Successfully',
           msgicon : 'check_circle',
           iconcolor: '#1d8c3d',
-          btnurl : 'panel/todaysreg',
+          btnurl : 'panel/todaysnewreg',
           savedIdRef  : idinfo
           }
       });
@@ -1278,7 +1309,4 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
     }
 
 
-
-
-    
 }

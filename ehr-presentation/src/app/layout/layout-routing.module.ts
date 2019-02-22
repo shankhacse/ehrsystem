@@ -46,6 +46,9 @@ const routes: Routes = [
             { path:'prescriptionlist', loadChildren:'./pharmacymedicinelist/pharmacymedicinelist.module#PharmacymedicinelistModule'} , 
             { path:'medicineissue', loadChildren:'./medicineissue/medicineissue.module#MedicineissueModule'},
             { path:'reportsupload', loadChildren:'./admin/reportsupload/reportsupload.module#ReportsuploadModule'},
+
+
+            { path: 'todaysnewreg' , loadChildren:'./todaysregistrationnew/todaysregistrationnew.module#TodaysregistrationnewModule'},
             
            
             
