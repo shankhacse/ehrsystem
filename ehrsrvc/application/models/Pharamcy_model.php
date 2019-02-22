@@ -606,11 +606,12 @@ class Pharamcy_model extends CI_Model{
 						  ->where($where_opd_ipd)
 						  ->where("issue_medicine_detail.medicine_id" , $medicine_id)
 						  ->get();
-		
+		/*
 		echo $this->db->last_query();
 		echo "\n";
 		echo "\n";
 		echo "\n";
+		*/
 	
 		
 		if($query->num_rows()>0) 
