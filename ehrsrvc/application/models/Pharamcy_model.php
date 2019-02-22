@@ -95,11 +95,19 @@ class Pharamcy_model extends CI_Model{
 						  ->get();
 		*/
 		$query = $this->db->select("
-			`patient_type`.`patient_type`,
+		/*	`patient_type`.`patient_type`,
 			`patients`.`patient_name`,
+			`patients`.`patient_code`, 
+			*/
 			`patients`.`patient_id`,
 			`patients`.`mobile_one`,
-			`patients`.`patient_code`, 
+			
+
+			patients.patient_code as associate_permworker_code,
+			patients.patient_name as associate_permworker_name,
+			ipd_patient_master.patient_gender,
+			ipd_patient_master.patient_name,
+			ipd_patient_master.patient_type,
 			/* `ipd_patient_master`.`admission_id` AS `prescription_ID`, */
 			ipd_patient_master.unique_id AS `prescription_ID`,
 			'I' AS prescFrom,
@@ -109,7 +117,8 @@ class Pharamcy_model extends CI_Model{
 		",FALSE)
 	  ->from("patient_health_profile") 
 	  ->join("ipd_patient_master","ipd_patient_master.unique_id = patient_health_profile.`prescription_addmission_id` AND patient_health_profile.`opd_ipd_flag` = 'I'", "INNER")
-	  ->join("patients" , "patients.patient_id = ipd_patient_master.patient_id" , "INNER")
+	/*  ->join("patients" , "patients.patient_id = ipd_patient_master.patient_id" , "INNER") */
+	  ->join("patients" , "patients.patient_id = ipd_patient_master.associate_permworker_id" , "LEFT")
 	  ->join("patient_type" , "patient_type.patient_type_id = patients.patient_type_id" , "INNER")
 	  ->join("issue_medicine_master" , "`issue_medicine_master`.`opd_ipd_prescription_id` = `ipd_patient_master`.`unique_id` AND issue_medicine_master.`health_profile_id` = patient_health_profile.`unique_id`" , "LEFT")
 	  ->join("opd_ipd_medicine" , "opd_ipd_medicine.health_profile_id = patient_health_profile.unique_id AND opd_ipd_medicine.opd_ipd_flag = 'I'" , "LEFT")

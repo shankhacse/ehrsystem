@@ -113,11 +113,20 @@ export class IpddischargeComponent implements OnInit {
       patientNameCtrl: new FormControl({value: '', disabled: true}, Validators.required),
       dobCtrl: new FormControl({value: '', disabled: true}, Validators.required),
       emplCodeCtrl: new FormControl({value: '', disabled: true}, Validators.required),
+      roomNoCtrl: new FormControl({value: '', disabled: true}, Validators.required),
+      bedNoCtrl: new FormControl({value: '', disabled: true}, Validators.required),
       bldgrpCtrl: new FormControl({value: '', disabled: true}, Validators.required),
+      genderCtrl: new FormControl({value: '', disabled: true}),
+      ageCtrl: new FormControl({value: '', disabled: true}),
+      patientAdvSearchCtrl: new FormControl({value: '', disabled: true}),
+      patinetNameCtrl: new FormControl({value: '', disabled: true}),
+      patientTypeCtrl: new FormControl({value: '', disabled: true}),
       bpCtrl: new FormControl(''),
+      bpDiastolicCtrl: new FormControl(''),
       haemoglobinCtrl: new FormControl(''),
       bldsugarFCtrl: new FormControl(''),
       bldsugarPPCtrl: new FormControl(''),
+      bldsugarRCtrl: new FormControl(''),
       jaundiceCtrl: new FormControl(''),
       tempCtrl: new FormControl(''),
       heightCtrl: new FormControl(''),
@@ -264,7 +273,7 @@ export class IpddischargeComponent implements OnInit {
         }
 
 
-        if(pdata.blood_group == "" || pdata.blood_group == null) {
+        if(pdata.patient_blood_grp == "" || pdata.patient_blood_grp == null) {
           this.ipdDischargeForm.controls['bldgrpCtrl'].enable();
         }
         else {
@@ -280,16 +289,26 @@ export class IpddischargeComponent implements OnInit {
           patientHelathProfileID: pdata.patient_health_profile_id,
           emplCodeCtrl: pdata.patient_code,
           dobCtrl: pdata.dob_dt,
-          bldgrpCtrl:pdata.blood_group,
+          roomNoCtrl:pdata.room_no,
+          bedNoCtrl:pdata.bed_no,
+          genderCtrl:pdata.patient_gender,
+          bldgrpCtrl:pdata.patient_blood_grp,
+          ageCtrl:pdata.patient_age,
+          patientAdvSearchCtrl:pdata.associate_permworker_name,
+          patientTypeCtrl:pdata.patient_type,
+          patinetNameCtrl:pdata.patient_name,
+          
           bpCtrl: pdata.bp,
+          bpDiastolicCtrl:pdata.bp_diastolic,
           haemoglobinCtrl: pdata.anemia,
           bldsugarFCtrl: pdata.blood_sugar_f,
           bldsugarPPCtrl: pdata.blood_sugar_pp,
+          bldsugarRCtrl: pdata.blood_sugar_random,
           jaundiceCtrl: pdata.jaundice,
           tempCtrl: pdata.temp,
           heightCtrl: pdata.height,
           weightCtrl: pdata.weight,
-          odemaCtrl: pdata.anemia,
+          odemaCtrl: pdata.odema,
           instructionCommentCtrl:pdata.instruction,
           dischargeCommentCtrl:pdata.discharge_summary,
           finalCommentCtrl:pdata.final_digonosis,

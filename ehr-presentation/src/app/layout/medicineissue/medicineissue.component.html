@@ -35,35 +35,38 @@
                                         <form [formGroup]="prescriptionMedPatientInfoForm">
                                           
                                             <div class="container infocontainer" fxLayout="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                                              <div fxFlex="20%">
+                                                            <mat-form-field class="fullwidthinp">
+                                                                <input matInput placeholder="Patient Name" formControlName="patientName">
+                                                            </mat-form-field>
+                                                </div>
+                            
+                                                 <div fxFlex="20%">
+                                                            <mat-form-field class="fullwidthinp">
+                                                                <input matInput placeholder="Age" formControlName="patientAge">
+                                                            </mat-form-field>
+                                               </div>
+                            
                                                 <div fxFlex="20%">
                                                     <mat-form-field class="fullwidthinp">
                                                         <input matInput placeholder="Prescription / IPD No " formControlName="prescriptionNo" />
                                                     </mat-form-field>
                                                 </div>
-                                                <div fxFlex="20%">
-                                                    <mat-form-field class="fullwidthinp">
-                                                        <input  type="hidden" formControlName="patientID" />
-                                                        <input matInput placeholder="Patient Code" formControlName="patientCode" />
-                                                    </mat-form-field>
-                                                </div>
+                                                
                                                 <div fxFlex="20%">
                                                     <mat-form-field class="fullwidthinp">
                                                         <input matInput placeholder="Type" formControlName="patientType">
                                                     </mat-form-field>
                                                 </div>
-                    
+
                                                 <div fxFlex="20%">
-                                                    <mat-form-field class="fullwidthinp">
-                                                        <input matInput placeholder="Patient Name" formControlName="patientName">
-                                                    </mat-form-field>
-                                                </div>
+                                                        <mat-form-field class="fullwidthinp">
+                                                            <input  type="hidden" formControlName="patientID" />
+                                                            <input matInput placeholder="Permament Worker" formControlName="ParmanentwrkCtrl" />
+                                                        </mat-form-field>
+                                                    </div>
                     
-                                                <div fxFlex="20%">
-                                                    <mat-form-field class="fullwidthinp">
-                                                        <input matInput placeholder="Age" formControlName="patientAge">
-                                                    </mat-form-field>
-                                                </div>
-                    
+                                               
                                             </div>
                                         </form>
                                             

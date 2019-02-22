@@ -303,5 +303,19 @@ export class PatientService {
           });
         });
     }
+
+/*----------------------------------- 21 Feb 2019 ------------------------ */
+    getPatientIPDInfoByUniqueID(pcode){
+      let myData = JSON.stringify({pcode: pcode});
+       return new Promise(resolve => {
+          this.http.post(this.global.patientIPDInfoByUniqueID_URL,myData).subscribe(data => {
+            resolve(data);
+           
+          }, err => {
+            console.log(err);
+          });
+        });
+      
+    }
    
 }

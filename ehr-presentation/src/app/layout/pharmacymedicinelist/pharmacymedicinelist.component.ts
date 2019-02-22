@@ -50,7 +50,8 @@ displayedColumnsIPD: string[] = [
   'prescDate',
   'patient_code',
   'patient_name',
-  'mobile_one'
+  'patient_gender',
+  'associate_permworker_code'
 ];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
