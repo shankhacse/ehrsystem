@@ -598,7 +598,7 @@ class Patient_model extends CI_Model
             ->join("relationship_master", "patients.relation_id = relationship_master.id", "LEFT")
             ->where($where)
             ->get();
-        //  echo $this->db->last_query();
+          #echo $this->db->last_query();
 
         if ($query->num_rows() > 0) {
             $patient_data = $query->row();
@@ -775,6 +775,32 @@ class Patient_model extends CI_Model
 
         if ($query->num_rows() > 0) {
             $patient_data = $query->result();
+        }
+        return $patient_data;
+    }
+
+/* -----------------------------------21 Feb 2019------------------------------------- */
+
+    public function getIPDPatientByUniqueID($uniqueid)
+    {
+        $patient_data = "";
+        $where = [
+            "ipd_patient_master.unique_id" => $uniqueid
+        ];
+        $query = $this->db->select(
+                                    "ipd_patient_master.*,
+                                     patients.patient_name as associate_permworker_name,
+                                     patients.patient_code as associate_permworker_code,
+                                    ")
+            ->from("ipd_patient_master")
+           
+            ->join("patients" , "patients.patient_id = ipd_patient_master.associate_permworker_id" , "LEFT")
+            ->where($where)
+            ->get();
+         # echo $this->db->last_query();
+
+        if ($query->num_rows() > 0) {
+            $patient_data = $query->row();
         }
         return $patient_data;
     }

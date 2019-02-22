@@ -86,6 +86,8 @@ export class GlobalconstantService {
   public patientSearchByaadhar_URL = this.APIURL+"patient/patientSearchByAadhar";
   public ipdpatientByEmpRel_URL = this.APIURL+"patient/getPatientListIPD";
 
+  public patientIPDInfoByUniqueID_URL = this.APIURL+"patient/getPatientIPDInfoByUniqueID";
+
   /* --------------------------------------------------------- 
    * ---------------------------------------------------------
    * @ Pharmcy URL LIST

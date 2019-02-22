@@ -131,6 +131,7 @@ export class MedicineissueComponent implements OnInit {
         patientType: new FormControl({value: '', disabled: true}),
         patientName: new FormControl({value: '', disabled: true}),
         patientAge: new FormControl({value: '', disabled: true}),
+        ParmanentwrkCtrl: new FormControl({value: '', disabled: true}),
         prescriptionNo : new FormControl({value: '', disabled: true}) 
       });
 
@@ -166,16 +167,20 @@ export class MedicineissueComponent implements OnInit {
       let reportdata;
 
       /* this.patientService.getPatientInfoByCode(localStorage.getItem("prescpcode")).then(data => { */
-      this.patientService.getPatientInfoByPatientID(localStorage.getItem("med_patient_id")).then(data => {
+      /* this.patientService.getPatientInfoByPatientID(localStorage.getItem("med_patient_id")).then(data => { */
+        this.patientService.getPatientIPDInfoByUniqueID(localStorage.getItem("prescid")).then(data => { 
         response = data;
+       
         if(response.msg_status==200) {
           pdata = response.result ; 
+          console.log(pdata.patient_id);
           this.prescriptionMedPatientInfoForm.patchValue({
             patientID: pdata.patient_id,
-            patientCode: pdata.patient_code,
+           /* patientCode: pdata.patient_code,*/
+            ParmanentwrkCtrl:pdata.associate_permworker_name,
             patientType:pdata.patient_type,
             patientName: pdata.patient_name,
-            patientAge: response.age + " Yrs.",
+            patientAge: pdata.patient_age + " Yrs.",
             prescriptionNo :  localStorage.getItem("prescpno")
            
         });
