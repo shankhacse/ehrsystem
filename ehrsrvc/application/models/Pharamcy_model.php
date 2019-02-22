@@ -584,13 +584,22 @@ class Pharamcy_model extends CI_Model{
 									WHEN opd_prescription.id > 0 THEN opd_prescription.`opd_prescription_id`
 									WHEN  ipd_patient_master.`admission_id` > 0 THEN ipd_patient_master.`admission_id`
 									END AS prescno ,
+
+									CASE 
+									WHEN issue_medicine_master.patient_id > 0 THEN patients.patient_name
+									WHEN issue_medicine_master.patient_id IS NULL THEN ipd_patient_master.patient_name
+									END AS patientname,
 									DATE_FORMAT(issue_medicine_master.`date_of_issue`,'%d/%m/%Y') AS issueDate,
 									
-									issue_medicine_detail.`qty`,
-									patients.`patient_name` AS patientname" ,FALSE)
+									issue_medicine_detail.`qty`
+								/*	patients.`patient_name` AS patientname*/
+									
+									
+									" ,FALSE)
 						  ->from("issue_medicine_detail") 
 						  ->join("issue_medicine_master","issue_medicine_detail.issue_master_id = issue_medicine_master.issue_id","INNER")
-						  ->join("patients","patients.patient_id = issue_medicine_master.patient_id","INNER")
+							->join("patients","patients.patient_id = issue_medicine_master.patient_id","INNER")
+							
 						  ->join("opd_prescription","opd_prescription.id = issue_medicine_master.opd_ipd_prescription_id AND issue_medicine_master.opd_ipd_flag = 'O'","LEFT")
 						  ->join("ipd_patient_master","ipd_patient_master.admission_id = issue_medicine_master.opd_ipd_prescription_id AND issue_medicine_master.opd_ipd_flag = 'I'","LEFT")
 						  ->where('DATE_FORMAT(issue_medicine_master.date_of_issue,"%Y-%m-%d") BETWEEN "'. date('Y-m-d', strtotime($from_date)). '" AND "'. date('Y-m-d', strtotime($to_date)).'"')
@@ -603,6 +612,7 @@ class Pharamcy_model extends CI_Model{
 		echo "\n";
 		echo "\n";
 		*/
+	
 		
 		if($query->num_rows()>0) 
 		{
