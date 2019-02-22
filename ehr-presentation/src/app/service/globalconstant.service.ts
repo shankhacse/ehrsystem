@@ -66,6 +66,7 @@ export class GlobalconstantService {
   public frequencyByMedlist_URL = this.APIURL+"medicine/getFrequencyByMedicine";
 
   public insertOPD_URL = this.APIURL+"opd/insertIntoOpd";
+  public insertSickLeave_URL = this.APIURL+"opd/saveSickLeave";
 
   public todaysRegDoct_URL = this.APIURL+"registration/getTodaysRegDoct";
   public todaysRegByRegType_URL = this.APIURL+"registration/todaysRegByRegType";

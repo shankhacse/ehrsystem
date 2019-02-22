@@ -1,0 +1,21 @@
+#sickEntryDialogPage {
+    margin-top:-7%;
+}
+
+#sickEntryDialogPage .mat-dialog-title{
+    text-align: center;
+    letter-spacing: 2px;
+    margin-top: 5%;
+}
+
+#sickEntryDialogPage li {
+    font-size: 0.81em;
+    letter-spacing: 1px;
+}
+
+#sickEntryDialogPage .requiednore{
+    text-align: center;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: #909090;
+}

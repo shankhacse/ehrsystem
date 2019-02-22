@@ -18,6 +18,7 @@ import { PrescriptionprintComponent } from './prescriptionprint/prescriptionprin
 import { DismisswithpromptdialogComponent } from './components/dismisswithpromptdialog/dismisswithpromptdialog.component';
 
 import { DeleteconfirmationdialogComponent } from './admin/components/deleteconfirmationdialog/deleteconfirmationdialog.component';
+import { SickentrydialogComponent } from './components/sickentrydialog/sickentrydialog.component';
 
 
 @NgModule({
@@ -29,9 +30,9 @@ import { DeleteconfirmationdialogComponent } from './admin/components/deleteconf
         ReactiveFormsModule
        
     ],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, OkdialogComponent , SuccessdialogComponent , ConfirmationdischargeComponent, MasterentrydialogComponent,SuccessdialogwithprintComponent,PrescriptionprintComponent, DismisswithpromptdialogComponent,DeleteconfirmationdialogComponent],
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent, OkdialogComponent , SuccessdialogComponent , ConfirmationdischargeComponent, MasterentrydialogComponent,SuccessdialogwithprintComponent,PrescriptionprintComponent, DismisswithpromptdialogComponent,DeleteconfirmationdialogComponent, SickentrydialogComponent],
    
-    entryComponents : [SuccessdialogComponent , ConfirmationdischargeComponent , MasterentrydialogComponent,SuccessdialogwithprintComponent,PrescriptionprintComponent,DismisswithpromptdialogComponent,DeleteconfirmationdialogComponent ]
+    entryComponents : [SuccessdialogComponent , ConfirmationdischargeComponent , MasterentrydialogComponent,SuccessdialogwithprintComponent,PrescriptionprintComponent,DismisswithpromptdialogComponent,DeleteconfirmationdialogComponent,SickentrydialogComponent ]
  
 })
 export class LayoutModule {}

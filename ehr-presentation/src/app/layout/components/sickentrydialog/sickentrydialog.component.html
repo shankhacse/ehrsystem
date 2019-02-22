@@ -1,0 +1,62 @@
+<div id="sickEntryDialogPage">
+
+  <mat-progress-bar
+  class="dialogFormProgress"
+  [color]="color"
+  [mode]="mode"
+  [value]="value"
+  [bufferValue]="bufferValue" *ngIf="isEnableProgress" >
+  </mat-progress-bar>
+
+
+<h4 style="text-align: center;letter-spacing: 1px;"> Sick Leave And Referral  </h4>
+<form [formGroup]="sickDialogEntryForm">
+<ul style="list-style:none;">
+  <li>
+    <mat-form-field style="width:100%;">
+      <input type="hidden" formControlName="hdnRegID"  />
+      <input type="hidden" formControlName="hdnPatientID" />
+      <input type="hidden" formControlName="hdnRegtype" />
+      <input matInput type="number" placeholder="No. of sick days *" formControlName="sickdaysCtrl" autocomplete="off">
+    </mat-form-field>
+
+  
+  </li>
+
+  <li>
+    <mat-checkbox formControlName="approvalCtrl">Accident Approval </mat-checkbox>
+  </li>
+
+  <li>
+      <mat-checkbox formControlName="admitCtrl" (change)="validateRecomChkBox($event,'ADMIT')" >Admit&nbsp;&nbsp;</mat-checkbox>
+      <mat-checkbox formControlName="observCtrl" (change)="validateRecomChkBox($event,'OBSERVATION')" >Observation</mat-checkbox>
+  </li>
+
+  <br>
+  <li>
+      <mat-checkbox formControlName="isReffHospital"  (change)="enableReffHospital($event)">Referral Hospital</mat-checkbox>
+  </li>
+  <li>
+      <mat-form-field style="width:100%;" >
+          <mat-select formControlName="reffHospitalCtrl" placeholder=""  >
+              
+             
+              <mat-option *ngFor="let reports of refferHospitals[0] " [value]="reports">
+                  {{reports.hospital_name}}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
+  </li>
+ 
+ 
+</ul>
+<p class="requiednore" style="color:red;" *ngIf="sickValidationError">Error : No. of sick days must<br> be greater than 0</p>
+<p class="requiednore">Note : * Fields are required</p>
+</form>
+
+<div mat-dialog-actions style="display:block;text-align: center;">
+<button mat-raised-button color="warn" (click)="closeDialog()" type="button"><mat-icon>cancel</mat-icon> Cancel</button>
+<button mat-raised-button color="primary" (click)="saveSickLeave()"  [disabled]="!sickDialogEntryForm.valid"><mat-icon>save</mat-icon> Save</button>
+</div>
+
+</div>
