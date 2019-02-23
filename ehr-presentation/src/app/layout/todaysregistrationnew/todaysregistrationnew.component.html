@@ -65,7 +65,7 @@
                                       <mat-spinner [diameter]="25"  style="display:none;" id="opdIssueLoader_{{row.registration_id}}" ></mat-spinner>
                                     &nbsp;&nbsp;
                                     <!--<mat-icon>loupe</mat-icon>-->
-                                      <a mat-raised-button color="primary" class="opdIssueBtn" (click)="sickLeaveEntryDialog(row)"  id="opdIssueBtn_{{row.registration_id}}">
+                                      <a mat-raised-button color="primary" class="opdIssueBtn" (click)="sickLeaveEntryDialog(row)"  id="opdIssueBtn_{{row.registration_id}}" *ngIf='row.reg_type=="CONSULTATION"'>
                                         <mat-icon>loupe</mat-icon>
                                         Sick 
                                     </a>

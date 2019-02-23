@@ -159,50 +159,110 @@ export class MedicineissueComponent implements OnInit {
       });
   
 
-      let response;
-      let pdata;
-      let symptomlist;
-      let diagnosislist;
-      let medicinedata;
-      let reportdata;
-
-      /* this.patientService.getPatientInfoByCode(localStorage.getItem("prescpcode")).then(data => { */
-      /* this.patientService.getPatientInfoByPatientID(localStorage.getItem("med_patient_id")).then(data => { */
-        this.patientService.getPatientIPDInfoByUniqueID(localStorage.getItem("prescid")).then(data => { 
-        response = data;
-       
-        if(response.msg_status==200) {
-          pdata = response.result ; 
-          console.log(pdata.patient_id);
-          this.prescriptionMedPatientInfoForm.patchValue({
-            patientID: pdata.patient_id,
-           /* patientCode: pdata.patient_code,*/
-            ParmanentwrkCtrl:pdata.associate_permworker_name,
-            patientType:pdata.patient_type,
-            patientName: pdata.patient_name,
-            patientAge: pdata.patient_age + " Yrs.",
-            prescriptionNo :  localStorage.getItem("prescpno")
-           
-        });
-        
-        
+      if(localStorage.getItem('presfrom') == "I") {
+        this.getIPDPatientInfo();
       }
-      else{
-         
-        }
-       },
+      
+      if(localStorage.getItem('presfrom') == "O") {
+       this.getOPDPatientInfo();
+      }
 
-       error => {
-           console.log("There is some error on submitting...");
-       });
-
-       this.getMedicinesByPrescription(localStorage.getItem("prescid"),localStorage.getItem("presfrom"));
-
-
-     
+      
        
 
   }
+
+
+
+  getOPDPatientInfo(){
+    let response;
+    let pdata;
+    let symptomlist;
+    let diagnosislist;
+    let medicinedata;
+    let reportdata;
+
+    /* this.patientService.getPatientInfoByCode(localStorage.getItem("prescpcode")).then(data => { */
+    this.patientService.getPatientInfoByPatientID(localStorage.getItem("med_patient_id")).then(data => {
+      response = data;
+      if(response.msg_status==200) {
+        pdata = response.result ; 
+        this.prescriptionMedPatientInfoForm.patchValue({
+          patientID: pdata.patient_id,
+          patientCode: pdata.patient_code,
+          patientType:pdata.patient_type,
+          patientName: pdata.patient_name,
+          patientAge: response.age + " Yrs.",
+          prescriptionNo :  localStorage.getItem("prescpno"),
+          ParmanentwrkCtrl:pdata.patient_code
+         
+      });
+      
+      
+    }
+    else{
+       
+      }
+     },
+
+     error => {
+         console.log("There is some error on submitting...");
+     });
+
+     this.getMedicinesByPrescription(localStorage.getItem("prescid"),localStorage.getItem("presfrom"));
+
+
+  }
+
+  getIPDPatientInfo() {
+    let response;
+    let pdata;
+    let symptomlist;
+    let diagnosislist;
+    let medicinedata;
+    let reportdata;
+
+    /* this.patientService.getPatientInfoByCode(localStorage.getItem("prescpcode")).then(data => { */
+     /* this.patientService.getPatientInfoByPatientID(localStorage.getItem("med_patient_id")).then(data => { */
+     this.patientService.getPatientIPDInfoByUniqueID(localStorage.getItem("prescid")).then(data => { 
+
+      response = data;
+     
+      if(response.msg_status==200) {
+        pdata = response.result ; 
+        console.log(pdata.patient_id);
+        this.prescriptionMedPatientInfoForm.patchValue({
+          patientID: pdata.patient_id,
+         /* patientCode: pdata.patient_code,*/
+          ParmanentwrkCtrl:pdata.associate_permworker_name,
+          patientType:pdata.patient_type,
+          patientName: pdata.patient_name,
+          patientAge: pdata.patient_age + " Yrs.",
+          prescriptionNo :  localStorage.getItem("prescpno")
+         
+      });
+      
+      
+    }
+    else{
+       
+      }
+     },
+
+     error => {
+         console.log("There is some error on submitting...");
+     });
+
+     this.getMedicinesByPrescription(localStorage.getItem("prescid"),localStorage.getItem("presfrom"));
+
+
+   
+  }
+
+
+
+
+
 
 
   initializeMedicine(medidval , stockval, issueval , info) {

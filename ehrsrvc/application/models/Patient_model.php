@@ -393,6 +393,10 @@ class Patient_model extends CI_Model
                 $patient_code=$employeeid."/".date("d-m-Y", strtotime($request->dob));
             }
 
+            $pdob  = NULL;
+            if(isset($request->dob)){
+                $pdob =  $request->dob;
+            }
            
 
             $patient_data = [
@@ -403,7 +407,7 @@ class Patient_model extends CI_Model
                 "patients.division_number" => trim(htmlspecialchars($divisionno)),
                 "patients.challan_number" => trim(htmlspecialchars($challanno)),
                 "patients.estate" => $estate,
-                "patients.dob" => trim(htmlspecialchars($request->dob)), 
+                "patients.dob" => trim(htmlspecialchars($pdob)), 
                 "patients.age" => trim(htmlspecialchars($patientdata->ageCtrl)), 
                 "patients.gender" => trim(htmlspecialchars($gender)),
                 "patients.employee_id" => $employeeid,
