@@ -124,7 +124,7 @@ export class SickleaveapprovalComponent implements OnInit {
   
 
   backToList(){
-    this.router.navigateByUrl('panel/todaysreg');
+    this.router.navigateByUrl('panel/todaysnewreg');
   }
 }
 

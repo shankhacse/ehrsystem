@@ -349,6 +349,168 @@ class Opd_model extends CI_Model{
 		
 	}
 	
+
+
+	/**
+	 * Save Sick Leave Data
+	 */
+	public function saveSickLeave($request,$hospital_id,$doctor_id){
+		
+		try{
+			
+			$this->db->trans_begin();
+			$insert_data = [];
+			
+			$opdPrescriptionArry = [];
+			$todaydt = date("Y-m-d H:i:s");
+			
+			$opdPrecesptionID = $this->getLatestPrescriptionID($hospital_id);
+			
+			
+			$opdForm =  $request->formdata;
+			
+			$registrationID = $opdForm->hdnRegID;
+			$patientid = $opdForm->hdnPatientID;
+			$pres_from = $opdForm->hdnRegtype;
+
+			$sickDays = NULL;
+			if(isset($opdForm->sickdaysCtrl)){$sickDays = $opdForm->sickdaysCtrl;}
+			
+			$acc_approval = $opdForm->approvalCtrl == 1 ? 'Y' : 'N';		
+			$sickFlag = 'Y';
+			$noofdaysSick = $sickDays;
+			$ipd_reco = $opdForm->admitCtrl == 1 ? 'R' : 'S'; // IPD Recomandation
+			$hospital_reco = $opdForm->observCtrl == 1 ? true : false; 
+			$referal_hospital = $opdForm->isReffHospital == 1 ? true : false;
+			$keep_in_observation = $opdForm->observCtrl == 1 ? true : false;
+			$comments = NULL;
+			
+			$referalhospital_id = NULL;
+			if($referal_hospital){
+				$referalHospital = $opdForm->reffHospitalCtrl;
+				$referalhospital_id = $referalHospital->hospital_id;
+			}
+			
+			$opdPrescriptionArry = [
+				"opd_prescription_id" => $opdPrecesptionID, 
+				"registrationid" => $registrationID,
+				"hospital_id" => $hospital_id,
+				"date" => $todaydt,
+				"patient_id" => $patientid,
+				"doctor_id" => $doctor_id,
+				"accidental_approval" => $acc_approval,
+				"symptom_list" => NULL,
+				"diagonised_list" => NULL,
+				"sick_flag" => $sickFlag,
+				"no_of_days_sick" => $noofdaysSick,
+				"ipd_reco_flag" => $ipd_reco,
+				"hospital_rec_flag" => $referal_hospital,
+				"referal_hospital_id" => $referalhospital_id,
+				"keep_in_observation" => $keep_in_observation,
+				"comments" => $comments,
+				"prescription_from" => $pres_from,
+				"servertag" => getServerTag()
+			];
+			
+
+			$this->db->insert('opd_prescription', $opdPrescriptionArry); 
+			$opd_precp_id = $this->db->insert_id();
+			$opd_uniq_id = generateUniqRowID($opd_precp_id,getServerTag(),$hospital_id);
+
+			// Update Table 
+			$whereOpdPresc = [
+				"id" => $opd_precp_id,
+				"servertag" => getServerTag(),
+				"hospital_id" => $hospital_id
+			];
+			$upda_OpdPresc = [
+				"unique_id" => $opd_uniq_id
+			];
+
+			$this->commondatamodel->updateSingleTableData('opd_prescription',$upda_OpdPresc,$whereOpdPresc);
+			
+			// Insert Into Sick Leav Approval if sick leave apply
+			if(isset($sickFlag) && $sickFlag=="Y" && $noofdaysSick > 0 ) {
+
+				$insert_patient_sickleave_detail = [];
+				$apply_date = date("Y-m-d");
+					for($i=0;$i<$noofdaysSick;$i++) {
+						
+						$insert_patient_sickleave_detail = [
+							"opd_ipd__id" => $opd_uniq_id,
+							"opd_ipd_flag" => "O",
+							"patient_id" => $patientid,
+							"applied_for_date" => $apply_date,
+							"is_approved" => "N",
+							"approved_by" => NULL,
+							"approved_on" => NULL,
+							"servertag" => getServerTag(),
+							"hospital_id" => $hospital_id
+						];
+
+						$this->db->insert('patient_sickleave_detail', $insert_patient_sickleave_detail); 
+						$sick_inserted_id = $this->db->insert_id();
+
+						$apply_date = date('Y-m-d', strtotime("+1 day", strtotime($apply_date)));
+
+						// Update Table 
+						$whereSick = [
+							"id" => $sick_inserted_id,
+							"servertag" => getServerTag(),
+							"hospital_id" => $hospital_id
+						];
+						$upda_SickLeave = [
+							"unique_id" => generateUniqRowID($sick_inserted_id,getServerTag(),$hospital_id)
+						];
+						$this->commondatamodel->updateSingleTableData('patient_sickleave_detail',$upda_SickLeave,$whereSick);
+					
+
+					}
+
+			}
+
+
+
+			
+			$updArry = [
+				"registration.served_flag" => 'Y',
+			];
+			
+			$whereReg = [
+				"registration.unique_id" => $registrationID,
+				"registration.hospital_id" => $hospital_id,
+			];
+			
+			$this->db->where($whereReg);
+			$this->db->update('registration', $updArry); 
+			
+		
+			if($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+				return false;
+            } else {
+				
+				$this->db->trans_commit();
+				/*
+				$returnData = [];
+				$returnData = [
+					"prescription" => $opd_uniq_id,
+					"healthprfl" => $health_profile_uniq_id
+				];
+				return $returnData;
+				*/
+                return true;
+                
+            }
+				
+		}
+		catch(Exception $exc){
+			 echo $exc->getTraceAsString();
+		}
+		
+	}
+
+
 	private function insertIntoMedicines($hospital_id,$opd_precp_id,$healthprofile_inserted_id,$medicineData){
 		if(isset($medicineData)){
 			$len = count($medicineData);

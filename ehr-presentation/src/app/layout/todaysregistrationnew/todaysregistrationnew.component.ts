@@ -5,6 +5,10 @@ import { MatTabChangeEvent } from '@angular/material';
 import { RegistrationService } from '../../service/registration.service';
 import { DatashareService } from '../../service/datashare.service';
 import { Router } from '@angular/router';
+import { SickentrydialogComponent } from '../components/sickentrydialog/sickentrydialog.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA , MatDialogConfig } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
+
 
 
 @Component({
@@ -67,7 +71,7 @@ export class TodaysregistrationnewComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   tabLoadTimes: Date[] = [];
-  constructor(private commonService:CommonService ,private registerService: RegistrationService , private datashareService:DatashareService , private router:Router) {
+  constructor(private commonService:CommonService ,private registerService: RegistrationService , private datashareService:DatashareService , private router:Router,public dialog: MatDialog, public snackBar: MatSnackBar) {
     console.log("Data service " + this.datashareService.sharedData);
   }
 
@@ -337,6 +341,52 @@ export class TodaysregistrationnewComponent implements OnInit {
 
   backToIpdList() {
     this.router.navigateByUrl('panel/doctor');
+  }
+
+  gotoSickLeaveApprovalList() {
+    this.router.navigateByUrl('panel/sickapproval');
+  }
+
+
+
+  /**
+   * Sick Leave Dialog Data Insert
+   */
+
+  sickLeaveEntryDialog(rowdata) {
+    console.log(rowdata);
+    this.openSickEntryDialog(rowdata);
+  }
+
+
+  
+  openSickEntryDialog(rowdata) {
+    const dialogRef = this.dialog.open(SickentrydialogComponent, {
+      width: '400px',
+      //height:'550px',
+      disableClose: true,
+      data:  rowdata
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+
+     
+      if(result.from == "Save") {
+        this.openSnackBar("Sick leave applied successfully");
+        this.getTodaysRegForDocByRegType("CONSULTATION","N");
+        this.getTodaysRegByRegTypeCount("CONSULTATION","N");
+      }
+
+     
+    });
+  }
+
+
+  openSnackBar(msg) {
+    let config = new MatSnackBarConfig();
+    config.duration = 3000;
+    this.snackBar.open(msg, "", config);
+   
   }
 
 

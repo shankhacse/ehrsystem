@@ -121,6 +121,16 @@ export class SymptomdiseaseService {
   }
 
 
+  insertToSickLeave(formdata) {
+    let datas = JSON.stringify({formdata:formdata});
+    return new Promise(resolve => {
+      this.http.post(this.global.insertSickLeave_URL,datas).subscribe(data => {
+        resolve(data);
+      }, err => {
+        console.log(err);
+      });
+   });
+  }
 
 
 
