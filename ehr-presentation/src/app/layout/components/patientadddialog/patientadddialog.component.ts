@@ -58,6 +58,9 @@ export class PatientadddialogComponent implements OnInit , OnDestroy {
   maxDate:Date = new Date();
   dobCtrl:string = "";
   
+ 
+  preg_vacCheck_star=" ";
+  dob_star=" ";
 
   validFormErr:string = "";
 
@@ -72,16 +75,16 @@ export class PatientadddialogComponent implements OnInit , OnDestroy {
     this.patientAddForm = new FormGroup({
      /* pcodeCtrl: new FormControl(''), */
       regType: new FormControl('' , Validators.required ),
-      pnameCtrl: new FormControl('' , Validators.required ),
+      pnameCtrl: new FormControl(''),
       ageCtrl: new FormControl(''), 
       dobCtrl: new FormControl(''),
      /* dobCtrl: new FormControl('', Validators.required),*/
-      gender : new FormControl('' , Validators.required),
+      gender : new FormControl(''),
       mobileCtrl: new FormControl(''),
       alternatemblCtrl: new FormControl(''),
       aadharCtrl: new FormControl(''),
       bldgrpCtrl: new FormControl(''),
-      patienttypeCtrl: new FormControl('' , Validators.required),
+      patienttypeCtrl: new FormControl(''),
     /*  associateEmplCtrl: new FormControl('' , Validators.required), */
       patientAdvSearchCtrl : new FormControl(''),
       associateEmplCtrl: new FormControl(''),
@@ -91,7 +94,7 @@ export class PatientadddialogComponent implements OnInit , OnDestroy {
       linenoCtrl: new FormControl(''),
       divisionCtrl: new FormControl(''),
       challannoCtrl: new FormControl(''),
-      estateCtrl: new FormControl('', Validators.required),
+      estateCtrl: new FormControl(''),
      // estateCtrl: new FormControl('') ,
       reasonCtrl: new FormControl('') ,
      
@@ -397,9 +400,10 @@ export class PatientadddialogComponent implements OnInit , OnDestroy {
    // var test= dateofbirth.toLocaleString();
    // console.log('test'+test)
     var dob=dateofbirth.toJSON(dateofbirth);
-  //  var dob=this.patientAddForm.get("dobCtrl");
+ 
     console.log("dob:"+dob);
-    if(this.patientAddForm.invalid) {
+
+    /* if(this.patientAddForm.invalid) {
       console.log("Validation Required");
     }
     else{
@@ -439,7 +443,43 @@ export class PatientadddialogComponent implements OnInit , OnDestroy {
 
       }//end of validation
 
-    }
+    }  */
+
+
+    if(this.validateOnRegType()){
+      // this.patientAddForm.controls['estateCtrl'].enable(); 
+      // this.registerButtonActive = false;
+       this.loaderActive = true;
+       let response;
+       this.patientService.addNewPatient(this.patientAddForm.value,dob).then(data => {
+         response = data;
+         if(response.msg_status==200){
+           let data = {
+            "from" : "Save",
+            "patientcode" : response.pcode, 
+            "patientname" : this.patientAddForm.get("pnameCtrl").value,
+            "dob" : new Date(this.patientAddForm.get("dobCtrl").value).toLocaleDateString(),
+            "gender" : this.patientAddForm.get("gender").value,
+            "division" : this.patientAddForm.get("divisionCtrl").value,
+            "challan" : this.patientAddForm.get("challannoCtrl").value,
+            "line" : this.patientAddForm.get("linenoCtrl").value,
+            "mobile" : this.patientAddForm.get("mobileCtrl").value,
+            "aadhar" : this.patientAddForm.get("aadharCtrl").value,
+            "regType" : this.patientAddForm.get("regType").value
+           }
+           this.dialogRef.close(data);
+   
+         }
+         else{
+           this.registerButtonActive = true;
+           this.loaderActive = false;
+         }
+        },
+          error => {
+            console.log("There is some error on submitting...");
+        });
+ 
+       }//end of validation
 
 }
 
@@ -467,58 +507,162 @@ validateOnRegType(){
         return validForm = false;
       
   }
+   /* ---------------- validation for CONSULTATION -----------------*/
+  if(this.patientAddForm.get("regType").value=="CONSULTATION"){
+   
+          if(this.patientAddForm.get("pnameCtrl").value==""){
+            this.validFormErr = "Error : Patient Name is required";
+            return validForm = false;
+          
+          }
+
+          if(this.patientAddForm.get("dobCtrl").value==""){
+          
+              if(this.patientAddForm.get("ageCtrl").value==""){
+                this.validFormErr = "Error : Age or Date of Birth is required";
+                return validForm = false;
+              
+              }
+          
+          }
+
+          if(this.patientAddForm.get("gender").value==""){
+            this.validFormErr = "Error : Gender is required";
+            return validForm = false;
+          
+          }
+
+          if(this.patientAddForm.get("patienttypeCtrl").value==""){
+            this.validFormErr = "Error : Employee Type is required";
+            return validForm = false;
+          
+          }
+
+          if(this.patientAddForm.get("estateCtrl").value==""){
+            this.validFormErr = "Error : Estate is required";
+            return validForm = false;
+          
+          }
+
+
+ 
+
+}
+
+ /* ---------------- validation for PREGNANCY -----------------*/
 
   if(this.patientAddForm.get("regType").value=="PREGNANCY"){
-   
-        if(this.patientAddForm.get("patientAdvSearchCtrl").value==""){
-          this.validFormErr = "Error : Associate Employee is required";
-          return validForm = false;
-        
-        }
 
-        if(this.patientAddForm.get("relationCtrl").value==""){
-          this.validFormErr = "Error : Relation is required";
-          return validForm = false;
-        
-        }
+            if(this.patientAddForm.get("pnameCtrl").value==""){
+              this.validFormErr = "Error : Patient Name is required";
+              return validForm = false;
+            
+            }
+
+            if(this.patientAddForm.get("dobCtrl").value==""){
+            
+                if(this.patientAddForm.get("ageCtrl").value==""){
+                  this.validFormErr = "Error : Age or Date of Birth is required";
+                  return validForm = false;
+                
+                }
+            
+            }
+
+            if(this.patientAddForm.get("gender").value==""){
+              this.validFormErr = "Error : Gender is required";
+              return validForm = false;
+            
+            }
+
+            if(this.patientAddForm.get("patienttypeCtrl").value==""){
+              this.validFormErr = "Error : Employee Type is required";
+              return validForm = false;
+            
+            }
+
+            if(this.patientAddForm.get("patientAdvSearchCtrl").value==""){
+              this.validFormErr = "Error : Associate Employee is required";
+              return validForm = false;
+            
+            }
+
+            if(this.patientAddForm.get("relationCtrl").value==""){
+              this.validFormErr = "Error : Relation is required";
+              return validForm = false;
+            
+            }
+
+            if(this.patientAddForm.get("estateCtrl").value==""){
+              this.validFormErr = "Error : Estate is required";
+              return validForm = false;
+            
+            }
+
 
  }
 
+
+
+  /* ---------------- validation for VACCINATION -----------------*/
+
  if(this.patientAddForm.get("regType").value=="VACCINATION"){
 
-      if(this.patientAddForm.get("patientAdvSearchCtrl").value==""){
-        this.validFormErr = "Error : Associate Employee is required";
-        return validForm = false;
-      
-      }
+          if(this.patientAddForm.get("pnameCtrl").value==""){
+            this.validFormErr = "Error : Patient Name is required";
+            return validForm = false;
+          
+          }
 
-      if(this.patientAddForm.get("relationCtrl").value==""){
-        this.validFormErr = "Error : Relation is required";
-        return validForm = false;
-      
-      }
+          if(this.patientAddForm.get("dobCtrl").value==""){
+          
+                this.validFormErr = "Error : Date of Birth is required";
+                return validForm = false;
+             
+          
+          }
 
-      if(this.patientAddForm.get("dobCtrl").value==""){
-        this.validFormErr = "Error : Date of Birth is required";
-        return validForm = false;
-      
-      }
+          if(this.patientAddForm.get("gender").value==""){
+            this.validFormErr = "Error : Gender is required";
+            return validForm = false;
+          
+          }
 
+          if(this.patientAddForm.get("patienttypeCtrl").value==""){
+            this.validFormErr = "Error : Employee Type is required";
+            return validForm = false;
+          
+          }
+
+          if(this.patientAddForm.get("patientAdvSearchCtrl").value==""){
+            this.validFormErr = "Error : Associate Employee is required";
+            return validForm = false;
+          
+          }
+
+          if(this.patientAddForm.get("relationCtrl").value==""){
+            this.validFormErr = "Error : Relation is required";
+            return validForm = false;
+          
+          }
+
+          if(this.patientAddForm.get("estateCtrl").value==""){
+            this.validFormErr = "Error : Estate is required";
+            return validForm = false;
+          
+          }
+
+     
+
+      
 }
 
-if(this.patientAddForm.get("dobCtrl").value==""){
-  
-    if(this.patientAddForm.get("ageCtrl").value==""){
-      this.validFormErr = "Error : Age or Date of Birth is required";
-      return validForm = false;
-    
-    }
 
-}
 
 
 
   validForm = true;
+
  
   return validForm;
 }
@@ -530,6 +674,19 @@ numberOnly(event): boolean {
   }
   return true;
 
+}
+
+handleChange(event) {
+console.log(event.value);
+this.preg_vacCheck_star=" ";
+this.dob_star=" ";
+
+  if(event.value=='PREGNANCY' || event.value=='VACCINATION'){
+    this.preg_vacCheck_star="* ";
+  }
+  if(event.value=='VACCINATION'){
+    this.dob_star="* ";
+  }
 }
   
 

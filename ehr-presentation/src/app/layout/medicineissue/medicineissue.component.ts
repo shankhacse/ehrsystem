@@ -230,11 +230,12 @@ export class MedicineissueComponent implements OnInit {
      
       if(response.msg_status==200) {
         pdata = response.result ; 
+        let wrk_name_code=pdata.associate_permworker_name+'('+pdata.associate_permworker_code+')';
         console.log(pdata.patient_id);
         this.prescriptionMedPatientInfoForm.patchValue({
           patientID: pdata.patient_id,
          /* patientCode: pdata.patient_code,*/
-          ParmanentwrkCtrl:pdata.associate_permworker_name,
+          ParmanentwrkCtrl:wrk_name_code,
           patientType:pdata.patient_type,
           patientName: pdata.patient_name,
           patientAge: pdata.patient_age + " Yrs.",

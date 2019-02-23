@@ -98,6 +98,12 @@
 
 <body style="margin:0;padding:0;">
 
+<table width="100%" border="0" class="smallFont" style="border-bottom:0px solid #000;">
+        <tr>
+            <td align="center" style="text-decoration:underline;padding:3px;font-size:18px;">Prescription</td>
+        </tr>
+    </table>
+
 
 	<table width="100%" border="0" align="left" style="font-size:1.1mm !important;clear:both;" >
         <tr>

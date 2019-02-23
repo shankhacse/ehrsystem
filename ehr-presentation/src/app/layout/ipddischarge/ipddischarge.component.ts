@@ -144,7 +144,7 @@ export class IpddischargeComponent implements OnInit {
       reportsCtrl: new FormControl(''),
       reportsFilterCtrl: new FormControl(''),
       dischargeDt: new FormControl(new Date().toISOString()),
-      nextCheckUpDt: new FormControl(new Date().toISOString()),
+      nextCheckUpDt: new FormControl(''),
       daysCtrl: new FormControl(''),
      
       instructionCommentCtrl : new FormControl(''),
@@ -280,7 +280,8 @@ export class IpddischargeComponent implements OnInit {
           this.ipdDischargeForm.controls['bldgrpCtrl'].disable();
         }
         
-
+        // added on 23.02.2019
+        nextChkDt='';
 
         this.ipdDischargeForm.patchValue({
           patientNameCtrl: pdata.patient_name,

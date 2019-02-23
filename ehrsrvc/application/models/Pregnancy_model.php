@@ -93,7 +93,14 @@ class Pregnancy_model extends CI_Model {
             // Additional Comment
            
             $comment = $additional->pregRemarks;
-            $next_chekup_dt = $additional->nextChkupDate;
+
+            $next_chekup_dt=NULL;
+            if($additional->nextChkupDate!=''){
+
+            $next_chekup_dt = date('Y-m-d H:i:s',strtotime($additional->nextChkupDate));
+            }
+            
+      
             
            // $vaccineDtlData = $patientvaccinInfo->pregnancyVaccinRows;
             
@@ -150,7 +157,7 @@ class Pregnancy_model extends CI_Model {
                 "opd_ipd_flag" => "O",
                 "lmp_date" => date('Y-m-d H:i:s',strtotime($pregnencyInfo->lmpDateCtrl)),
                 "estimate_delivery_date" =>date('Y-m-d H:i:s',strtotime($pregnencyInfo->eddDateCtrl)),
-                "next_checkup_dt" => date('Y-m-d H:i:s',strtotime($next_chekup_dt)),
+                "next_checkup_dt" => $next_chekup_dt,
                 "remarks" => $comment,
                 "servertag" => getServerTag(),
                 "hospital_id" => $hospital_id

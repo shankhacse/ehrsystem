@@ -9,8 +9,8 @@
   <mat-dialog-content>
       <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
           <div fxFlex="60%">
-              <span style="font-size: 13px;" style.color = "{{issubmitted && patientAddForm.get('regType').hasError('required') ? '#f42b2b' : '#7e7ea4'}}" >* Reg. Type&nbsp;&nbsp;</span>
-              <mat-radio-group  formControlName="regType" required >
+              * Reg. Type&nbsp;&nbsp;
+              <mat-radio-group  formControlName="regType" required (change)="handleChange($event)" >
                   <mat-radio-button value="CONSULTATION" > General Consultation&nbsp;&nbsp; </mat-radio-button>
                   <mat-radio-button value="PREGNANCY" > Pregnancy&nbsp;&nbsp; </mat-radio-button>
                   <mat-radio-button value="VACCINATION" > Vaccination </mat-radio-button>
@@ -34,7 +34,7 @@
             
           
               <mat-form-field class="fullwidthinp">
-                    <input matInput [matDatepicker]="picker1" placeholder="* Date of Birth"  formControlName="dobCtrl" autocomplete="off" [max]="maxDate" readonly>
+                    <input matInput [matDatepicker]="picker1" placeholder="{{dob_star}} Date of Birth"  formControlName="dobCtrl" autocomplete="off" [max]="maxDate" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
               </mat-form-field>
@@ -44,7 +44,7 @@
                 (keypress)="numberOnly($event)">
               </mat-form-field>
 
-              <span style="font-size: 13px;" style.color = "{{issubmitted && patientAddForm.get('gender').hasError('required') ? '#f42b2b' : '#7e7ea4'}}" >* Gender</span>
+              <span style="font-size: 13px;"  >* Gender</span>
                 <div style="padding-bottom: 8px;padding-top:5px;">
                  
                     <mat-radio-group  formControlName="gender" required >
@@ -79,7 +79,7 @@
                 </mat-select>
             </mat-form-field>
 
-              <span style="font-size: 13px;" style.color = "{{issubmitted && patientAddForm.get('patienttypeCtrl').hasError('required') ? '#f42b2b' : '#7e7ea4'}}" >* Employee Type</span>
+              <span style="font-size: 13px;" >* Employee Type</span>
              
               
               <div style="padding-bottom: 8px;padding-top: 5px;">
@@ -127,7 +127,8 @@
             -->
 
             <mat-form-field class="fullwidthinp" >
-              <input matInput placeholder="Associate Employee" aria-label="Patient" [matAutocomplete]="auto" formControlName="patientAdvSearchCtrl"  (keyup)="getPatientListBySearch($event)">
+                
+              <input matInput placeholder=" {{preg_vacCheck_star}}Permanent Employee" aria-label="Patient" [matAutocomplete]="auto" formControlName="patientAdvSearchCtrl"  (keyup)="getPatientListBySearch($event)">
          
 
                <mat-autocomplete #auto="matAutocomplete" 
@@ -152,7 +153,7 @@
             -->
 
             <mat-form-field class="fullwidthinp">
-              <mat-select placeholder="Relation" formControlName="relationCtrl">
+              <mat-select placeholder="{{preg_vacCheck_star}}Relation" formControlName="relationCtrl">
                 <mat-option *ngFor="let relations of relationsList[0]" [value]="relations.id">
                   {{relations.relation}}
                 </mat-option>
@@ -247,7 +248,10 @@
     
 
   </mat-dialog-content>
-  <p style="color: #C34E4E;text-align: left;padding-left: 59px;">{{validFormErr}}</p>
+  <div style="text-align: left;padding-left: 59px;color: rgb(255, 9, 9);font-size: 12px;font-weight: 500;letter-spacing: 1px;">
+    {{validFormErr}}
+  </div>
+  <!-- <p style="color: #C34E4E;text-align: left;padding-left: 59px;">{{validFormErr}}</p> -->
   <mat-dialog-actions >
     <button mat-raised-button color="accent" (click)="onNoClick()" type="button">Cancel</button>
     <button class="mat-raised-button mat-primary" type="submit" *ngIf="registerButtonActive">Save</button>

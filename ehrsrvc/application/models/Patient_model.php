@@ -839,7 +839,7 @@ class Patient_model extends CI_Model
                        
                         DATE_FORMAT(patient_sickleave_detail.applied_for_date,'%d-%m-%Y') as Apply_Date,
                         DATE_FORMAT(patient_sickleave_detail.approved_on,'%d-%m-%Y') as Approve_Date,
-                        patients.patient_code as Patient_Code,
+                        patients.patient_code as Patient_ID,
                         patients.patient_name as Patient_Name,
                         patients.challan_number as Challan_Number, 
                         patients.division_number as Division_Number,
