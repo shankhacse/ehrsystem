@@ -67,7 +67,7 @@ export class SickleaveregisterComponent implements OnInit {
       list = dataval.result;
       this.sickleaveList.push(list);
       console.log(this.sickleaveList[0]);
-    //  this.exceldata=this.sickleaveList[0];
+      this.exceldata=this.sickleaveList[0];
       const tcount = this.sickleaveList[0].length;
       if(tcount > 0){
         this.recordsFound = true;
@@ -75,7 +75,7 @@ export class SickleaveregisterComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }
-     // this.exceldata=this.dataSource;
+      
       this.issuedRecordFound =true;
      
     } ,

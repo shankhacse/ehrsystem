@@ -836,10 +836,16 @@ class Patient_model extends CI_Model
         ]; 
 
         $query = $this->db->select("
-                        patient_sickleave_detail.*,
-                        DATE_FORMAT(patient_sickleave_detail.applied_for_date,'%d-%m-%Y') as applydate,
-                        DATE_FORMAT(patient_sickleave_detail.approved_on,'%d-%m-%Y') as approvedate,
-                        patients.*")
+                       
+                        DATE_FORMAT(patient_sickleave_detail.applied_for_date,'%d-%m-%Y') as Apply_Date,
+                        DATE_FORMAT(patient_sickleave_detail.approved_on,'%d-%m-%Y') as Approve_Date,
+                        patients.patient_code as Patient_Code,
+                        patients.patient_name as Patient_Name,
+                        patients.challan_number as Challan_Number, 
+                        patients.division_number as Division_Number,
+                        patients.line_number as Line_Number
+                        
+                        ")
             ->from("patient_sickleave_detail")
             ->join("patients", "patient_sickleave_detail.patient_id=patients.patient_id", "LEFT")
             ->where('DATE_FORMAT(patient_sickleave_detail.applied_for_date,"%Y-%m-%d") BETWEEN "'. date('Y-m-d', strtotime($from_date)). '" AND "'. date('Y-m-d', strtotime($to_date)).'"')
