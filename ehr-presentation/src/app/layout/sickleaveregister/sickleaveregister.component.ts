@@ -12,6 +12,9 @@ import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA , MatDialogConfig } from '@angular/material';
 import { IpdService } from '../../service/ipd.service';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import { ExcelService } from '../../service/excel.service';
+
+
 
 @Component({
   selector: 'app-sickleaveregister',
@@ -29,10 +32,13 @@ export class SickleaveregisterComponent implements OnInit {
 
   sickleaveList=[];
 
+  exceldata=[];
+
   
 
   constructor(
-    private router:Router, private commonService:CommonService, private symptomdiseaseService:SymptomdiseaseService , private datashareService:DatashareService , private patientService:PatientService , public dialog: MatDialog , private ipdService:IpdService
+    private router:Router, private commonService:CommonService, private symptomdiseaseService:SymptomdiseaseService , private datashareService:DatashareService , private patientService:PatientService , public dialog: MatDialog , private ipdService:IpdService,
+    private excelService:ExcelService
   ) {
     this.issuedSickleaveSearchForm = new FormGroup({
      
@@ -57,9 +63,11 @@ export class SickleaveregisterComponent implements OnInit {
 
     this.commonService.getIssuedSickApprovalByDate(this.issuedSickleaveSearchForm.value).then(data => {
       dataval = data;
+      
       list = dataval.result;
       this.sickleaveList.push(list);
       console.log(this.sickleaveList[0]);
+    //  this.exceldata=this.sickleaveList[0];
       const tcount = this.sickleaveList[0].length;
       if(tcount > 0){
         this.recordsFound = true;
@@ -67,7 +75,7 @@ export class SickleaveregisterComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }
-     
+     // this.exceldata=this.dataSource;
       this.issuedRecordFound =true;
      
     } ,
@@ -77,6 +85,8 @@ export class SickleaveregisterComponent implements OnInit {
 
   }
 
-
+  exportAsXLSX():void {
+    this.excelService.exportAsExcelFile(this.exceldata, 'sickleave');
+ }
 
 }// end of class

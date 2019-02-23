@@ -26,7 +26,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatSidenavModule, MatListModule ,MatMenuModule } from '@angular/material';
 import { AppMaterialModule } from './app-material/app-material.module';
 import { AutofocusDirective } from './autofocus.directive';
-
+import { ExcelService } from './service/excel.service';
 
 
 
@@ -54,7 +54,7 @@ import { AutofocusDirective } from './autofocus.directive';
     MatListModule,
     MatMenuModule
   ],
-  providers: [GlobalconstantService,AuthService,ErrorHandler,
+  providers: [GlobalconstantService,AuthService,ErrorHandler,ExcelService,
       {
       provide: HTTP_INTERCEPTORS,
       useClass: TokeninterceptorService,
