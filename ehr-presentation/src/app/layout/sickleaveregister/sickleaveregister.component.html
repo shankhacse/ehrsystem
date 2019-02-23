@@ -33,13 +33,11 @@
                           <form [formGroup]="issuedSickleaveSearchForm" (ngSubmit)="onSubmit()" >
                             <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
                         
-                              <div fxFlex="30%">
-                                  
-                              </div>
+                              
                         
                               <div fxFlex="20%">
                                 <mat-form-field class="fullwidthinp">
-                                    <input matInput [matDatepicker]="fromDtPick" placeholder="From Date" formControlName="searchFromDateCtrl" autocomplete="off"  >
+                                    <input matInput [matDatepicker]="fromDtPick" placeholder="* From Date" formControlName="searchFromDateCtrl" autocomplete="off" readonly >
                                     <mat-datepicker-toggle matSuffix [for]="fromDtPick"></mat-datepicker-toggle>
                                     <mat-datepicker #fromDtPick></mat-datepicker>
                                 </mat-form-field>
@@ -47,11 +45,33 @@
                         
                               <div fxFlex="20%">
                                   <mat-form-field class="fullwidthinp">
-                                      <input matInput [matDatepicker]="toDtPick" placeholder="To Date" formControlName="searchToDateCtrl" autocomplete="off" readonly >
+                                      <input matInput [matDatepicker]="toDtPick" placeholder="* To Date" formControlName="searchToDateCtrl" autocomplete="off" readonly >
                                       <mat-datepicker-toggle matSuffix [for]="toDtPick"></mat-datepicker-toggle>
                                       <mat-datepicker #toDtPick></mat-datepicker>
                                   </mat-form-field>
                               </div>
+                              <div fxFlex="40%">
+
+                                  <mat-form-field class="fullwidthinp" >
+                                                                      
+                                      <input matInput placeholder="Search By  Code / Name " aria-label="Patient" [matAutocomplete]="auto" formControlName="patientAdvSearchCtrl" (keyup)="getPatientListBySearch($event)">
+                                  
+
+                                      <mat-autocomplete #auto="matAutocomplete" 
+                                          mat-search-text-change="null"
+                                          [displayWith]="displayFn.bind(this)"
+                                         
+                                          >
+                                          <mat-option *ngFor="let patient of filteredPatients | async" [value]="patient.id" >
+                                              <small>{{patient.name}}</small> |
+                                              <small>{{patient.code}}</small> 
+                                              
+                                          </mat-option>
+                                          
+                                          </mat-autocomplete> 
+                                  </mat-form-field>
+                                  
+                                </div>
                         
                               <div fxFlex="10%">
                                   <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
@@ -61,7 +81,7 @@
                                  
                               </div>
                         
-                              <div fxFlex="20%">
+                              <div fxFlex="10%">
                                   
                               </div>
                               

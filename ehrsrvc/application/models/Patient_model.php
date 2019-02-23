@@ -826,14 +826,25 @@ class Patient_model extends CI_Model
 	
 		 $from_date = $formData->searchFromDateCtrl;
          $to_date = $formData->searchToDateCtrl;
+         $patientid= $formData->patientAdvSearchCtrl;
         
       
+            if($patientid!=''){
+                 
+                $where = [
+                    "patient_sickleave_detail.is_approved" => 'Y',
+                    "patient_sickleave_detail.patient_id" => $patientid
+                ];
 
+            }else{
+                $where = [
+                    "patient_sickleave_detail.is_approved" => 'Y'
+                ];
+               
 
-        $where = [
-            
-             "patient_sickleave_detail.is_approved" => 'Y'
-        ]; 
+            }
+
+       
 
         $query = $this->db->select("
                        
@@ -858,5 +869,51 @@ class Patient_model extends CI_Model
         }
         return $resultdata;
     }
+
+
+
+    /**
+     *date 23.02.2019
+     * @name getPatientList od sick leave register 
+     * @return $patient_data get all patient and their type
+     */
+    public function patientSickLeaveRegSearchByQry($qry,$hospital_id)
+    {  
+        $where = array( 
+                            'patients.patient_type_id' => 1 // permanent worker
+                         );
+        $patient_data = "";
+        $query = $this->db->select("
+                patients.patient_id,
+                patients.patient_code,
+                patients.patient_name,
+                patients.mobile_one,
+                patients.employee_id,
+                patients.adhar,
+                patients.line_number,
+                patients.division_number,
+                patients.challan_number,
+                patients.house_no
+                ")
+            ->from("patients")
+           
+            ->join("patient_type", "patient_type.patient_type_id=patients.patient_type_id", "INNER")
+            ->like('patients.patient_code', $qry)
+            ->or_like('patients.patient_name', $qry)
+            ->or_like('patients.mobile_one', $qry)
+            ->or_like('patients.adhar', $qry)
+            ->where('patients.hospital_id',$hospital_id)
+            ->where($where)
+            ->order_by('patients.patient_name', 'ASC')
+            ->limit(20)
+            ->get();
+       # echo $this->db->last_query();
+        if ($query->num_rows() > 0) {
+            $patient_data = $query->result();
+        }
+        return $patient_data;
+    }
+
+
 
 }// ens of class

@@ -317,5 +317,19 @@ export class PatientService {
         });
       
     }
+
+
+/*----------------------------------- 23 Feb 2019 ------------------------ */
+    filterSickLeaveRegisterPatientByCode(pcode){
+      let myData = JSON.stringify({pcode: pcode});
+       return new Promise(resolve => {
+          this.http.post(this.global.patientSickLeaveRegSearchByQry_URL,myData).subscribe(data => {
+            resolve(data);
+           
+          }, err => {
+            console.log(err);
+          });
+        });
+    }
    
 }
