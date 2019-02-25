@@ -854,7 +854,8 @@ class Patient_model extends CI_Model
                         patients.patient_name as Patient_Name,
                         patients.challan_number as Challan_Number, 
                         patients.division_number as Division_Number,
-                        patients.line_number as Line_Number
+                        patients.line_number as Line_Number,
+						1 AS Days
                         
                         ")
             ->from("patient_sickleave_detail")
