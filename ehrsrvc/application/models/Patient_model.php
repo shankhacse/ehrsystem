@@ -394,8 +394,8 @@ class Patient_model extends CI_Model
             }
 
             $pdob  = NULL;
-            if(isset($request->dob)){
-                $pdob =  $request->dob;
+            if($request->dob!=''){
+                $pdob =  date("Y-m-d", strtotime($request->dob));
             }
            
 
@@ -407,7 +407,7 @@ class Patient_model extends CI_Model
                 "patients.division_number" => trim(htmlspecialchars($divisionno)),
                 "patients.challan_number" => trim(htmlspecialchars($challanno)),
                 "patients.estate" => $estate,
-                "patients.dob" => trim(htmlspecialchars($pdob)), 
+                "patients.dob" => $pdob, 
                 "patients.age" => trim(htmlspecialchars($patientdata->ageCtrl)), 
                 "patients.gender" => trim(htmlspecialchars($gender)),
                 "patients.employee_id" => $employeeid,
@@ -421,6 +421,7 @@ class Patient_model extends CI_Model
                 "patients.reason" => trim(htmlspecialchars($patientdata->reasonCtrl)),
                 "patients.hospital_id" => $hospital_id
             ];
+         
 
            $this->db->insert('patients', $patient_data);
            $last_insert_id = $this->db->insert_id();

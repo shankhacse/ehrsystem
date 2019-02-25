@@ -39,6 +39,7 @@ export class GlobalconstantService {
 
   public insertVaccination_URL = this.APIURL+"opd/insertIntoVaccination";
   public insertIntoPregnancy_URL = this.APIURL+"opd/savePregnancyInfo";
+  public regBydate_URL = this.APIURL+"registration/getRegistrationByDate";
  
 
   // Blood Group
@@ -70,6 +71,7 @@ export class GlobalconstantService {
 
   public todaysRegDoct_URL = this.APIURL+"registration/getTodaysRegDoct";
   public todaysRegByRegType_URL = this.APIURL+"registration/todaysRegByRegType";
+  public RegListBydate_URL = this.APIURL+"registration/RegListByDateRange";
 
   //sick leave approval
   public sickApprovalList_URL = this.APIURL +"patient/getSickApprovedList";

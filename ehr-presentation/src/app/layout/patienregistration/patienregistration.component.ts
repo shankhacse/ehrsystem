@@ -87,6 +87,7 @@ export class PatienregistrationComponent implements OnInit ,OnDestroy {
   IDsearchForm: FormGroup;
   FieldsearchForm: FormGroup;
   patientTblRegForm: FormGroup;
+  registrationSearchForm : FormGroup;
   //registerButtonActive:boolean = true;
   loaderActive:boolean = false;
   searchLoader:boolean = false;
@@ -109,15 +110,17 @@ export class PatienregistrationComponent implements OnInit ,OnDestroy {
 
   todaysRegTblColumn: string[] = [
     'action',
+    'date_of_registration',
     'regtype',
     'patient_code',
+    
    // 'patient_name',
    // 'birthdate',
    // 'gender', 
     'division_number' ,
     'challan_number' ,
     'line_number' ,
-    'mobile_one',
+   // 'mobile_one',
    // 'adhar'
   ];
 
@@ -222,6 +225,12 @@ export class PatienregistrationComponent implements OnInit ,OnDestroy {
     this.patientTblRegForm = new FormGroup({
       regpcodeCtrl : new FormControl('')
     });*/
+
+    this.registrationSearchForm = new FormGroup({
+      searchFromDateCtrl : new FormControl(new Date().toISOString())
+   
+     
+    });
 
 
 
@@ -435,16 +444,50 @@ displayFn(id) {
       this.todaysregistrationList.push(regdata);
       this.todaysRegTblColumn = [
                           'action',
+                          'date_of_registration',
                           'regtype',
                           'patient_code',
+                         
                         /*  'patient_name',
                           'birthdate',
                           'gender',  */
                           'division_number' ,
                           'challan_number' ,
                           'line_number' ,
-                          'mobile_one',
-                          /*'adhar' */
+                          /*'mobile_one',
+                          'adhar' */
+                          ];
+      this.dataSource = new MatTableDataSource(this.todaysregistrationList[0]);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    },
+    error => {
+     console.log("error in todays registration list");
+   });
+  }
+
+  getRegistrationBydate() {
+    let dataval;
+    let regdata;
+    this.todaysregistrationList=[];
+    this.registerService.getRegistrationByDate(this.registrationSearchForm.value).then(data => {
+      dataval = data;
+      regdata = dataval.todaysreg_data;
+      this.todaysregistrationList.push(regdata);
+      this.todaysRegTblColumn = [
+                          'action',
+                          'date_of_registration',
+                          'regtype',
+                          'patient_code',
+                         
+                        /*  'patient_name',
+                          'birthdate',
+                          'gender',  */
+                          'division_number' ,
+                          'challan_number' ,
+                          'line_number' ,
+                          /*'mobile_one',
+                          'adhar' */
                           ];
       this.dataSource = new MatTableDataSource(this.todaysregistrationList[0]);
       this.dataSource.paginator = this.paginator;
@@ -1015,7 +1058,11 @@ validateOnRegType(){
   return validForm;
 }
 
-
+onSearchBydate() {
+  console.log('onSearchBydate');
+  this.getRegistrationBydate() ;
+ 
+} 
 
   
 
