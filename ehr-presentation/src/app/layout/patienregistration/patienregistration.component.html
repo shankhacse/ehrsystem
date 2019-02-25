@@ -245,17 +245,14 @@
                         
                                             <div fxFlex="20%">
                                               <mat-form-field class="fullwidthinp">
-                                                  <input matInput [matDatepicker]="fromDtPick" placeholder="* Date" formControlName="searchFromDateCtrl" autocomplete="off" readonly >
+                                                  <input matInput [matDatepicker]="fromDtPick" placeholder="* Date" formControlName="searchFromDateCtrl" autocomplete="off" readonly (dateChange)="onSearchBydate($event)" >
                                                   <mat-datepicker-toggle matSuffix [for]="fromDtPick"></mat-datepicker-toggle>
                                                   <mat-datepicker #fromDtPick></mat-datepicker>
                                               </mat-form-field>
                                           </div>
                                       
                                             <div fxFlex="20%">
-                                            <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
-                                                            <button mat-flat-button color="primary" class="phrmcybtn" type="submit" > <i class="material-icons">
-                                                                youtube_searched_for </i> Search</button>
-                                                        </div>
+                                          
                                             </div>
                                           
               

@@ -127,4 +127,11 @@ export class RegistrationreportComponent implements OnInit {
     this.excelService.exportAsExcelFile(this.exceldata, 'registration');
  }
 
+
+ getPatientByType() {
+ 
+  console.log("test");
+ }
+
+
 }// end of class

@@ -1058,7 +1058,7 @@ validateOnRegType(){
   return validForm;
 }
 
-onSearchBydate() {
+onSearchBydate(event) {
   console.log('onSearchBydate');
   this.getRegistrationBydate() ;
  
