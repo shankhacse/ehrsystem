@@ -342,6 +342,7 @@ class Registration_model extends CI_Model{
 		
 		$type = $request->type;
 		$serve = $request->serve;
+		$serachDate=date('Y-m-d', strtotime($request->serachDate));
 		
 		$conditional_where = [];
 
@@ -352,9 +353,15 @@ class Registration_model extends CI_Model{
 
 
 		
-		
-		$where = [
+		/* commented on 25.02.2019 */
+		/* $where = [
 			"DATE_FORMAT(registration.date_of_registration,'%Y-%m-%d')" => $today,
+			"registration.hospital_id" => $hospitalid,
+			"registration.is_deleted" => 'N'
+		]; */
+
+		$where = [
+			"DATE_FORMAT(registration.date_of_registration,'%Y-%m-%d')" => $serachDate,
 			"registration.hospital_id" => $hospitalid,
 			"registration.is_deleted" => 'N'
 		];
@@ -362,6 +369,7 @@ class Registration_model extends CI_Model{
 		$query = $this->db->select("
 									/* registration.registration_id,*/
 									registration.unique_id AS registration_id,
+									DATE_FORMAT(registration.`date_of_registration`,'%d-%m-%Y') As date_of_registration,
 									registration.registration_type AS reg_type,
 									patients.patient_code,
                                     patients.patient_id,
@@ -372,7 +380,9 @@ class Registration_model extends CI_Model{
 									patients.challan_number,
 									patients.line_number,
 									patients.mobile_one,
-									patients.adhar
+									patients.adhar,
+									patients.age,
+									patient_type.patient_type
 								",FALSE)
                          ->from("registration") 
 						 ->join("patients","patients.patient_id = registration.patient_id","INNER")

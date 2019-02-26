@@ -62,8 +62,8 @@ export class RegistrationService {
 
 
 
-  getTodaysRegByRegType(type,serve) {
-    let myData = JSON.stringify({type:type,serve:serve});
+  getTodaysRegByRegType(type,serve,serachDate) {
+    let myData = JSON.stringify({type:type,serve:serve,serachDate:serachDate});
     return new Promise(resolve => {
         this.http.post(this.global.todaysRegByRegType_URL,myData).subscribe(data => {
           resolve(data);
