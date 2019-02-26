@@ -50,6 +50,7 @@ const routes: Routes = [
 
 
             { path: 'todaysnewreg' , loadChildren:'./todaysregistrationnew/todaysregistrationnew.module#TodaysregistrationnewModule'},
+            { path: 'regreport' , loadChildren:'./registrationreport/registrationreport.module#RegistrationreportModule'},
             
            
             

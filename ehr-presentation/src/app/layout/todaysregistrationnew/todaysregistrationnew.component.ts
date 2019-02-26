@@ -9,7 +9,7 @@ import { SickentrydialogComponent } from '../components/sickentrydialog/sickentr
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA , MatDialogConfig } from '@angular/material';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 
-
+import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-todaysregistrationnew',
@@ -28,6 +28,8 @@ export class TodaysregistrationnewComponent implements OnInit {
   patientTypeList = [];
   recordsFound = false;
   isButtonActive = true;
+  searchForm : FormGroup;
+  activeTab=0;
 
   allcount = 0;
   pwcount = 0;
@@ -56,15 +58,20 @@ export class TodaysregistrationnewComponent implements OnInit {
   displayedColumns: string[] = [
   'action',
   //'reg_type',
+  'patient_type',
+  'date_of_registration',
   'patient_code',
   'patient_name',
   'birthdate',
+  'age',
   'gender', 
   'division_number' ,
   'challan_number' ,
   'line_number' ,
-  'mobile_one',
-  'adhar'];
+  // 'mobile_one',
+  //'adhar',
+  
+];
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -73,21 +80,28 @@ export class TodaysregistrationnewComponent implements OnInit {
   tabLoadTimes: Date[] = [];
   constructor(private commonService:CommonService ,private registerService: RegistrationService , private datashareService:DatashareService , private router:Router,public dialog: MatDialog, public snackBar: MatSnackBar) {
     console.log("Data service " + this.datashareService.sharedData);
+
+
+    this.searchForm = new FormGroup({
+      searchFromDateCtrl : new FormControl(new Date().toISOString())
+ 
+    });
+
   }
 
   step = 0;
 
   setStep(index: number) {
     this.step = index;
-   
+    var serachDate=this.searchForm.get("searchFromDateCtrl").value;
       if(this.step == 0){
-        this.getTodaysRegForDocByRegType("CONSULTATION","Y");
+        this.getTodaysRegForDocByRegType("CONSULTATION","Y",serachDate);
       }
       else if(this.step == 1){
-        this.getTodaysRegForDocByRegType("PREGNANCY","Y");
+        this.getTodaysRegForDocByRegType("PREGNANCY","Y",serachDate);
       }
       else if(this.step == 2){
-        this.getTodaysRegForDocByRegType("VACCINATION","Y");
+        this.getTodaysRegForDocByRegType("VACCINATION","Y",serachDate);
       }
 
 
@@ -106,14 +120,21 @@ export class TodaysregistrationnewComponent implements OnInit {
   }
   ngOnInit() {
    this.isButtonActive = true;
-   this.getTodaysRegForDocByRegType("CONSULTATION","N");
+   var serachDate=this.searchForm.get("searchFromDateCtrl").value;
+   this.getTodaysRegForDocByRegType("CONSULTATION","N",serachDate);
 
-   this.getTodaysRegByRegTypeCount("CONSULTATION","N");
-   this.getTodaysRegByRegTypeCount("PREGNANCY","N");
-   this.getTodaysRegByRegTypeCount("VACCINATION","N");
+   this.getTodaysRegByRegTypeCount("CONSULTATION","N",serachDate);
+   this.getTodaysRegByRegTypeCount("PREGNANCY","N",serachDate);
+   this.getTodaysRegByRegTypeCount("VACCINATION","N",serachDate);
    
    //(document.querySelector('.opdLoder') as HTMLElement).style.display = 'none';
   }
+
+ 
+
+  
+
+  
 
 
 
@@ -122,24 +143,27 @@ export class TodaysregistrationnewComponent implements OnInit {
     this.openReglistBlock = true;
     let tabindx;
     tabindx = tabChangeEvent.index;
-
+    this.activeTab=tabindx;
+    var serachDate=this.searchForm.get("searchFromDateCtrl").value;
     if(tabindx == 0){
-      this.getTodaysRegForDocByRegType("CONSULTATION","N");
+      this.getTodaysRegForDocByRegType("CONSULTATION","N",serachDate);
     }
     else if(tabindx == 1){
-      this.getTodaysRegForDocByRegType("PREGNANCY","N");
+      this.getTodaysRegForDocByRegType("PREGNANCY","N",serachDate);
     }
     else if(tabindx == 2){
-      this.getTodaysRegForDocByRegType("VACCINATION","N");
+      this.getTodaysRegForDocByRegType("VACCINATION","N",serachDate);
     }
     else if(tabindx == 3){
       this.openReglistBlock = false;
-      this.getTodaysRegByRegTypeVisitedCount("CONSULTATION","Y");
-      this.getTodaysRegByRegTypeVisitedCount("PREGNANCY","Y");
-      this.getTodaysRegByRegTypeVisitedCount("VACCINATION","Y");
+      this.getTodaysRegByRegTypeVisitedCount("CONSULTATION","Y",serachDate);
+      this.getTodaysRegByRegTypeVisitedCount("PREGNANCY","Y",serachDate);
+      this.getTodaysRegByRegTypeVisitedCount("VACCINATION","Y",serachDate);
     }
     
 }
+
+
 
 
 
@@ -167,14 +191,14 @@ export class TodaysregistrationnewComponent implements OnInit {
 
 
 
-  getTodaysRegForDocByRegType(type,serve) {
+  getTodaysRegForDocByRegType(type,serve,serachDate) {
 
     this.todaysregistrationList = [];
     this.recordsFound  = false;
     let dataval;
     let regdata;
 
-    this.registerService.getTodaysRegByRegType(type,serve).then(data => {
+    this.registerService.getTodaysRegByRegType(type,serve,serachDate).then(data => {
       dataval = data;
       regdata = dataval.todaysreg_data;
       this.todaysregistrationList.push(regdata);
@@ -194,11 +218,11 @@ export class TodaysregistrationnewComponent implements OnInit {
 
 
 
-  getTodaysRegByRegTypeCount(type,serve) {
+  getTodaysRegByRegTypeCount(type,serve,serachDate) {
     this.todaysregistrationListCount = [];
     let dataval;
     let regdata;
-    this.registerService.getTodaysRegByRegType(type,serve).then(data => {
+    this.registerService.getTodaysRegByRegType(type,serve,serachDate).then(data => {
       dataval = data;
       regdata = dataval.todaysreg_data;
       this.todaysregistrationListCount = [];
@@ -261,11 +285,11 @@ export class TodaysregistrationnewComponent implements OnInit {
 
 
   
-  getTodaysRegByRegTypeVisitedCount(type,serve) {
+  getTodaysRegByRegTypeVisitedCount(type,serve,serachDate) {
     this.todaysregistrationListCount = [];
     let dataval;
     let regdata;
-    this.registerService.getTodaysRegByRegType(type,serve).then(data => {
+    this.registerService.getTodaysRegByRegType(type,serve,serachDate).then(data => {
       dataval = data;
       regdata = dataval.todaysreg_data;
       this.todaysregistrationListCount = [];
@@ -370,11 +394,11 @@ export class TodaysregistrationnewComponent implements OnInit {
   
     dialogRef.afterClosed().subscribe(result => {
 
-     
+      var serachDate=this.searchForm.get("searchFromDateCtrl").value;
       if(result.from == "Save") {
         this.openSnackBar("Sick leave applied successfully");
-        this.getTodaysRegForDocByRegType("CONSULTATION","N");
-        this.getTodaysRegByRegTypeCount("CONSULTATION","N");
+        this.getTodaysRegForDocByRegType("CONSULTATION","N",serachDate);
+        this.getTodaysRegByRegTypeCount("CONSULTATION","N",serachDate);
       }
 
      
@@ -390,4 +414,41 @@ export class TodaysregistrationnewComponent implements OnInit {
   }
 
 
-}
+  onSearchBydate(event) {
+    console.log(event.value);
+   // this.getRegistrationBydate() ;
+
+   var serachDate=this.searchForm.get("searchFromDateCtrl").value;
+   console.log(this.activeTab);
+
+   let tabindx = this.activeTab;
+   
+   var serachDate=this.searchForm.get("searchFromDateCtrl").value;
+   if(tabindx == 0){
+     this.getTodaysRegForDocByRegType("CONSULTATION","N",serachDate);
+    // this.getTodaysRegByRegTypeCount("CONSULTATION","N",serachDate);
+   }
+   else if(tabindx == 1){
+     this.getTodaysRegForDocByRegType("PREGNANCY","N",serachDate);
+     //this.getTodaysRegByRegTypeCount("PREGNANCY","N",serachDate);
+   }
+   else if(tabindx == 2){
+     this.getTodaysRegForDocByRegType("VACCINATION","N",serachDate);
+     //this.getTodaysRegByRegTypeCount("VACCINATION","N",serachDate);
+   }
+ 
+  //  this.getTodaysRegForDocByRegType("CONSULTATION","N",serachDate);
+  //  this.getTodaysRegForDocByRegType("PREGNANCY","N",serachDate);
+  //  this.getTodaysRegForDocByRegType("VACCINATION","N",serachDate);
+
+
+  this.getTodaysRegByRegTypeCount("VACCINATION","N",serachDate);
+  this.getTodaysRegByRegTypeCount("PREGNANCY","N",serachDate);
+  this.getTodaysRegByRegTypeCount("CONSULTATION","N",serachDate);
+  
+   
+
+
+  } 
+
+}// end of class

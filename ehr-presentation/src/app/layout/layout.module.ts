@@ -23,6 +23,7 @@ import { SickentrydialogComponent } from './components/sickentrydialog/sickentry
 
 
 
+
 @NgModule({
     imports: [
         CommonModule,
@@ -32,7 +33,7 @@ import { SickentrydialogComponent } from './components/sickentrydialog/sickentry
         ReactiveFormsModule
        
     ],
-	declarations: [LayoutComponent, SidebarComponent, HeaderComponent, OkdialogComponent , SuccessdialogComponent , ConfirmationdischargeComponent, MasterentrydialogComponent,SuccessdialogwithprintComponent,PrescriptionprintComponent, DismisswithpromptdialogComponent,DeleteconfirmationdialogComponent, SickentrydialogComponent],
+	declarations: [LayoutComponent, SidebarComponent, HeaderComponent, OkdialogComponent , SuccessdialogComponent , ConfirmationdischargeComponent, MasterentrydialogComponent,SuccessdialogwithprintComponent,PrescriptionprintComponent, DismisswithpromptdialogComponent,DeleteconfirmationdialogComponent, SickentrydialogComponent,],
 	
 	entryComponents : [SuccessdialogComponent , ConfirmationdischargeComponent , MasterentrydialogComponent,SuccessdialogwithprintComponent,PrescriptionprintComponent,DismisswithpromptdialogComponent,DeleteconfirmationdialogComponent,SickentrydialogComponent ]
  

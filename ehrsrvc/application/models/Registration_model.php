@@ -27,6 +27,7 @@ class Registration_model extends CI_Model{
 	
 		$query = $this->db->select("
 									registration.registration_id,
+									DATE_FORMAT(registration.`date_of_registration`,'%d-%m-%Y') As date_of_registration,
 									patients.patient_code,
 									patients.patient_name,
 									DATE_FORMAT(patients.`dob`,'%d-%m-%Y') As birthdate,
@@ -341,6 +342,7 @@ class Registration_model extends CI_Model{
 		
 		$type = $request->type;
 		$serve = $request->serve;
+		$serachDate=date('Y-m-d', strtotime($request->serachDate));
 		
 		$conditional_where = [];
 
@@ -351,9 +353,15 @@ class Registration_model extends CI_Model{
 
 
 		
-		
-		$where = [
+		/* commented on 25.02.2019 */
+		/* $where = [
 			"DATE_FORMAT(registration.date_of_registration,'%Y-%m-%d')" => $today,
+			"registration.hospital_id" => $hospitalid,
+			"registration.is_deleted" => 'N'
+		]; */
+
+		$where = [
+			"DATE_FORMAT(registration.date_of_registration,'%Y-%m-%d')" => $serachDate,
 			"registration.hospital_id" => $hospitalid,
 			"registration.is_deleted" => 'N'
 		];
@@ -361,6 +369,7 @@ class Registration_model extends CI_Model{
 		$query = $this->db->select("
 									/* registration.registration_id,*/
 									registration.unique_id AS registration_id,
+									DATE_FORMAT(registration.`date_of_registration`,'%d-%m-%Y') As date_of_registration,
 									registration.registration_type AS reg_type,
 									patients.patient_code,
                                     patients.patient_id,
@@ -371,7 +380,9 @@ class Registration_model extends CI_Model{
 									patients.challan_number,
 									patients.line_number,
 									patients.mobile_one,
-									patients.adhar
+									patients.adhar,
+									patients.age,
+									patient_type.patient_type
 								",FALSE)
                          ->from("registration") 
 						 ->join("patients","patients.patient_id = registration.patient_id","INNER")
@@ -389,5 +400,138 @@ class Registration_model extends CI_Model{
         return $resultdata;
     }
 
+   
+
+/*---------------------------------------25 February 2019----------------------- */
+
+
+  /**
+     * get list of sick leave register list
+     *
+     * @author Shankha
+     * @date 22/02/2019
+     */
+    public function getRegListByDateRange($request, $hospital_id)
+    {
+        $resultdata = [];
+        $formData = $request->data;
+	
+		 $from_date = $request->fromdate;
+         $to_date = $request->todate;
+         $regTypeCtrl = $formData->regTypeCtrl;
+         $patTypeCtrl = $formData->patTypeCtrl;
+        
+        //pre($formData);
+     // exit;
+            if($regTypeCtrl!='' && $patTypeCtrl!=''){
+
+				$where = [
+					"registration.is_deleted" => 'N',
+					"patients.patient_type_id" => $patTypeCtrl,
+					"registration.registration_type" => $regTypeCtrl,
+                ];
+                 
+               
+            }else if($patTypeCtrl!=''){
+                $where = [
+					"registration.is_deleted" => 'N',
+					"patients.patient_type_id" => $patTypeCtrl,
+                ];
+               
+
+            }else if($regTypeCtrl!=''){
+				$where = [
+                    "registration.is_deleted" => 'N',
+                    "registration.registration_type" => $regTypeCtrl,
+                   
+                ];
+
+
+			}else{
+				$where = [
+                    "registration.is_deleted" => 'N',
+                ];
+
+			}
+
+       
+
+		$query = $this->db->select("
+							DATE_FORMAT(registration.`date_of_registration`,'%d-%m-%Y') As date_of_registration,
+							registration.registration_type,
+							patient_type.patient_type,
+							patients.patient_code,
+							patients.division_number,
+							patients.challan_number,
+						
+							patients.line_number
+
+                        
+                        ")
+            ->from("registration")
+			->join("patients","patients.patient_id = registration.patient_id","INNER")
+			->join("patient_type","patient_type.patient_type_id = patients.patient_type_id","INNER")
+            ->where('DATE_FORMAT(registration.date_of_registration,"%Y-%m-%d") BETWEEN "'. date('Y-m-d', strtotime($from_date)). '" AND "'. date('Y-m-d', strtotime($to_date)).'"')
+            ->where($where)
+            ->get();
+#q();
+
+        if ($query->num_rows() > 0) {
+            $resultdata = $query->result();
+        }
+        return $resultdata;
+    }
+
+
+	
+	  /**
+     * @name getRegistrationBydate
+     * @author Shankha Ghosh
+     * @return $data
+     * @desc get all todays registration data
+     */
+    public function getRegistrationBydate($request,$hospitalid)
+    {  
+		//pre($request->data->searchFromDateCtrl);
+		$searchdate=date('Y-m-d', strtotime($request->data->searchFromDateCtrl));
+        $resultdata = "";
+		
+		$where = [
+			"DATE_FORMAT(registration.date_of_registration,'%Y-%m-%d')" => $searchdate,
+			"registration.hospital_id" => $hospitalid,
+			"registration.is_deleted" => "N"
+		];
+	
+		$query = $this->db->select("
+									registration.registration_id,
+									DATE_FORMAT(registration.`date_of_registration`,'%d-%m-%Y') As date_of_registration,
+									patients.patient_code,
+									patients.patient_name,
+									DATE_FORMAT(patients.`dob`,'%d-%m-%Y') As birthdate,
+									patients.gender,
+									patients.division_number,
+									patients.challan_number,
+									patients.line_number,
+									patients.mobile_one,
+									patients.adhar,
+									IF(opd_prescription.id IS NULL, 'Y', 'N') AS allowdelete,
+									registration.registration_type as regtype
+								",FALSE)
+                         ->from("registration") 
+						 ->join("patients","patients.patient_id = registration.patient_id","INNER")
+						 ->join("opd_prescription","opd_prescription.registrationid = registration.registration_id","LEFT")
+						 ->where($where)
+						 ->order_by('registration.date_of_registration','DESC')
+                         ->get();
+			#echo $this->db->last_query();			
+		
+        if($query->num_rows()>0) {
+            $resultdata=$query->result();
+            }
+        return $resultdata;
+    }
     
-}
+	
+
+
+}// end of class

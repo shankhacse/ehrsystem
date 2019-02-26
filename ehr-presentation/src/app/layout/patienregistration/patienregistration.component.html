@@ -236,6 +236,37 @@
 
                         <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" >
                                 <div fxFlex="80%">
+                            <section class="blockContent">
+                             <form [formGroup]="registrationSearchForm" (ngSubmit)="onSearchBydate()" >
+                              
+                                    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                        
+                             
+                        
+                                            <div fxFlex="20%">
+                                              <mat-form-field class="fullwidthinp">
+                                                  <input matInput [matDatepicker]="fromDtPick" placeholder="* Date" formControlName="searchFromDateCtrl" autocomplete="off" readonly (dateChange)="onSearchBydate($event)" >
+                                                  <mat-datepicker-toggle matSuffix [for]="fromDtPick"></mat-datepicker-toggle>
+                                                  <mat-datepicker #fromDtPick></mat-datepicker>
+                                              </mat-form-field>
+                                          </div>
+                                      
+                                            <div fxFlex="20%">
+                                          
+                                            </div>
+                                          
+              
+                                            <div fxFlex="50%">
+                                                
+                                               
+                                            </div>
+                                      
+                                           
+                                            
+                                          </div>
+
+                             </form></section>
+                                        
                                     
                                 </div>
                                 <div fxFlex="20%">
@@ -370,9 +401,9 @@
                             <td mat-cell *matCellDef="let row">{{row.patient_name}}<br> {{row.patient_code}} </td>
                         </ng-container>
 
-                        <ng-container matColumnDef="mobile_one">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile </th>
-                            <td mat-cell *matCellDef="let row"> {{row.mobile_one}} </td>
+                        <ng-container matColumnDef="date_of_registration">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Reg. Date </th>
+                            <td mat-cell *matCellDef="let row"> {{row.date_of_registration}} </td>
                         </ng-container>
                 
                        <!--

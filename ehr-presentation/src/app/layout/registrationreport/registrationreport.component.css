@@ -1,10 +1,4 @@
-#opdPrepPage .navBtn button{
-    border-radius: 50px;
-    font-size: 11px;
-    letter-spacing: 1px;
-}
-
-.patientsearchTabs .mat-icon {
+.sickleavesearchTabs .mat-icon {
     padding-right: 5px;
 }
 
@@ -21,24 +15,8 @@ tr.mat-header-row {
 .mat-cell {
     font-size: 12px;
     letter-spacing: 1px;
-    color:#000;
-    font-weight:500;
-    font-size: 11px;
-}
-/*
-mat-footer-row,
-mat-header-row,
-mat-row,
-td.mat-cell,
-td.mat-footer-cell,
-th.mat-header-cell {
- border-bottom-color: #DCE4F8; 
 }
 
-.reglisttable {
-    border: 1px solid #DCE4F8;
-}
-*/
 .reglisttables , .visitedtables {
     margin-top: 0.5%;
 }
@@ -84,13 +62,9 @@ th.mat-header-cell {
 .customeBtn{
     border: 0;
     background: #0e58c8;
-   /* padding: 6px 17px; */
-    border-radius: 4px;
+    padding: 6px 17px;
+    border-radius: 14px;
     color: #FFF;
-    position: absolute;
-    right: 2%;
-    font-size: 12px;
-    letter-spacing: 1.2px;
 }
 .cutomTbl{
     border: 1px solid #efefef;
@@ -127,37 +101,27 @@ th.mat-header-cell {
     
 }
 
-
-/*
-.mat-table__wrapper .mat-table {
-    min-width: auto !important;
-    width: 100% !important;
+.mat-tab-label-container {
+    background: #dfe0ea !important;
 }
-
-.m2at-header-row {
-    width: 100%;
+mat-tab-group {
+    border:1px solid #dfe0ea;
+    border-top:0;
 }
-
-.mat-row {
-    width: 100%;
-}
-
-.mat-column {
-    flex: 0 0 25% !important;
-    min-width: 104px !important;
-}
-
-/*
-.reglisttable tr th , .reglisttable tr td  {
-    padding-left: 15px !important;
-}
-*/
-
-
 
 .blockContent {
     width: 96%;
-    margin-top: 1%;
-    margin-left: 1%;
+    margin: 2% auto;
   
-  }
+}
+.blockContent h5{
+    letter-spacing: 1px;
+}
+
+.png-icon{
+    margin: 5px auto auto;
+    padding: 0;
+    display: inline-block;
+    background-repeat: no-repeat no-repeat;
+    pointer-events: none;
+}

@@ -62,8 +62,8 @@ export class RegistrationService {
 
 
 
-  getTodaysRegByRegType(type,serve) {
-    let myData = JSON.stringify({type:type,serve:serve});
+  getTodaysRegByRegType(type,serve,serachDate) {
+    let myData = JSON.stringify({type:type,serve:serve,serachDate:serachDate});
     return new Promise(resolve => {
         this.http.post(this.global.todaysRegByRegType_URL,myData).subscribe(data => {
           resolve(data);
@@ -73,6 +73,47 @@ export class RegistrationService {
       });
   }
 
+  /*---------------------------------- 25 February 2019 ------------------------------------ */
+  /**
+ * @author Shankha Ghosh
+ * @param formval 
+ * @description get Patient Registration list by date range
+ */
+
+
+getPatientRegistrationByDate(formdata,fromdate,todate){
+  let datas = JSON.stringify({data:formdata,fromdate:fromdate,todate:todate});
+  return new Promise(resolve => {
+    this.http.post(this.global.RegListBydate_URL,datas).subscribe(data => {
+      resolve(data);
+    }, err => {
+      console.log(err);
+    });
+ });
+}
+
+
+  /*---------------------------------- 25 February 2019 ------------------------------------ */
+  /**
+ * @author Shankha Ghosh
+ * @param formval 
+ * @description get Patient Registration list by date
+ */
+
+
+
+getRegistrationByDate(formdata){
+  let datas = JSON.stringify({data:formdata});
+  return new Promise(resolve => {
+      this.http.post(this.global.regBydate_URL,datas).subscribe(data => {
+        resolve(data);
+       
+      }, err => {
+        console.log(err);
+      });
+    });
+  
+}
 
   
 }
