@@ -394,7 +394,7 @@ class Patient_model extends CI_Model
             }
 
             $pdob  = NULL;
-            if(isset($request->dob)){
+            if($request->dob!=''){
                 $pdob =  $request->dob;
             }
            
