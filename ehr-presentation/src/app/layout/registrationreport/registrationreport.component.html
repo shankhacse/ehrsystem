@@ -54,7 +54,7 @@
 
                                 <mat-form-field>
                                   <mat-select placeholder="Reg. Type (optional)" formControlName="regTypeCtrl" >
-                                   
+                                    
                                     <mat-option value="CONSULTATION"> General Consultation</mat-option>
                                     <mat-option value="PREGNANCY"> Pregnancy</mat-option>
                                     <mat-option value="VACCINATION">Vaccination</mat-option>
@@ -120,6 +120,10 @@
                                 <ng-container matColumnDef="patientID">
                                   <th mat-header-cell *matHeaderCellDef> Patient ID </th>
                                   <td mat-cell *matCellDef="let element">{{element.patient_code}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="parmanent_wrk_code">
+                                  <th mat-header-cell *matHeaderCellDef> Permanent <br>Worker Code </th>
+                                  <td mat-cell *matCellDef="let element">{{element.parmanent_wrk_code}} </td>
                                 </ng-container>
                                 <ng-container matColumnDef="division" style="background:red;">
                                   <th mat-header-cell *matHeaderCellDef> Division No </th>

@@ -167,6 +167,8 @@ export class SickleaveregisterComponent implements OnInit {
     this.sickleaveList = [];
     let dataval;
     let list;
+    this.issuedRecordFound =false;
+    this.recordsFound = false;
   console.log(this.issuedSickleaveSearchForm.value);
     this.commonService.getIssuedSickApprovalByDate(this.issuedSickleaveSearchForm.value).then(data => {
       dataval = data;
@@ -181,9 +183,10 @@ export class SickleaveregisterComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.sickleaveList[0]);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.issuedRecordFound =true;
       }
       
-      this.issuedRecordFound =true;
+     
      
     } ,
     error => {

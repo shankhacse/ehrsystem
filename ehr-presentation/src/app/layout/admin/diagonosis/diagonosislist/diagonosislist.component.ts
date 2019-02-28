@@ -118,7 +118,7 @@ export class DiagonosislistComponent implements OnInit {
      
     } ,
     error => {
-     console.log("error in todays investigation list");
+     console.log("error in todays diagnosis list");
    });
     
   }
@@ -133,7 +133,9 @@ export class DiagonosislistComponent implements OnInit {
     }
   }
 
-
+  gotoAdd(){
+    this.router.navigateByUrl('panel/diagnosis');
+  }
 
 
 }//end of class

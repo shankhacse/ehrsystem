@@ -452,6 +452,9 @@ public function verifyGrnFile()
     }
 
 
+
+
+
     /*
 	@return type boolean
 	@method isValidPreTrainingStatus(pretrainingstatus)
@@ -474,15 +477,11 @@ private function isValidMedicine($medicine)
             {
                 return 1;
             }
-
-
         }
         else
         {
-            return 0;
-        }
-            
-    
+            return 1;
+        } 
    
 }
 
@@ -547,6 +546,424 @@ exit;
   
 }
 
+
+    /*--------------------------- verify dependent excel--------------------------- */
+
+public function verifyDependentExcelFile()
+    {
+        CUSTOMHEADER::getCustomHeader();
+        $json_response = [];
+        $headers = $this->input->request_headers();
+
+        if($_FILES['file']['error']!=4)
+        { 
+            $tempFile = $_FILES['file']['tmp_name'];
+            //$extension = ".xls";
+        
+            $array = explode('.', $_FILES['file']['name']);
+            $extension = end($array);
+
+                
+                if($extension=="xls")
+                {
+                    $objReader= PHPExcel_IOFactory::createReader('Excel5');	// For excel 2007 	  
+                }
+                else
+                {           	
+                    $objReader= PHPExcel_IOFactory::createReader('Excel2007');	// For excel 2007 	  
+                }
+
+                $filename =  $tempFile;
+				
+				$objReader->setReadDataOnly(true); 		
+				$objPHPExcel=$objReader->load($filename);
+		        $totalrows=$objPHPExcel->setActiveSheetIndex(0)->getHighestRow();   //Count Numbe of rows avalable in excel      	 
+		        $objWorksheet=$objPHPExcel->setActiveSheetIndex(0); 
+                $totalcolumn = $objPHPExcel->setActiveSheetIndex(0)->getHighestDataColumn();
+
+                for($i=2;$i<=$totalrows;$i++)
+		        { 
+                    $worker_code[] = array(
+                        "error" => $this->isValidWorkerCode($objWorksheet->getCellByColumnAndRow(0,$i)->getValue()),
+                        "cell" =>  $objWorksheet->getCellByColumnAndRow(0,$i)->getColumn().$i,
+                        "value" =>  ($objWorksheet->getCellByColumnAndRow(0,$i)->getValue() == "" ?
+                                     "" :$objWorksheet->getCellByColumnAndRow(0,$i)->getValue()  ),
+                    );
+
+                    $worker_name[] = array(
+                        "error" => 0,
+                        "cell" =>  $objWorksheet->getCellByColumnAndRow(1,$i)->getColumn().$i,
+                        "value" =>  ($objWorksheet->getCellByColumnAndRow(1,$i)->getValue() == "" ?
+                                     "" :$objWorksheet->getCellByColumnAndRow(1,$i)->getValue()  ),
+                    );
+
+                    $relation[] = array(
+                        "error" => $this->isValidRelation($objWorksheet->getCellByColumnAndRow(2,$i)->getValue()),
+                        "cell" =>  $objWorksheet->getCellByColumnAndRow(2,$i)->getColumn().$i,
+                        "value" =>  ($objWorksheet->getCellByColumnAndRow(2,$i)->getValue() == "" ?
+                                 "" :$objWorksheet->getCellByColumnAndRow(2,$i)->getValue()  ),
+                    );
+
+                    $dependent_name[] = array(
+                        "error" =>  $this->isValidateBlank($objWorksheet->getCellByColumnAndRow(3,$i)->getValue()),
+                        "cell" =>  $objWorksheet->getCellByColumnAndRow(3,$i)->getColumn().$i,
+                        "value" =>  ($objWorksheet->getCellByColumnAndRow(3,$i)->getValue() == "" ?
+                                 "" :$objWorksheet->getCellByColumnAndRow(3,$i)->getValue()  ),
+                    );
+
+
+                    $active[] = array(
+                        "error" => 0,
+                        "cell" =>  $objWorksheet->getCellByColumnAndRow(4,$i)->getColumn().$i,
+                        "value" =>  ($objWorksheet->getCellByColumnAndRow(4,$i)->getValue() == "" ?
+                                 "" :$objWorksheet->getCellByColumnAndRow(4,$i)->getValue()  ),
+                    );
+
+                    $sex[] = array(
+                        "error" => 0,
+                        "cell" =>  $objWorksheet->getCellByColumnAndRow(5,$i)->getColumn().$i,
+                        "value" =>  ($objWorksheet->getCellByColumnAndRow(5,$i)->getValue() == "" ?
+                                 "" :$objWorksheet->getCellByColumnAndRow(5,$i)->getValue()  ),
+                    );
+
+                    $dateinfo=htmlspecialchars(trim($objWorksheet->getCellByColumnAndRow(6,$i)->getValue()));          			         //Excel Column 8
+
+                    if (strpos($dateinfo, '/') !== false) 
+                    {
+                        $dateinfo=str_replace(['/'], '-', $objWorksheet->getCellByColumnAndRow(6,$i)->getValue());  
+                        $dateinfo = date("d-m-Y",strtotime($dateinfo));
+                        
+                    }
+                    else
+                    {
+                            $dateinfo = $objWorksheet->getCellByColumnAndRow(6,$i)->getValue();
+                            $dateinfo= ($dateinfo == "" ? NULL : date('d-m-Y', PHPExcel_Shared_Date::ExcelToPHP($dateinfo)) );
+
+                            
+                    }
+                    $dob[] = array(
+                        "error" =>  $this->isValidateBlank($objWorksheet->getCellByColumnAndRow(6,$i)->getValue()),
+                        "cell" =>  $objWorksheet->getCellByColumnAndRow(6,$i)->getColumn().$i,
+                        "value" => $dateinfo,
+                    );
+
+                    $houseno[] = array(
+                        "error" => 0,
+                        "cell" =>  $objWorksheet->getCellByColumnAndRow(7,$i)->getColumn().$i,
+                        "value" =>  ($objWorksheet->getCellByColumnAndRow(7,$i)->getValue() == "" ?
+                                 "" :$objWorksheet->getCellByColumnAndRow(7,$i)->getValue()  ),
+                    );
+
+                    $lineno[] = array(
+                        "error" => $this->isValidLine($objWorksheet->getCellByColumnAndRow(8,$i)->getValue()),
+                        "cell" =>  $objWorksheet->getCellByColumnAndRow(8,$i)->getColumn().$i,
+                        "value" =>  ($objWorksheet->getCellByColumnAndRow(8,$i)->getValue() == "" ?
+                                 "" :$objWorksheet->getCellByColumnAndRow(8,$i)->getValue()  ),
+                    );
+
+                    $divisionno[] = array(
+                        "error" => $this->isValidDivision($objWorksheet->getCellByColumnAndRow(9,$i)->getValue()),
+                        "cell" =>  $objWorksheet->getCellByColumnAndRow(9,$i)->getColumn().$i,
+                        "value" =>  ($objWorksheet->getCellByColumnAndRow(9,$i)->getValue() == "" ?
+                                 "" :$objWorksheet->getCellByColumnAndRow(9,$i)->getValue()  ),
+                    );
+
+                   
+
+                }
+                
+
+
+                $json_response= [
+                    
+                    "worker_code" => $worker_code,
+                    "worker_name" => $worker_name,
+                    "relation" => $relation,
+                    "dependent_name" => $dependent_name,
+                    "active" => $active,
+                    "sex" => $sex,
+                    "dob" => $dob,
+                    "houseno" => $houseno,
+                    "lineno" => $lineno,
+                    "divisionno" => $divisionno
+                    
+                ];
+            
+        }//end of file check
+        
+       
+        header('Content-Type: application/json');
+	echo json_encode( $json_response );
+	exit;
+        
+      
+    }
+
+
+ /*
+	@return type boolean
+	@method isValidWorkerCode(code)
+	@date  26.02.2019
+*/
+private function isValidWorkerCode($code)
+{
+        if($code!="")
+        {
+            $where = array("patients.patient_code"=>trim($code));
+            $isexist = $this->commondatamodel->checkExistanceData('patients',$where);
+            if($isexist>=1)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 1;
+        }
+}
+
+
+ /*
+	@return type boolean
+	@method isValidRelation(relation)
+	@date  26.02.2019
+*/
+private function isValidRelation($relation)
+{
+        if($relation!="")
+        {
+            $where = array("relationship_master.relation"=>trim($relation));
+            $isexist = $this->commondatamodel->checkExistanceData('relationship_master',$where);
+            if($isexist>=1)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 1;
+        }
+}
+
+ /*
+	@return type boolean
+	@method isValidateBlank(value)
+	@date  26.02.2019
+*/
+private function isValidateBlank($value)
+{
+        if(trim($value)!="")
+        {
+            return 0;
+        }
+        else
+        {
+            return 1;
+        }
+}
+
+
+
+ /*
+	@return type boolean
+	@method isValidLine(relation)
+	@date  26.02.2019
+*/
+private function isValidLine($line)
+{
+        if($line!="")
+        {
+            $where = array("line_master.line_code"=>trim($line));
+            $isexist = $this->commondatamodel->checkExistanceData('line_master',$where);
+            if($isexist>=1)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 0;
+        }
+}
+
+ /*
+	@return type boolean
+	@method isValidDivision(relation)
+	@date  26.02.2019
+*/
+private function isValidDivision($division)
+{
+        if($division!="")
+        {
+            $where = array("division_master.division_code"=>trim($division));
+            $isexist = $this->commondatamodel->checkExistanceData('division_master',$where);
+            if($isexist>=1)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 0;
+        }
+}
+
+
+public function insertIntoDependentPatient()
+{
+    CUSTOMHEADER::getCustomHeader();
+    $json_response = [];
+    $headers = $this->input->request_headers();
+    
+    if(CUSTOMHEADER::getAuthotoken($headers)){$client_token = CUSTOMHEADER::getAuthotoken($headers);}else{$client_token = "";}
+    
+    $server_token="";
+    if($client_token!=""){
+        $server_token = $this->authorisation->getToken($client_token->jti)->web_token;
+       
+    }
+   
+    if($client_token!=""){
+    if($client_token->jti==$server_token ){
+        
+        $token_data = $client_token->data;
+        $hospital_id = $token_data->hospital_id;
+        
+    
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+
+        $DependentData = $request->fdata;
+
+
+       $worker_code=$DependentData->worker_code->value;
+       $worker_name=$DependentData->worker_name->value;
+       $relation=$DependentData->relation->value;
+       $dependent_name=$DependentData->dependent_name->value;
+       $active=$DependentData->active->value;
+       $sex=$DependentData->sex->value;
+       $dob=date("d-m-Y",strtotime($DependentData->dob->value));
+       $houseno=$DependentData->houseno->value;
+       $lineno=$DependentData->lineno->value;
+       $divisionno=$DependentData->divisionno->value;
+
+       $generatedCode=$worker_code.'/'.$dob;
+
+       $RelationWhere = array('relationship_master.relation' =>trim($relation));
+       $relationData = $this->commondatamodel->getSingleRowByWhereCls('relationship_master',$RelationWhere);
+       $relation_id=$relationData->id;
+
+       if($active=='Yes'){
+        $currant_status='Active';
+       }else{
+        $currant_status='Terminated'; 
+       }
+
+
+       $dependent_array = array(
+                                'patient_code' => $generatedCode, 
+                                'patient_name' => $dependent_name, 
+                                'relation_id' => $relation_id, 
+                                'currant_status' => $currant_status, 
+                                'employee_id' => $worker_code, 
+                                'gender' => $sex, 
+                                'dob' => date("Y-m-d",strtotime($dob)), 
+                                'house_no' => $houseno, 
+                                'line_number' => $lineno, 
+                                'division_number' => $divisionno, 
+                                'hospital_id' => $hospital_id
+                               );
+       // pre($dependent_array );
+
+        $patientwhere = array('patients.patient_code' =>$generatedCode);
+            $checkpatientCode=$this->commondatamodel->checkExistanceData('patients',$patientwhere);
+
+            if($checkpatientCode){
+                $dependent_upd_array = array(
+                    'patient_name' => $dependent_name, 
+                    'relation_id' => $relation_id, 
+                    'currant_status' => $currant_status,
+                    'patient_type_id' => 3, // dependent id 
+                    'employee_id' => $worker_code, 
+                    'gender' => $sex, 
+                    'dob' => date("Y-m-d",strtotime($dob)), 
+                    'house_no' => $houseno, 
+                    'line_number' => $lineno, 
+                    'division_number' => $divisionno, 
+                    'hospital_id' => $hospital_id
+                   );
+
+                   $this->db->where($patientwhere);
+                   $query= $this->db->update('patients',$dependent_upd_array);
+
+            }else{
+                $dependent_inst_array = array(
+                    'patient_code' => $generatedCode, 
+                    'patient_name' => $dependent_name, 
+                    'patient_type_id' => 3, // dependent id
+                    'relation_id' => $relation_id, 
+                    'currant_status' => $currant_status, 
+                    'gender' => $sex, 
+                    'dob' => date("Y-m-d",strtotime($dob)), 
+                    'house_no' => $houseno, 
+                    'line_number' => $lineno, 
+                    'division_number' => $divisionno, 
+                   );
+
+                  $query = $this->db->insert('patients', $dependent_inst_array); 
+
+
+            }
+    
+     
+        if($query){
+            $json_response = [
+                "msg_status"=>HTTP_SUCCESS,
+                "msg_data"=>"SUCCESS",
+            ];
+        }
+        else{
+            $json_response = [
+                "msg_status"=>HTTP_SUCCESS,
+                "msg_data"=>"There is some problem.Please try again",
+            ];
+        }
+        
+    }else{
+        $json_response = [
+                            "msg_status"=>HTTP_AUTH_FAIL,
+                            "msg_data"=>"Authentication fail."
+        ];
+    }
+    }else{
+         $json_response = [
+                            "msg_status"=>HTTP_AUTH_FAIL,
+                            "msg_data"=>"Authentication fail."
+        ];
+
+    }
+    header('Content-Type: application/json');
+echo json_encode( $json_response );
+exit;
+    
+  
+}
 
 
 }//end of class

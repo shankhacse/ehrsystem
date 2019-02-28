@@ -245,7 +245,7 @@
                         
                                             <div fxFlex="20%">
                                               <mat-form-field class="fullwidthinp">
-                                                  <input matInput [matDatepicker]="fromDtPick" placeholder="* Date" formControlName="searchFromDateCtrl" autocomplete="off" readonly (dateChange)="onSearchBydate($event)" >
+                                                  <input matInput [matDatepicker]="fromDtPick" placeholder="* Date" formControlName="searchFromDateCtrl" autocomplete="off" readonly (dateChange)="onSearchBydate()" >
                                                   <mat-datepicker-toggle matSuffix [for]="fromDtPick"></mat-datepicker-toggle>
                                                   <mat-datepicker #fromDtPick></mat-datepicker>
                                               </mat-form-field>

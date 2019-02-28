@@ -98,7 +98,7 @@
                         
                      
 
-                        <section>
+                        <section *ngIf="issuedRecordFound">
                             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width:100%">
                                 <ng-container matColumnDef="slno">
                                     <th mat-header-cell *matHeaderCellDef style="width:10%;"> Sl No. </th>
@@ -151,9 +151,9 @@
                             </div>
                         </section>
                         
-                        <!-- <section *ngIf="!issuedRecordFound">
+                         <section *ngIf="!issuedRecordFound">
                           <h2 style="font-size: 16px;letter-spacing: 3px;text-indent: 14px;">No Records Found</h2>
-                        </section> -->
+                        </section> 
 
 
 

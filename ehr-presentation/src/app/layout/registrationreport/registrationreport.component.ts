@@ -52,6 +52,7 @@ export class RegistrationreportComponent implements OnInit {
         patTypeCtrl : new FormControl('')
        
       });
+      
      }
 
   ngOnInit() {
@@ -75,8 +76,9 @@ export class RegistrationreportComponent implements OnInit {
   displayedColumns: string[] = [
                                 'slno',
                                 'reg_date',
-                                'reg_type', 
+                                'reg_date',
                                 'patient_type', 
+                                'parmanent_wrk_code', 
                                 'patientID', 
                                 'challanno',
                                 'division',

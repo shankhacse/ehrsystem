@@ -366,7 +366,10 @@ class Registration_model extends CI_Model{
 			"registration.is_deleted" => 'N'
 		];
 	
-		$query = $this->db->select("
+		$query = $this->db->select("CASE
+									WHEN patients.patient_type_id = 1 THEN patients.patient_code
+									ELSE patients.employee_id
+									END AS parmanent_wrk_code,
 									/* registration.registration_id,*/
 									registration.unique_id AS registration_id,
 									DATE_FORMAT(registration.`date_of_registration`,'%d-%m-%Y') As date_of_registration,
@@ -456,7 +459,10 @@ class Registration_model extends CI_Model{
 
        
 
-		$query = $this->db->select("
+		$query = $this->db->select("CASE
+							WHEN patients.patient_type_id = 1 THEN patients.patient_code
+							ELSE patients.employee_id
+							END AS parmanent_wrk_code,
 							DATE_FORMAT(registration.`date_of_registration`,'%d-%m-%Y') As date_of_registration,
 							registration.registration_type,
 							patient_type.patient_type,
@@ -467,7 +473,7 @@ class Registration_model extends CI_Model{
 							patients.line_number
 
                         
-                        ")
+                        ",FALSE)
             ->from("registration")
 			->join("patients","patients.patient_id = registration.patient_id","INNER")
 			->join("patient_type","patient_type.patient_type_id = patients.patient_type_id","INNER")

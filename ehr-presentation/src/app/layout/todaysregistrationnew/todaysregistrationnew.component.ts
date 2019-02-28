@@ -61,6 +61,7 @@ export class TodaysregistrationnewComponent implements OnInit {
   'patient_type',
   'date_of_registration',
   'patient_code',
+  'parmanent_wrk_code',
   'patient_name',
   'birthdate',
   'age',

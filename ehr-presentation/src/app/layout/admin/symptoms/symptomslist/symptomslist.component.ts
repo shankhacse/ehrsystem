@@ -65,7 +65,7 @@ export class SymptomslistComponent implements OnInit {
      
     } ,
     error => {
-     console.log("error in todays investigation list");
+     console.log("error in todays symptomslist list");
    });
 
   }
@@ -105,6 +105,11 @@ export class SymptomslistComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+
+  gotoAdd(){
+    this.router.navigateByUrl('panel/symptoms');
   }
 
 }//end of class

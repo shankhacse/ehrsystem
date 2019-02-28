@@ -48,8 +48,8 @@ export class PatientlistComponent implements OnInit {
     'dr_type',
     
     'gender',
-    'mobile_one',
-    'mobile_two',
+    //'mobile_one',
+    //'mobile_two',
     'challan_number',
     'currant_status',
     'dateofbirth',

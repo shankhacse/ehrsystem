@@ -1,0 +1,83 @@
+<div style="width:100%;float: right;text-align:right;padding-bottom: 12px;">
+  <button mat-mini-fab color="warn"   (click)="redirectToComp()" type="button" ><i class="material-icons">
+        clear
+        </i></button>
+
+</div>
+<div class="wrapper"> 
+<table class="table table-striped mat-elevation-z8"  >
+<thead>
+  <tr style="background-color: #373e77; color: #f3f1ed;">
+    <th width="5%">Sl</th>
+    <th width="10%">Worker Code</th>
+    <th width="15%">Worker Name</th>
+    <th width="10%">Relation</th>
+    <th width="15%">Dependant Name</th>
+    <th width="5%">Active</th>
+    <th width="5%">Sex</th>
+    <th width="10%">Date of Birth</th>
+    <th width="5%">House No.</th>
+    <th width="5%">Line No.</th>
+    <th width="5%">Division No</th>
+   
+  </tr>
+</thead>
+<tbody>
+  <tr *ngFor="let excelrow of depList; let i = index">
+    <td align='center'>{{i+1}}</td>
+    <td matTooltip="{{excelrow.worker_code.cell}}" [ngClass]="{'errorcell' : excelrow.worker_code.error}">{{excelrow.worker_code.value}}</td>
+    <!-- <td>{{excelrow.worker_code.value}}</td> -->
+    <td>{{excelrow.worker_name.value}}</td>
+    <td matTooltip="{{excelrow.relation.cell}}" [ngClass]="{'errorcell' : excelrow.relation.error}">{{excelrow.relation.value}}</td>
+  
+    <td matTooltip="{{excelrow.dependent_name.cell}}" [ngClass]="{'errorcell' : excelrow.dependent_name.error}">{{excelrow.dependent_name.value}}</td>
+  
+    <td>{{excelrow.active.value}}</td>
+    <td>{{excelrow.sex.value}}</td>
+    <td matTooltip="{{excelrow.dob.cell}}" [ngClass]="{'errorcell' : excelrow.dob.error}">{{excelrow.dob.value}}</td>
+   
+    <td>{{excelrow.houseno.value}}</td>
+    <td matTooltip="{{excelrow.lineno.cell}}" [ngClass]="{'errorcell' : excelrow.lineno.error}">{{excelrow.lineno.value}}</td>
+    <td matTooltip="{{excelrow.divisionno.cell}}" [ngClass]="{'errorcell' : excelrow.divisionno.error}">{{excelrow.divisionno.value}}</td>
+    
+   
+ 
+  
+  </tr>
+ 
+</tbody>
+</table>
+
+</div>
+<p style="color:#F00;text-align: left;padding-left: 20px;">{{validFormErr}}</p>
+
+  <div *ngIf="this.incorrectClose" style="text-align: center;margin-top:2%;margin-bottom:2%;" >
+  
+  <a mat-raised-button color="warn" class="toplink" (click)="redirectToComp()" style="font-size:11px;letter-spacing:1px;margin-left:5px">Close</a>
+  
+
+
+</div>
+
+<section id="SubmitBlock">
+  <div *ngIf="this.isButtonVisible" (click)="this.isButtonVisible = false" class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+      <button  mat-flat-button color="primary" class="phrmcybtn" type="button" (click)="saveData()"> Save</button>
+  </div>
+
+  <div *ngIf="this.isProcess" style="color:rgb(38, 107, 197);text-align: center;padding-left: 20px;">
+        <p>  Processing Please wait .... {{insertrow}} / {{totalrow}} </p>
+  </div>
+
+  <div *ngIf="this.afterProcess" style="text-align: center;padding-left: 20px;margin-top:2%;margin-bottom:2%;" >
+      <p style="color:rgb(34, 111, 212);text-align: center;padding-left: 20px;">{{updatemessage}}</p>
+      <a mat-raised-button color="primary" class="toplink"(click)="redirectToPatientList()" style="font-size:11px;letter-spacing:1px;">Patient List</a>
+      <a mat-raised-button color="warn" class="toplink" (click)="redirectToComp()" style="font-size:11px;letter-spacing:1px;margin-left:5px">Close</a>
+      
+   
+   
+</div>
+
+
+
+
+</section>

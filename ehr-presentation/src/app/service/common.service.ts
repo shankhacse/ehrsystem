@@ -832,4 +832,24 @@ getIssuedSickApprovalByDate(formdata){
  });
 }
 
+
+  /**
+ * @author Shankha Ghosh
+ * @param formval 
+ * @description Insert diagonosis into diagonosis table
+ */
+
+
+async insertIntoDependentPatient(formval) {
+  let datas = JSON.stringify({fdata:formval});
+  return await new Promise(resolve => {
+    this.http.post(this.global.insertDependent_URL,datas).subscribe(data => {
+      
+      resolve(data);
+    }, err => {
+      console.log(err);
+    });
+ });
 }
+
+}// end of class

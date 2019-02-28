@@ -195,6 +195,8 @@ public groupList_URL = this.APIURL+"master/getGroup";
   public insertEMP_URL = this.APIURL+"Fileimport/insertIntoEmployee";
   public grnvalidation_URL = this.APIURL+"fileimport/verifyGrnFile";		
   public insertMED_URL = this.APIURL+"Fileimport/insertIntoMedicine";
+  public importDependent_URL = this.APIURL+"fileimport/verifyDependentExcelFile";		
+  public insertDependent_URL = this.APIURL+"Fileimport/insertIntoDependentPatient";
 
 
 /* --------------------------------------------------------- 		
