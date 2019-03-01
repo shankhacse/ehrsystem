@@ -385,7 +385,8 @@ class Registration_model extends CI_Model{
 									patients.mobile_one,
 									patients.adhar,
 									patients.age,
-									patient_type.patient_type
+									/* patient_type.patient_type */
+									patient_type.dr_type as patient_type 
 								",FALSE)
                          ->from("registration") 
 						 ->join("patients","patients.patient_id = registration.patient_id","INNER")
@@ -465,10 +466,11 @@ class Registration_model extends CI_Model{
 							END AS parmanent_wrk_code,
 							DATE_FORMAT(registration.`date_of_registration`,'%d-%m-%Y') As date_of_registration,
 							registration.registration_type,
-							patient_type.patient_type,
+							patient_type.dr_type as patient_type,
 							patients.patient_code,
 							patients.division_number,
 							patients.challan_number,
+							patients.patient_name,
 						
 							patients.line_number
 

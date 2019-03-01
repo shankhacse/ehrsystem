@@ -75,11 +75,11 @@ export class RegistrationreportComponent implements OnInit {
 
   displayedColumns: string[] = [
                                 'slno',
-                                'reg_date',
+                                'patient_name',
                                 'reg_date',
                                 'patient_type', 
                                 'parmanent_wrk_code', 
-                                'patientID', 
+                               // 'patientID', 
                                 'challanno',
                                 'division',
                                 'lineno'];

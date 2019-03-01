@@ -326,10 +326,11 @@ class Ipd_model extends CI_Model{
 	        $patient_id = trim($formMasterData->patientID);
 	        
 	        $nextCheckUpDt = NULL;
-	        if(isset($formMasterData->nextCheckUpDt)) {
+	        if($formMasterData->nextCheckUpDt!='') {
 	            $nextCheckUpDt = date('Y-m-d H:i:s',strtotime($formMasterData->nextCheckUpDt));
 	        }
-	        
+			
+			
 	        $instruction = trim(htmlspecialchars($formMasterData->instructionCommentCtrl));
 	        $dischargeSummry = trim(htmlspecialchars($formMasterData->dischargeCommentCtrl));
 	        $finalDiagnos = trim(htmlspecialchars($formMasterData->finalCommentCtrl));
