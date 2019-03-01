@@ -52,13 +52,21 @@
                           <ng-container matColumnDef="status">
                               <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:20%;">Status</th>
                               <td mat-cell *matCellDef="let row">
-                                  <button type="button" mat-mini-fab  *ngIf="row.is_active=='Y'" class="prescriptionBtn customeblockBtn activebtn" (click)="changeStatus(row.investigation_id,'N')" id="invRowBtn_{{row.investigation_id}}">
-                                      
-                                    </button>
+                                  <i class="material-icons activebtn" [ngClass]="{'avoid_clicks' : this.disableClick}" *ngIf="row.is_active=='Y'" (click)="changeStatus(row.investigation_id,'N')" id="invRowBtn_{{row.investigation_id}}">
+                                      fiber_manual_record
+                                      </i>
 
-                                    <button type="button" mat-mini-fab  *ngIf="row.is_active=='N'" class="prescriptionBtn customeblockBtn inactivebtn" (click)="changeStatus(row.investigation_id,'Y')" id="invRowBtn_{{row.investigation_id}}">
+                                      <i class="material-icons inactivebtn" [ngClass]="{'avoid_clicks' : this.disableClick}" *ngIf="row.is_active=='N'" (click)="changeStatus(row.investigation_id,'Y')" id="invRowBtn_{{row.investigation_id}}">
+                                          fiber_manual_record
+                                          </i>
+
+                                  <!-- <button type="button" mat-mini-fab  *ngIf="row.is_active=='Y'" class="prescriptionBtn customeblockBtn activebtn" (click)="changeStatus(row.investigation_id,'N')" id="invRowBtn_{{row.investigation_id}}">
+                                      
+                                    </button> -->
+
+                                    <!-- <button type="button" mat-mini-fab  *ngIf="row.is_active=='N'" class="prescriptionBtn customeblockBtn inactivebtn" (click)="changeStatus(row.investigation_id,'Y')" id="invRowBtn_{{row.investigation_id}}">
                                        
-                                      </button>
+                                      </button> -->
                               </td>
                             </ng-container>
 

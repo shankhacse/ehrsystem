@@ -42,6 +42,7 @@ export class LinedialogComponent implements OnInit {
 
   updatemessage:string;
   updateaction:string;
+  disableClick;
 
   constructor(
     private router:Router,
@@ -85,6 +86,16 @@ export class LinedialogComponent implements OnInit {
   public filterdivision: ReplaySubject<Division[]> = new ReplaySubject<Division[]>(1);
 
  ngOnInit() {
+
+
+  
+  var isReadableCheck = localStorage.getItem('isReadable');
+  console.log('isReadable editLine: '+isReadableCheck);
+  if(isReadableCheck=='true'){
+    this.disableClick = 1;
+  }else{
+    this.disableClick = 0;
+  }
    this.getDivision('division_master'); //@param--tablename
    
  }

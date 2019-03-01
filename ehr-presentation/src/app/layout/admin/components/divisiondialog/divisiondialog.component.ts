@@ -37,6 +37,7 @@ export class DivisiondialogComponent implements OnInit {
 
   updatemessage:string;
   updateaction:string;
+  disableClick;
 
   constructor(
     private router:Router,
@@ -76,6 +77,17 @@ export class DivisiondialogComponent implements OnInit {
    }
 
   ngOnInit() {
+
+
+  
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable editDivision: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
+
   }
 
   onSubmitEdit(formdata) {

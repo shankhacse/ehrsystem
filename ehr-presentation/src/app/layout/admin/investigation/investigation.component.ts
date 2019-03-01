@@ -22,6 +22,7 @@ export class InvestigationComponent implements OnInit {
   invObj;
   investigation_id;
   investigation_name;
+  disableClick;
 
   constructor(
      private router:Router,
@@ -75,6 +76,15 @@ export class InvestigationComponent implements OnInit {
   }
 
   ngOnInit() {
+    
+  
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable AddTest: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
     console.log('testing');
   }
 

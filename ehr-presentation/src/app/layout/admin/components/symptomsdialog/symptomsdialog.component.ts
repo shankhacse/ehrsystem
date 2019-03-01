@@ -43,6 +43,7 @@ export class SymptomsdialogComponent implements OnInit {
 
   updatemessage:string;
   updateaction:string;
+  disableClick;
 
   constructor(
     private router:Router,
@@ -84,6 +85,16 @@ export class SymptomsdialogComponent implements OnInit {
 
     
     ngOnInit() {
+      
+  
+      var isReadableCheck = localStorage.getItem('isReadable');
+      console.log('isReadable symptoms: '+isReadableCheck);
+      if(isReadableCheck=='true'){
+        this.disableClick = 1;
+      }else{
+        this.disableClick = 0;
+      }
+  
       this.getGroups();
     }
 

@@ -32,7 +32,7 @@ export class IpdlistComponent implements OnInit {
   dischargedPrescList = [];
   recordsFound = false;
   isButtonActive = true;
-
+  disableClick;
 
   displayedColumns: string[] = [
   'action',
@@ -87,7 +87,13 @@ dischargeDisplayedColumns: string[] = [
  
   ngOnInit() {
 
-    
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable Ipdlist: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
   
     this.isButtonActive = true;
     //this.getTodaysRegForDoc("ALL","N");

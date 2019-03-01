@@ -43,7 +43,8 @@ export class LayoutComponent implements OnInit {
         let token = this.getDecodedAccessToken(localStorage.getItem("token"));
        // console.log(token);
         this.redirectHome = this.getHomeUrl(token.data.user_role_code);
-
+        // commented on 01.03.2019
+       /*
         if(token.data.user_role_code=="ADMIN") {
             this.isAdmin = true;
            // this.isNotAdmin = false;
@@ -52,6 +53,22 @@ export class LayoutComponent implements OnInit {
             this.isAdmin = false;
            // this.isNotAdmin = true;
         }
+
+        */
+
+       var leftpanel = localStorage.getItem('isLeftpanel');
+
+            if(leftpanel=="Yes") {
+                this.isAdmin = true;
+            // this.isNotAdmin = false;
+            }
+            else{
+                this.isAdmin = false;
+            // this.isNotAdmin = true;
+            }
+
+
+
         //this.username = localStorage.getItem('fname') +" "+localStorage.getItem('lname');
         this.username = localStorage.getItem('fname') ;
     }
@@ -78,20 +95,29 @@ export class LayoutComponent implements OnInit {
       getHomeUrl(rolecode:string){
         let homeUrl = "";
         if(rolecode == "ADMIN"){
+          
             homeUrl = "/panel/dashboard";
+           
         }
 
         else if(rolecode == "DOC"){
+           
             homeUrl = "/panel/doctor";
         }
 
         else if(rolecode == "PHRM"){
+           
             homeUrl = "/panel/prescriptionlist";
         }
 
         
         else if(rolecode == "ASST"){
+            
             homeUrl = "/panel/registration";
+        }
+        else if(rolecode == "SPRADM"){
+            
+            homeUrl = "/panel/superadmin";
         }
         else {
             homeUrl = "";
@@ -104,6 +130,33 @@ export class LayoutComponent implements OnInit {
 
       redirectToHome(){
         this.router.navigate([this.redirectHome]);
+      }
+
+
+      redirectAdminHome(){
+        let token = this.getDecodedAccessToken(localStorage.getItem("token"));
+         console.log(token.data.user_role_code);
+
+         if(token.data.user_role_code=="SPRADM"){
+            localStorage.setItem("isLeftpanel", 'No'); // added on 1.03.2019
+            this.redirectHome = this.getHomeUrl(token.data.user_role_code);
+            window.location.replace(this.redirectHome);
+
+         }else{
+            this.redirectHome = this.getHomeUrl(token.data.user_role_code);
+           // window.location.replace(this.redirectHome);
+           this.router.navigateByUrl(this.redirectHome);
+
+         }
+
+
+
+       
+
+       
+
+        
+
       }
       
 }

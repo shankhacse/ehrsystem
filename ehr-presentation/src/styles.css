@@ -87,3 +87,9 @@ td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:
 
 }
 */
+
+/* css for active read only button */
+
+.avoid_clicks {
+    pointer-events: none;
+}

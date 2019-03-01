@@ -52,19 +52,35 @@ export class LoginComponent implements OnInit {
       
       localStorage.setItem("fname", user_data.first_name);
       localStorage.setItem("lname", user_data.last_name);
+
+      /*--------- Use for Super Admin Readonly travel to doctor,admin,assistant,pharmacy */
+        if(user_data.is_readable=='Y'){
+          localStorage.setItem("isReadable", 'true');
+        }else{
+          localStorage.setItem("isReadable", 'false');
+        }
+
      // this.router.navigate(['/panel/registration']);
       
       if(user_data.user_role_code=="ADMIN"){
         this.router.navigate(['/panel/dashboard']);
+        localStorage.setItem("isLeftpanel", 'Yes');
       }
       else if(user_data.user_role_code=="DOC"){
         this.router.navigate(['/panel/doctor']);
+        localStorage.setItem("isLeftpanel", 'No');
       }
       else if(user_data.user_role_code=="ASST"){
         this.router.navigate(['/panel/registration']);
+        localStorage.setItem("isLeftpanel", 'No');
       }
       else if(user_data.user_role_code=="PHRM"){
         this.router.navigate(['/panel/prescriptionlist']);
+        localStorage.setItem("isLeftpanel", 'No');
+      }
+      else if(user_data.user_role_code=="SPRADM"){
+        this.router.navigate(['/panel/superadmin']);
+        localStorage.setItem("isLeftpanel", 'No');
       }
       else{
         this.router.navigate(['/not-found']);

@@ -254,7 +254,7 @@
   <!-- <p style="color: #C34E4E;text-align: left;padding-left: 59px;">{{validFormErr}}</p> -->
   <mat-dialog-actions >
     <button mat-raised-button color="accent" (click)="onNoClick()" type="button">Cancel</button>
-    <button class="mat-raised-button mat-primary" type="submit" *ngIf="registerButtonActive">Save</button>
+    <button class="mat-raised-button mat-primary" [ngClass]="{'avoid_clicks' : this.disableClick}" type="submit" *ngIf="registerButtonActive">Save</button>
     <mat-spinner [diameter]="25" color="primary" style="margin-left: 10px; margin-top: 6px;" *ngIf="loaderActive" ></mat-spinner>
   </mat-dialog-actions>
 </form>

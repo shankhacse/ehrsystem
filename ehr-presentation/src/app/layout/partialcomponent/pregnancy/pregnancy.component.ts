@@ -90,6 +90,7 @@ export class PregnancyComponent implements OnInit {
   medicineError:string = "";
   testReportError:string = "";
   validFormErr:string = "";
+  disableClick;
 
   
   
@@ -116,7 +117,7 @@ export class PregnancyComponent implements OnInit {
     });
 
     this.additionalInfoForm = new FormGroup({
-      nextChkupDate: new FormControl(''),
+      nextChkupDate: new FormControl(null),
       pregRemarks: new FormControl('')
     });
 
@@ -176,6 +177,15 @@ calEstimateDeliveryDate(type: string, event) {
   private _onDestroy = new Subject<void>();
 
   ngOnInit() {
+
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable Pregnancy: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
+
     this.pregnancyVaccinationGivenForm = this.fb.group({
       pregnancyVaccinRows: this.fb.array([])
     });

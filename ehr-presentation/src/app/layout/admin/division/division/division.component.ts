@@ -19,6 +19,7 @@ export class DivisionComponent implements OnInit {
   divNameCtrl:string = "";
  
   validFormErr:string = "";
+  disableClick;
 
   constructor(
     private router:Router,
@@ -33,6 +34,16 @@ export class DivisionComponent implements OnInit {
    }
 
   ngOnInit() {
+   
+  
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable add Division: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
+
     console.log('division testing');
   }
 

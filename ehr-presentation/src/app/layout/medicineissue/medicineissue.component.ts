@@ -44,6 +44,8 @@ export class MedicineissueComponent implements OnInit {
   validFormErr:string = "";
   lastPresciptionID:number = 0;
   loclStrgHealthPrflID;
+
+  disableClick;
   
 
   displayedColumns: string[] = [ 'datetd' , 'medicinetd' , 'dosagetd' , 'unittd', 'daystd' , 'actiontd'];
@@ -153,6 +155,14 @@ export class MedicineissueComponent implements OnInit {
 
   
     ngOnInit() {
+
+      var isReadableCheck = localStorage.getItem('isReadable');
+      console.log('isReadable: '+isReadableCheck);
+      if(isReadableCheck=='true'){
+        this.disableClick = 1;
+      }else{
+        this.disableClick = 0;
+      }
       
       this.prescriptionMedForm = this.fb.group({
         medicineRows: this.fb.array([])

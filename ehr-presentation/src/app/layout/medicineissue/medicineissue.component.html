@@ -127,9 +127,9 @@
                                             <div fxFlex="10%">
                                                 
                                                 <div style="margin-top:11%;"></div>
-                                                <button mat-flat-button color="primary" class="phrmcybtn" type="button" *ngIf="sendPhrmcyBtnActive" (click) = "issueMedicine()" [disabled]="issueBtnDisable" >Issue Now</button>
+                                                <button mat-flat-button [ngClass]="{'avoid_clicks' : this.disableClick}" color="primary" class="phrmcybtn" type="button" *ngIf="sendPhrmcyBtnActive" (click) = "issueMedicine()" [disabled]="issueBtnDisable" >Issue Now</button>
                                                
-                                                <button mat-flat-button color="default" class="phrmcybtn" *ngIf="!sendPhrmcyBtnActive" style="vertical-align: middle;padding: 4px 0;" type="button">
+                                                <button mat-flat-button [ngClass]="{'avoid_clicks' : this.disableClick}" color="default" class="phrmcybtn" *ngIf="!sendPhrmcyBtnActive" style="vertical-align: middle;padding: 4px 0;" type="button">
                                                     <mat-spinner [diameter]="25" color="primary" ></mat-spinner>
                                                   </button>
                                             </div>

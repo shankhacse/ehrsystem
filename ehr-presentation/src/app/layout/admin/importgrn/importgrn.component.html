@@ -31,9 +31,9 @@
                           </div>   
                           <div fxFlex="60%">
                             
-                              <div class="upload-btn-wrapper">
+                              <div class="upload-btn-wrapper" [ngClass]="{'avoid_clicks' : this.disableClick}">
                                 
-                                  <button mat-raised-button class="btn" (click)="fileInput.click()" >Select file</button>&nbsp;<span class="filenamespan">{{filename}}</span>
+                                  <button mat-raised-button class="btn"  (click)="fileInput.click()" >Select file</button>&nbsp;<span class="filenamespan">{{filename}}</span>
     <input accept=".xlsx, .xls" type="file" name="reportfile" id="reportfile" (change)="upload($event.target.files)" #fileInput />
                                          </div> 
                           </div>

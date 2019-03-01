@@ -39,6 +39,7 @@ export class MedicineComponent implements OnInit {
 
   message:string;
   action:string;
+  disableClick;
 
 
   validFormErr:string = "";
@@ -80,6 +81,16 @@ export class MedicineComponent implements OnInit {
     }
 
   ngOnInit() {
+
+   
+  
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
     this.getMedicineTypeData('medicine_type');
     this.getMedicine('medicine');
 

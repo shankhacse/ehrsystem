@@ -27,6 +27,7 @@ export class LineComponent implements OnInit {
   divisionCtrl:string = "";
  
   validFormErr:string = "";
+  disableClick;
 
   constructor(
     private router:Router,
@@ -46,6 +47,16 @@ export class LineComponent implements OnInit {
    public filterdivision: ReplaySubject<Division[]> = new ReplaySubject<Division[]>(1);
 
   ngOnInit() {
+    
+  
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable addLine: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
+
     this.getDivision('division_master'); //@param--tablename
     
   }

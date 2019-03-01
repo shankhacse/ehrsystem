@@ -100,8 +100,8 @@
                                                        
                                                     </div>
                                                     <div fxFlex="40%">
-                                                     <div class="upload-btn-wrapper">
-                                               <button class="btn" >Select file and upload</button>
+                                                     <div class="upload-btn-wrapper" [ngClass]="{'avoid_clicks' : this.disableClick}">
+                                               <button class="btn"  >Select file and upload</button>
                  <input type="file" name="reportfile" id="reportfile" (change)="upload($event.target.files)" #fileInput />
                                                       </div>
                                                             

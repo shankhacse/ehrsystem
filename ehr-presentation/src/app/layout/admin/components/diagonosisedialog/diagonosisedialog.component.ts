@@ -35,6 +35,7 @@ export class DiagonosisedialogComponent implements OnInit {
   updatemessage:string;
   updateaction:string;
  
+  disableClick;
 
   constructor(
     private router:Router,
@@ -72,6 +73,16 @@ export class DiagonosisedialogComponent implements OnInit {
    }
 
   ngOnInit() {
+
+  
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable diagnosis edit: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
+
   }
 
   onSubmitEdit(formdata) {

@@ -25,7 +25,7 @@
                             </i></button>
                        
                       </div>
-                  </mat-toolbar>
+                  </mat-toolbar> <br>
           <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
               <div fxFlex="50%">
                 <input matInput placeholder="" formControlName="diviIdCtrl" autocomplete="off" hidden="true"   > 
@@ -67,7 +67,7 @@
            <!--Button Block-->
       <section id="testSubmitBlock">
           <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
-              <button mat-flat-button color="primary" class="phrmcybtn" type="submit"> Update</button>
+              <button mat-flat-button [ngClass]="{'avoid_clicks' : this.disableClick}" color="primary" class="phrmcybtn" type="submit"> Update</button>
           </div>
       </section>
   <!-- end of mode check-->

@@ -89,7 +89,7 @@
            <!--Button Block-->
       <section id="testSubmitBlock">
           <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
-              <button mat-flat-button color="primary" class="phrmcybtn" type="submit"> Update</button>
+              <button mat-flat-button [ngClass]="{'avoid_clicks' : this.disableClick}" color="primary" class="phrmcybtn" type="submit"> Update</button>
           </div>
       </section>
   <!-- end of mode check-->

@@ -44,6 +44,8 @@ export class ChallandialogComponent implements OnInit {
 
   updatemessage:string;
   updateaction:string;
+  disableClick;
+  
 
   constructor(
     private router:Router,
@@ -85,6 +87,15 @@ export class ChallandialogComponent implements OnInit {
 
   
    ngOnInit() {
+
+  
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable challan: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
     this.getEstate('estate'); //@param--tablename
     
   }

@@ -1,0 +1,44 @@
+.menuWrapper {
+    background: #ededed;
+    height: 100%;
+}
+.menusection {
+    width:80%;
+    margin: 0% auto;
+    padding-top: 6%;
+}
+.menucol {
+   
+    min-height:220px;
+    background: #FFF;
+    /* box-shadow: 0px 1px 32px 18px #b7b6b6; */
+   /* box-shadow: 14px 33px 32px 18px #b7b6b6; */
+     box-shadow: 14px 25px 66px 30px #b7b6b6;
+     border-radius: 5px;
+}
+.icon {
+    text-align:center;
+    padding-top: 10%;
+}
+.icon i {
+    font-size: 4.5em;
+    color: #904ccf;
+    /* text-shadow: -2px -4px 13px #4b4b4b; */
+}
+.menutitle {
+    text-align: center;
+    color: #4d4da8;
+    font-size: 1rem;
+   /* font-weight: 500;
+    color: #FFF;
+    font-size: 1rem;
+    letter-spacing: 1px;*/
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.menubtn {
+    text-align: center;
+   
+}
+.menubtn a {
+    background: #f85225;
+}

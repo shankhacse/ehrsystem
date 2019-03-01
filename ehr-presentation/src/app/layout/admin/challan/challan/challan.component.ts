@@ -29,6 +29,8 @@ export class ChallanComponent implements OnInit {
  
   validFormErr:string = "";
 
+   disableClick;
+   
   constructor(
     private router:Router,
     private commonService:CommonService,
@@ -47,6 +49,16 @@ export class ChallanComponent implements OnInit {
    public filterstate: ReplaySubject<Estate[]> = new ReplaySubject<Estate[]>(1);
 
   ngOnInit() {
+ 
+  
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable addChallan: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
+
     this.getEstate('estate'); //@param--tablename
     
   }

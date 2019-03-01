@@ -99,6 +99,7 @@ export class IpdvisitComponent implements OnInit {
   medicineError:string = "";
   testReportError:string = "";
   validFormErr:string = "";
+  disableClick;
 
   constructor(private router:Router, private commonService:CommonService, private symptomdiseaseService:SymptomdiseaseService , private datashareService:DatashareService , private patientService:PatientService , public dialog: MatDialog , private ipdService:IpdService,public snackBar: MatSnackBar) { 
     
@@ -187,6 +188,14 @@ export class IpdvisitComponent implements OnInit {
   private _onDestroy = new Subject<void>();
 
   ngOnInit() {
+
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable IpdVisit: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
     
     this.getBloodGroup();
     this.getMedicine('A');

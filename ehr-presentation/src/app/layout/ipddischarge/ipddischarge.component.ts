@@ -100,6 +100,7 @@ export class IpddischargeComponent implements OnInit {
   medicineError:string = "";
   testReportError:string = "";
   validFormErr:string = "";
+  disableClick;
 
   //submitBtnText = "";
 
@@ -205,6 +206,14 @@ export class IpddischargeComponent implements OnInit {
   private _onDestroy = new Subject<void>();
 
   ngOnInit() {
+
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable Ipddischarge: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
     
     this.getBloodGroup();
     this.getMedicine('A');

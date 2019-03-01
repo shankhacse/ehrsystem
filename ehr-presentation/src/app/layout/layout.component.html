@@ -18,7 +18,10 @@
     >
     <mat-toolbar class="primarycolor" >Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink='{{redirectHome}}'><mat-icon>dashboard</mat-icon> Home</a>
+      <!-- <a mat-list-item routerLink='{{redirectHome}}'><mat-icon>dashboard</mat-icon> Home</a> -->
+
+      <a mat-list-item (click)="redirectAdminHome()"><mat-icon>dashboard</mat-icon> Home</a>
+
       <mat-nav-list>
         <mat-list-item (click)="menuTrigger.openMenu()">Get Ready</mat-list-item>
       </mat-nav-list>
@@ -36,8 +39,8 @@
       <a mat-list-item routerLink="/panel/reportsupload"><mat-icon>link</mat-icon>Report Upload</a>		
       <a mat-list-item routerLink="/panel/grn"><mat-icon>link</mat-icon>Import GRN Excel</a>
       <mat-divider></mat-divider>
-      <a mat-list-item routerLink="/panel/registration"><mat-icon>memory</mat-icon> Registration</a>
-      <a mat-list-item routerLink="/panel/doctor"><mat-icon>memory</mat-icon> Doctors Visit</a>
+      <!-- <a mat-list-item routerLink="/panel/registration"><mat-icon>memory</mat-icon> Registration</a>
+      <a mat-list-item routerLink="/panel/doctor"><mat-icon>memory</mat-icon> Doctors Visit</a> -->
       
       <!-- <a mat-list-item routerLink="/panel/forms"><mat-icon>compare</mat-icon> Stock Report</a>
       <a mat-list-item routerLink="/panel/forms"><mat-icon>notification_important</mat-icon> Other Report</a>

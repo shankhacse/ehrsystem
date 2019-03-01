@@ -19,7 +19,7 @@ export class DiagonosisComponent implements OnInit {
   acdCodeNameCtrl:string = "";
  
   validFormErr:string = "";
-
+  disableClick;
   
 
 
@@ -38,6 +38,16 @@ export class DiagonosisComponent implements OnInit {
   }
 
   ngOnInit() {
+
+   
+  
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable addDiagnosis: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
     console.log('testing');
   }
 

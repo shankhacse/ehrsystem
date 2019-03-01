@@ -28,6 +28,7 @@ export class ImportdependentComponent implements OnInit {
 
   isLoader=false;
   filename:string = "";
+  disableClick;
 
   constructor(
     private router:Router,
@@ -46,6 +47,16 @@ export class ImportdependentComponent implements OnInit {
   }
 
   ngOnInit() {
+
+
+  
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable import dependent: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
   }
 
   upload(files: File[]){

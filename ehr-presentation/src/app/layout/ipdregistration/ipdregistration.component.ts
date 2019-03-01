@@ -82,7 +82,7 @@ export interface PatientInfo{
   encapsulation: ViewEncapsulation.None
 })
 export class IpdregistrationComponent implements OnInit {
-
+  disableClick;
   ipdRegistrationForm : FormGroup;
   patientList = []; 
   relationsList = []; 
@@ -176,6 +176,16 @@ export class IpdregistrationComponent implements OnInit {
   private _onDestroy = new Subject<void>();
 
   ngOnInit() {
+
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
+
+    
     this.getPatientCode('E');
     this.getRelations();
     this.getBloodGroup();

@@ -112,7 +112,7 @@ import { OpdnewprescconfirmationdialogComponent } from '../components/opdnewpres
 export class OpdpreprationComponent implements OnInit, OnDestroy {
 
 
-
+  disableClick;
   public selectedTab = 0;
   disableConsultTAB = false;
   disablePregnancyTAB = true;
@@ -274,6 +274,14 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
   
 
     ngOnInit() {
+
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable OpdGen: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
 
      
       let regType = localStorage.getItem("regtype");

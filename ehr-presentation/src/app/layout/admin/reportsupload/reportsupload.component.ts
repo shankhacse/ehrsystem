@@ -84,6 +84,7 @@ export class ReportsuploadComponent implements OnInit {
 
 
   fileToUpload: File = null;
+  disableClick;
 
 
   displayedColumns: string[] = [
@@ -154,6 +155,18 @@ export class ReportsuploadComponent implements OnInit {
    private _onDestroy = new Subject<void>();
 
   ngOnInit() {
+
+      
+ 
+  
+  var isReadableCheck = localStorage.getItem('isReadable');
+  console.log('isReadable report upload: '+isReadableCheck);
+  if(isReadableCheck=='true'){
+    this.disableClick = 1;
+  }else{
+    this.disableClick = 0;
+  }
+
 
     this.getPatientCode('E');
     this.getTests();

@@ -56,7 +56,7 @@
 
 <div mat-dialog-actions style="display:block;text-align: center;">
 <button mat-raised-button color="warn" (click)="closeDialog()" type="button"><mat-icon>cancel</mat-icon> Cancel</button>
-<button mat-raised-button color="primary" (click)="saveSickLeave()"  [disabled]="!sickDialogEntryForm.valid"><mat-icon>save</mat-icon> Save</button>
+<button mat-raised-button [ngClass]="{'avoid_clicks' : this.disableClick}" color="primary" (click)="saveSickLeave()"  [disabled]="!sickDialogEntryForm.valid"><mat-icon>save</mat-icon> Save</button>
 </div>
 
 </div>

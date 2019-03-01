@@ -27,6 +27,7 @@ export class ImportgrnComponent implements OnInit {
 
   isLoader=false;
   filename:string = "";
+  disableClick;
 
   constructor(
     private router:Router,
@@ -45,6 +46,18 @@ export class ImportgrnComponent implements OnInit {
   }
 
   ngOnInit() {
+
+      
+ 
+  
+  var isReadableCheck = localStorage.getItem('isReadable');
+  console.log('isReadable import grn: '+isReadableCheck);
+  if(isReadableCheck=='true'){
+    this.disableClick = 1;
+  }else{
+    this.disableClick = 0;
+  }
+
    
   }
 upload(files: File[]){

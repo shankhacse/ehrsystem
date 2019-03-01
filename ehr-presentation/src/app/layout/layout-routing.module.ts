@@ -53,7 +53,7 @@ const routes: Routes = [
             { path: 'regreport' , loadChildren:'./registrationreport/registrationreport.module#RegistrationreportModule'},
 
             { path:'importdependent', loadChildren:'./admin/importdependent/importdependent.module#ImportdependentModule'},
-            
+            { path:'superadmin', loadChildren:'./superadmin/superadmin.module#SuperadminModule'},
            
             
         ]

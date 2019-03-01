@@ -48,6 +48,7 @@ export class MedicinedialogComponent implements OnInit {
   action:string;
 
   validFormErr:string = "";
+  disableClick;
 
   filtermedcines: Observable<Medicine[]>;
   medicineinfo:Medicine[] = [];
@@ -96,6 +97,16 @@ export class MedicinedialogComponent implements OnInit {
    public filtermedicines: ReplaySubject<MedicineType[]> = new ReplaySubject<MedicineType[]>(1);
 
   ngOnInit() {
+
+    
+  
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable editMedicine: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
     this.getMedicineTypeData('medicine_type');
 
     this.getMedicine('medicine');

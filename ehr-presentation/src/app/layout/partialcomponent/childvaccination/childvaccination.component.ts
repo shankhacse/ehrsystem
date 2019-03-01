@@ -43,6 +43,7 @@ export class ChildvaccinationComponent implements OnInit {
   localStrgPcode = "";
   localStrgRid;
   localStrgPatientID;
+  disableClick;
   
   constructor(private router:Router, private commonService:CommonService, private symptomdiseaseService:SymptomdiseaseService , private datashareService:DatashareService , private patientService:PatientService , public dialog: MatDialog , private ipdService:IpdService, private fb: FormBuilder) { 
     
@@ -118,6 +119,15 @@ export class ChildvaccinationComponent implements OnInit {
   private _onDestroy = new Subject<void>();
 
   ngOnInit() {
+
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable ChildVacination: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
+
     this.vaccinationGivenForm = this.fb.group({
       vaccinRows: this.fb.array([])
     });

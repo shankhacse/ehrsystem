@@ -30,7 +30,7 @@ export class ImportexcelComponent implements OnInit {
   authentication;
   isLoader=false;
   filename:string = "";
-
+  disableClick;
   
   constructor(
      private router:Router,
@@ -52,6 +52,16 @@ export class ImportexcelComponent implements OnInit {
   }
   version = VERSION
   ngOnInit() {
+
+ 
+  
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable Patint import: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
   }
 
   onSubmit() {

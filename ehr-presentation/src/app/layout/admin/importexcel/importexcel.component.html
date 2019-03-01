@@ -34,7 +34,7 @@
                               
                                 <div class="upload-btn-wrapper">
                                   
-                                    <button mat-raised-button class="btn" (click)="fileInput.click()" >Select file</button>&nbsp;<span class="filenamespan"></span>
+                                    <button mat-raised-button [ngClass]="{'avoid_clicks' : this.disableClick}" class="btn" (click)="fileInput.click()" >Select file</button>&nbsp;<span class="filenamespan"></span>
       <input accept=".xlsx, .xls" type="file" name="reportfile" id="reportfile" (change)="upload($event.target.files)" #fileInput />
      
                                            </div> 

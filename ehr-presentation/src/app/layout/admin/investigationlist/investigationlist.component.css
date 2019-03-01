@@ -141,11 +141,13 @@ mat-tab-group {
 }
 
 .activebtn{
-    background-color: #27a89a;
+    color: #27a89a;
+    cursor: pointer;
 }
 
 .inactivebtn{
-    background-color: #d25f57;
+    color: #d25f57;
+    cursor: pointer;
 }
 
 table {

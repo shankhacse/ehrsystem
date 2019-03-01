@@ -81,7 +81,7 @@
         </div>
 
         <div class="container " fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center" style="text-align:center;">
-            <div fxFlex="100%"><button mat-flat-button color="primary" class="phrmcybtn" type="submit" >Save</button></div>
+            <div fxFlex="100%"><button mat-flat-button [ngClass]="{'avoid_clicks' : this.disableClick}" color="primary" class="phrmcybtn" type="submit" >Save</button></div>
         </div>
 
     </form>

@@ -26,6 +26,7 @@ import { SickentrydialogComponent } from './components/sickentrydialog/sickentry
 
 
 
+
 @NgModule({
     imports: [
         CommonModule,

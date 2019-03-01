@@ -172,7 +172,7 @@
 
                           
                         <div class="reg-action margincontent" >
-                            <button mat-flat-button class="regblockbtn center-obj" style="background: #09446d;"  (click)="searchPatient()" *ngIf="!searchLoader">
+                            <button mat-flat-button [ngClass]="{'avoid_clicks' : this.disableClick}" class="regblockbtn center-obj" style="background: #09446d;"  (click)="searchPatient()" *ngIf="!searchLoader">
                                  Register Now <mat-icon>arrow_forward_ios</mat-icon> 
                             </button>
 
@@ -283,13 +283,13 @@
                              <th mat-header-cell *matHeaderCellDef>
 
                                     <div class="desktopAction">
-                                        <button mat-flat-button color="primary" (click)="registerPtc()" class="custmbtn" *ngIf="registerBtnEnable" [disabled]="registerBtndisable">
+                                        <button mat-flat-button [ngClass]="{'avoid_clicks' : this.disableClick}" color="primary" (click)="registerPtc()" class="custmbtn" *ngIf="registerBtnEnable" [disabled]="registerBtndisable">
                                                 <mat-icon class="matcustomicon">donut_large</mat-icon> Register &nbsp;&nbsp;
                                         </button>
                                     </div>
                              
                                     <div class="responsiveAction">
-                                        <button mat-icon-button class="success" matTooltip="Registere Now" matTooltipPosition="before" matTooltipClass="registernowTooltip" style="background: #3f51b5;color:#FFF;margin-left: 3px;" (click)="registerPtc()" *ngIf="registerBtnEnable" [disabled]="registerBtndisable"><mat-icon>donut_large</mat-icon></button>
+                                        <button mat-icon-button [ngClass]="{'avoid_clicks' : this.disableClick}"  class="success" matTooltip="Registere Now" matTooltipPosition="before" matTooltipClass="registernowTooltip" style="background: #3f51b5;color:#FFF;margin-left: 3px;" (click)="registerPtc()" *ngIf="registerBtnEnable" [disabled]="registerBtndisable"><mat-icon>donut_large</mat-icon></button>
                                     </div>
 
                                     <mat-spinner [diameter]="25" style="margin-left:25%;" *ngIf="!registerBtnEnable"></mat-spinner>
@@ -374,8 +374,8 @@
                             <td mat-cell *matCellDef="let row" class="regactioncol"> 
 
                                     <div class="desktopAction">
-                                        <button mat-flat-button class="success custmbtn"><mat-icon class="matcustomicon">done</mat-icon>Registered</button>&nbsp;
-                                        <button mat-mini-fab color="warn" (click)="deleteRegistration(row.registration_id)"  *ngIf="row.allowdelete === 'Y'" ><mat-icon>delete</mat-icon></button>
+                                        <button mat-flat-button [ngClass]="{'avoid_clicks' : this.disableClick}" class="success custmbtn"><mat-icon class="matcustomicon">done</mat-icon>Registered</button>&nbsp;
+                                        <button mat-flat-button mat-mini-fab [ngClass]="{'avoid_clicks' : this.disableClick}" color="warn" (click)="deleteRegistration(row.registration_id)"  *ngIf="row.allowdelete === 'Y'" ><mat-icon>delete</mat-icon></button>
                                     </div>
                                     
                                     <!-- Enable on responsive mode -->

@@ -15,6 +15,7 @@ export class InvestigationlistComponent implements OnInit {
   dataSource:any;
   recordsFound = false;
   isPageloded=false;
+  disableClick;
 
   displayedColumns: string[] = [
     'slno',
@@ -35,6 +36,15 @@ export class InvestigationlistComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+ 
+  
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable testList: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
 
     this.getInvestigationList();
 

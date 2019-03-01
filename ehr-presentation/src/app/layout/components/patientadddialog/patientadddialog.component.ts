@@ -57,6 +57,7 @@ export class PatientadddialogComponent implements OnInit , OnDestroy {
   issubmitted = false;
   maxDate:Date = new Date();
   dobCtrl:string = "";
+  disableClick;
   
  
   preg_vacCheck_star=" ";
@@ -131,6 +132,14 @@ export class PatientadddialogComponent implements OnInit , OnDestroy {
   }
 
   ngOnInit() {
+
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable Add New Patient: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
     this.getPatientCode('E');
     this.getBloodGroup();
     this.getRelationsByType('N/W');

@@ -407,8 +407,8 @@
             <!--Button Block-->
             <section id="ipdSubmitBlock">
                 <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
-                    <button mat-flat-button color="warn" class="phrmcybtn" type="button" (click)="removeIPDDischarge()" *ngIf="isRemoveEnable"> Remove</button>
-                    <button mat-flat-button color="primary" class="phrmcybtn" type="submit"> Save</button>
+                    <button mat-flat-button [ngClass]="{'avoid_clicks' : this.disableClick}" color="warn" class="phrmcybtn" type="button" (click)="removeIPDDischarge()" *ngIf="isRemoveEnable"> Remove</button>
+                    <button mat-flat-button [ngClass]="{'avoid_clicks' : this.disableClick}" color="primary" class="phrmcybtn" type="submit"> Save</button>
                 </div>
             </section>
 

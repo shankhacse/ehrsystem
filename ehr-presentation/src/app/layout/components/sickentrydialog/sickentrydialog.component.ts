@@ -32,6 +32,7 @@ export class SickentrydialogComponent implements OnInit {
   value = 50;
   bufferValue = 75;
   isEnableProgress = false;
+  disableClick;
   
 
   constructor(private router:Router,public dialogRef: MatDialogRef<SickentrydialogComponent> , private commonService:CommonService, @Inject(MAT_DIALOG_DATA) public data: any , private symptomdiseaseService:SymptomdiseaseService ) { 
@@ -54,6 +55,14 @@ export class SickentrydialogComponent implements OnInit {
 
 
   ngOnInit() {
+
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable Sick Leave Approval: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
     this.isEnableProgress = false;
     this.getHospitals();
 

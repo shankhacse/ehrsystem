@@ -267,7 +267,7 @@
             
             <!-- Button Block -->
             <section id="ipdSubmitBlock">
-                <button mat-flat-button color="primary" class="phrmcybtn" type="submit" style="float:right;" (click) = "savePregnancy()" > Save</button>
+                <button mat-flat-button [ngClass]="{'avoid_clicks' : this.disableClick}" color="primary" class="phrmcybtn" type="submit" style="float:right;" (click) = "savePregnancy()" > Save</button>
             </section>
 
        

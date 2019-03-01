@@ -1,0 +1,67 @@
+<section class="menuWrapper">
+  <section id="doctorsmenu" class="menusection">
+      <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.2%" fxLayoutAlign="center">
+         
+        <div fxFlex="20%" class="menucol">
+            <div class="icon">
+                <i class="material-icons">recent_actors</i>
+            </div>
+            <div class="menutitle">
+              <p>Assistant Panel</p>
+            </div>
+            <div class="menubtn">
+                <a mat-raised-button routerLink="/panel/registration" color="warn" >Go <i class="material-icons"> keyboard_arrow_right</i></a>
+            </div>
+        </div>
+      
+  
+          <div fxFlex="20%" class="menucol">
+              <div class="icon">
+                  <i class="material-icons">local_pharmacy</i>
+              </div>
+              <div class="menutitle">
+                <p>Doctor Panel</p>
+              </div>
+              <div class="menubtn">
+                  <a mat-raised-button routerLink="/panel/doctor" color="warn" >Go <i class="material-icons"> keyboard_arrow_right</i></a>
+              </div>
+          </div>
+    
+
+              
+          <div fxFlex="20%" class="menucol">
+                  <div class="icon">
+                      <i class="material-icons">queue_play_next</i>
+                  </div>
+                  <div class="menutitle">
+                    <p>Pharmacist Panel</p>
+                  </div>
+                  <div class="menubtn">
+                      <a mat-raised-button routerLink="/panel/prescriptionlist" color="warn" >Go <i class="material-icons"> keyboard_arrow_right</i></a>
+                  </div>
+              </div>
+
+              <div fxFlex="20%" class="menucol">
+                <div class="icon">
+                    <i class="material-icons">account_box</i>
+                </div>
+                <div class="menutitle">
+                  <p>Admin Panel</p>
+                </div>
+                <div class="menubtn">
+                   <a mat-raised-button type="button" (click)="gotoAdmin()" color="warn" >Go <i class="material-icons"> keyboard_arrow_right</i></a>
+                </div>
+            </div>
+  
+      
+          
+      </div>
+  
+  
+    
+  
+  
+  
+  
+  </section>  <!--End of super admin section -->
+  </section>

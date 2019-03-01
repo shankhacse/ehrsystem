@@ -25,6 +25,7 @@ export class SymptomsComponent implements OnInit {
   groupCtrl:string = "";
  
   validFormErr:string = "";
+  disableClick;
 
   constructor(
      private router:Router,
@@ -42,6 +43,15 @@ export class SymptomsComponent implements OnInit {
 
   
   ngOnInit() {
+  
+  
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable addStmptoms: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
     this.getGroups();
   }
 

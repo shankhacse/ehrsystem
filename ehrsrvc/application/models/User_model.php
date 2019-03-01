@@ -18,7 +18,8 @@ class User_model extends CI_Model {
                             users.hospital_id,
                             users.doctor_id,
                             user_role.user_role_code,
-                            user_role.user_role_name
+                            user_role.user_role_name,
+                            user_role.is_readable
                             ")
                           ->from("users")
                           ->join("user_role","users.user_role_id=user_role.id")

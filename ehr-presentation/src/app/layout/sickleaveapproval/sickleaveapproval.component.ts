@@ -31,6 +31,7 @@ export class SickleaveapprovalComponent implements OnInit {
   totalTodaysRegCount=0;
 
   dataSource ;
+  disableClick;
   
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -43,6 +44,14 @@ export class SickleaveapprovalComponent implements OnInit {
   }
   date = new FormControl(new Date());
   ngOnInit() {
+
+    var isReadableCheck = localStorage.getItem('isReadable');
+    console.log('isReadable sickleaveapproval: '+isReadableCheck);
+    if(isReadableCheck=='true'){
+      this.disableClick = 1;
+    }else{
+      this.disableClick = 0;
+    }
    
     this.getSickApproveList();
 
