@@ -17,11 +17,12 @@ class Fileimport_model extends CI_Model{
 			$insert_data = [];
 		
 			$todaydt = date("Y-m-d H:i:s");
-            $EmpData = $request->fdata;
+          //  $EmpData = $request->fdata;
+          $value = $request->fdata;
             
-           // pre($EmpData);
+          //  pre($EmpData);exit;
 
-            foreach ($EmpData as $key => $value) {
+           // foreach ($EmpData as $key => $value) {
              
                 $dob=$value->dob->value;
                 if($dob!=""){
@@ -127,7 +128,7 @@ class Fileimport_model extends CI_Model{
 			//pre($patientArray);
 			
             
-        }//end of foreach
+     //   }//end of foreach
 		
 			if($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();

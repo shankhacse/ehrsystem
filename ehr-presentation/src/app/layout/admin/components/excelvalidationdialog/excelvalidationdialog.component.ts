@@ -27,6 +27,12 @@ export class ExcelvalidationdialogComponent implements OnInit {
   updateaction:string;
   validFormErr:string;
 
+  totalrow=0;
+  insertrow=0;
+  incorrectClose=false;
+  public isProcess = false;
+  public afterProcess=false;
+
 
   test_cls=0;
   constructor(
@@ -47,7 +53,7 @@ export class ExcelvalidationdialogComponent implements OnInit {
     
     
     const count1 = Object.keys(this.exceldata.garden_code).length;
-
+    this.totalrow=count1;
     if(count1 > 0) {
       let resultObj1;
       for(let i = 0; i<count1; i++){
@@ -87,6 +93,8 @@ export class ExcelvalidationdialogComponent implements OnInit {
           console.log(this.totalError);
           if(this.totalError >0){
             this.isButtonVisible = false;
+            this.incorrectClose=true;
+            this.validFormErr='Error: Total incorrect Data: '+this.totalError;
             
           }
         
@@ -106,10 +114,53 @@ export class ExcelvalidationdialogComponent implements OnInit {
     }
 
 
+
+
+
     saveData(){
       console.log('save');
       console.log(this.employeeList);
+      this.isProcess=true;
+      this.updatemessage='Saved Successfully';
 
+      const count2 = Object.keys(this.exceldata.garden_code).length;
+      for(let i = 0; i<count2; i++){
+      let response;
+    this.commonService.insertIntoEmployee(this.employeeList[i],).then(data => {
+      response = data;
+      if(response.msg_data == "SUCCESS" && response.msg_status == "200"){
+              this.insertrow=i+1;
+              if(this.totalrow==this.insertrow){
+              this.isProcess=false;
+              this.afterProcess=true;
+            }
+       
+      }
+      else{
+
+            this.insertrow=i+1;
+            if(this.totalrow==this.insertrow){
+            this.isProcess=false;
+            this.afterProcess=true;
+          }
+   
+     
+      }
+      console.log(response);
+    },
+    error => {
+        console.log("There is some error on submitting...");
+    });
+
+
+  }//end of for
+    }
+
+
+    /*saveData(){
+      console.log('save');
+      console.log(this.employeeList);
+      this.isProcess=true;
       let response;
     this.commonService.insertIntoEmployee(this.employeeList,).then(data => {
       response = data;
@@ -123,7 +174,7 @@ export class ExcelvalidationdialogComponent implements OnInit {
  
         console.log('success');
         this.openSnackBar(this.updatemessage,this.updateaction);
-       
+        this.afterProcess=true;
       }
       else{
       //  this.openDialogError();
@@ -143,6 +194,10 @@ export class ExcelvalidationdialogComponent implements OnInit {
     });
     }
 
+    */
+
+
+
 
     redirectToComp(){
      
@@ -151,6 +206,11 @@ export class ExcelvalidationdialogComponent implements OnInit {
      
     }    
 
+    redirectToPatientList(){
+     
+      this.dialogRef.close();
+      this.router.navigateByUrl('panel/patientlist');
+    }  
 
     openSnackBar(message: string, action: string) {
       this.snackBar.open(message, action, {
