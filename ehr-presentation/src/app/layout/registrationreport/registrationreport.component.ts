@@ -82,7 +82,9 @@ export class RegistrationreportComponent implements OnInit {
                                // 'patientID', 
                                 'challanno',
                                 'division',
-                                'lineno'];
+                                'lineno',
+                                'registration_type'
+                              ];
 
  @ViewChild(MatPaginator) paginator: MatPaginator;
  @ViewChild(MatSort) sort: MatSort;

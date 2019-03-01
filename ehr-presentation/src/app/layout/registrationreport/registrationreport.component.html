@@ -54,7 +54,7 @@
 
                                 <mat-form-field>
                                   <mat-select placeholder="Reg. Type (optional)" formControlName="regTypeCtrl" >
-                                    
+                                    <mat-option  value="">Select</mat-option>
                                     <mat-option value="CONSULTATION"> General Consultation</mat-option>
                                     <mat-option value="PREGNANCY"> Pregnancy</mat-option>
                                     <mat-option value="VACCINATION">Vaccination</mat-option>
@@ -67,6 +67,7 @@
                                 <mat-form-field>
                                 
                                   <mat-select placeholder="Patient Type (optional)" formControlName="patTypeCtrl" >
+                                      <mat-option  value="">Select</mat-option>
                                     <mat-option *ngFor="let ptype of patientTypeList[0]" [value]="ptype.patient_type_id">
                                         {{ptype.patient_type}}
                                     </mat-option>
@@ -113,7 +114,7 @@
                                   <th mat-header-cell *matHeaderCellDef> Reg. Date </th>
                                   <td mat-cell *matCellDef="let element"> {{element.date_of_registration}} </td>
                                 </ng-container>
-                                <ng-container matColumnDef="reg_type">
+                                <ng-container matColumnDef="registration_type">
                                     <th mat-header-cell *matHeaderCellDef> Registration Type </th>
                                     <td mat-cell *matCellDef="let element"> {{element.registration_type}} </td>
                                 </ng-container>
