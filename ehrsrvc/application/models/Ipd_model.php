@@ -627,7 +627,8 @@ class Ipd_model extends CI_Model{
 							ipd_patient_master.unique_id AS ipdID,
 							ipd_patient_master.room_no,
 							ipd_patient_master.bed_no,
-							DATE_FORMAT(ipd_patient_master.admission_date,'%d-%m-%Y') AS admission_dt
+							DATE_FORMAT(ipd_patient_master.admission_date,'%d-%m-%Y') AS admission_dt,
+							DATE_FORMAT(ipd_patient_master.discharge_date,'%d-%m-%Y') AS discharge_date
 							",FALSE)
 							->from("ipd_patient_master")
 							/* ->join("patients" , "patients.patient_id = ipd_patient_master.patient_id" , "LEFT")*/
@@ -978,5 +979,141 @@ class Ipd_model extends CI_Model{
         return $data;
 	}
 
-   
-}
+ 
+	
+/*-----------------------------5 march 20019 ------------------------- */
+
+
+	/**
+	 * @name getIPDDischargeListByDateRange
+	 * @author Shankha Ghosh
+	 * @return $data
+	 *
+	 */
+	
+	public function getIPDDischargeListByDateRange($request,$hospital_id) {
+	    $resultdata = [];
+	    
+		$formData = $request->data;
+	
+		$from_date = $formData->searchFromDateCtrldis;
+		$to_date = $formData->searchToDateCtrldis;
+		
+		
+	    /*
+	     $where = [
+	     "ipd_patient_master.hospital_id" => $hospital_id,
+	     "DATE_FORMAT(ipd_patient_master.admission_date,'%Y-%m-%d')" => $searchDt ,
+	     "ipd_patient_master.`discharge_flag`" => FALSE,
+	     "ipd_patient_master.`discharge_date`" => NULL
+	     ];
+	     */
+	    
+	    $where = [
+	        "ipd_patient_master.hospital_id" => $hospital_id,
+	        "ipd_patient_master.`discharge_flag`" => TRUE
+	    ];
+	    
+	    $query = $this->db->select("
+							
+							/*patient_type.patient_type,
+							patients.patient_name,
+							patients.mobile_one , */
+							patients.patient_code as associate_permworker_code,
+							patients.patient_id,
+							  ipd_patient_master.patient_name,
+							  ipd_patient_master.patient_type,
+							  ROUND(ipd_patient_master.patient_age) as patient_age,
+							  ipd_patient_master.patient_gender,
+							  ipd_patient_master.provision_diagnosis,
+						/*	ipd_patient_master.admission_id AS ipdID, */
+							ipd_patient_master.unique_id AS ipdID,
+							ipd_patient_master.room_no,
+							ipd_patient_master.bed_no,
+							DATE_FORMAT(ipd_patient_master.admission_date,'%d-%m-%Y') AS admission_dt,
+							DATE_FORMAT(ipd_patient_master.discharge_date,'%d-%m-%Y') AS discharge_date
+							",FALSE)
+							->from("ipd_patient_master")
+							/* ->join("patients" , "patients.patient_id = ipd_patient_master.patient_id" , "LEFT")*/
+							->join("patients" , "patients.patient_id = ipd_patient_master.associate_permworker_id" , "LEFT")
+							->join("patient_type" , "patient_type.patient_type_id = patients.patient_type_id" , "LEFT")
+							->where($where)
+							->where("ipd_patient_master.discharge_date IS NOT NULL")
+							->where('DATE_FORMAT(ipd_patient_master.discharge_date,"%Y-%m-%d") BETWEEN "'. date('Y-m-d', strtotime($from_date)). '" AND "'. date('Y-m-d', strtotime($to_date)).'"')
+							->order_by("ipd_patient_master.discharge_date", "asc")
+							->get();
+							
+							#echo $this->db->last_query();
+							
+							if($query->num_rows()>0) {
+							    $resultdata=$query->result();
+							}
+							return $resultdata;
+	}
+
+/*-----------------------------5 march 20019 ------------------------- */
+	/**
+     * @name getIPDListByDtByDateRange
+     * @author Shankha Ghosh
+     * @return $data
+     */
+	
+	public function getIPDListByDtByDateRange($request,$hospital_id) {
+		$resultdata = "";
+
+		$formData = $request->data;
+	
+		$from_date = $formData->searchFromDateCtrl;
+		$to_date = $formData->searchToDateCtrl;
+		
+	
+		/*
+		$where = [
+			"ipd_patient_master.hospital_id" => $hospital_id,
+			"DATE_FORMAT(ipd_patient_master.admission_date,'%Y-%m-%d')" => $searchDt ,
+			"ipd_patient_master.`discharge_flag`" => FALSE,
+			"ipd_patient_master.`discharge_date`" => NULL
+		]; 
+		*/
+		
+		$where = [
+			"ipd_patient_master.hospital_id" => $hospital_id,
+			"ipd_patient_master.`discharge_flag`" => FALSE
+		]; 
+		
+		$query = $this->db->select("
+						  /*patient_type.patient_type,
+							patients.patient_name,
+							patients.mobile_one , */
+							patients.patient_code as associate_permworker_code,
+							patients.patient_id,
+							ipd_patient_master.patient_name,
+							  ipd_patient_master.patient_type,
+							  ROUND(ipd_patient_master.patient_age) as patient_age,
+							  ipd_patient_master.patient_gender,
+							  ipd_patient_master.provision_diagnosis,
+							/* ipd_patient_master.admission_id AS ipdID, */
+							ipd_patient_master.unique_id AS ipdID,
+							ipd_patient_master.room_no,
+							ipd_patient_master.bed_no,
+							DATE_FORMAT(ipd_patient_master.admission_date,'%d-%m-%Y') AS admission_dt
+							",FALSE)
+                          ->from("ipd_patient_master") 
+						 /* ->join("patients" , "patients.patient_id = ipd_patient_master.patient_id" , "LEFT")*/
+						  ->join("patients" , "patients.patient_id = ipd_patient_master.associate_permworker_id" , "LEFT")
+						  ->join("patient_type" , "patient_type.patient_type_id = patients.patient_type_id" , "LEFT")
+						  ->where($where)
+						  ->where('DATE_FORMAT(ipd_patient_master.admission_date,"%Y-%m-%d") BETWEEN "'. date('Y-m-d', strtotime($from_date)). '" AND "'. date('Y-m-d', strtotime($to_date)).'"')
+						  ->order_by("ipd_patient_master.discharge_date", "asc")
+						  ->get();
+						  
+		//echo $this->db->last_query();
+		
+        if($query->num_rows()>0) {
+            $resultdata=$query->result();
+            }
+        return $resultdata;
+	}
+
+
+}// end of class

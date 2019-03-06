@@ -4,11 +4,13 @@
           
         <div class="patientsearchTabs" fxFlex="90%">
                   <mat-toolbar style="background: transparent;"> 
-                          <h4 class="card_title"> IPD List</h4>
+                           <h4 class="card_title"> IPD List</h4> 
+                          
                           <div style="width:100%;text-align:right;" class="navBtn">
                                 <button mat-raised-button color="primary" class="toplink" (click)="backToIpdList()" >Back To Home </button>
                           </div>
-                  </mat-toolbar>
+                  </mat-toolbar> 
+
               
                 <div class="reglisttables" >
                     <form [formGroup]="pharmacyListsrchForm" novalidate > 
@@ -22,14 +24,70 @@
                             <button mat-flat-button color="primary" style="margin-left:10px;" (click)="searchPrescriptionList()" ><mat-icon>search</mat-icon> Search</button>
                             -->
                     </form>
-                    <mat-tab-group (selectedTabChange)="tabChanged($event)">
+                    <mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="tabChanged($event)">
                             <mat-tab>
                                     <ng-template mat-tab-label>
                                             <mat-icon>assignment_turned_in </mat-icon>
                                            IPD List
                                     </ng-template>
 
-                                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 reglisttable" style="width: 100%;" >
+                                    
+                  <section class="blockContent">
+                      <form [formGroup]="SearchForm" (ngSubmit)="onSearchIPD()" >
+                        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                    
+                         
+                    
+                          <div fxFlex="20%">
+                            <mat-form-field class="fullwidthinp">
+                                <input matInput [matDatepicker]="fromDtPick" placeholder="* From Date" formControlName="searchFromDateCtrl" autocomplete="off" readonly >
+                                <mat-datepicker-toggle matSuffix [for]="fromDtPick"></mat-datepicker-toggle>
+                                <mat-datepicker #fromDtPick></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    
+                          <div fxFlex="20%">
+                              <mat-form-field class="fullwidthinp">
+                                  <input matInput [matDatepicker]="toDtPick" placeholder="* To Date" formControlName="searchToDateCtrl" autocomplete="off" readonly >
+                                  <mat-datepicker-toggle matSuffix [for]="toDtPick"></mat-datepicker-toggle>
+                                  <mat-datepicker #toDtPick></mat-datepicker>
+                              </mat-form-field>
+                          </div>
+                          
+                      
+                          
+                    
+                          <div fxFlex="10%">
+                              <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                                  <button mat-flat-button color="primary" class="phrmcybtn" type="submit" > <i class="material-icons">
+                                      youtube_searched_for </i> Search</button>
+                              </div>
+                             
+                          </div>
+                          <div fxFlex="20%">
+
+                           
+                              
+                            </div> 
+                          <div fxFlex="20%">
+
+                          
+                                
+                            </div> 
+                    
+                         
+                          
+                        </div>
+                      </form>
+                    </section>
+                    <div *ngIf="recordsFound" style="padding:5px;">
+                        <button mat-flat-button class="phrmcybtn" color="warn" (click)="exportAsXLSXIPD()"> 
+                            <i class="material-icons" style="width: 30px;">
+                                save_alt
+                                </i>Excel</button>
+                        </div>
+
+                                    <table *ngIf="recordsFound" mat-table [dataSource]="dataSource" class="mat-elevation-z8 reglisttable" style="width: 100%;" >
   
                                             <ng-container matColumnDef="action" >
                                                 <th mat-header-cell *matHeaderCellDef style="width:20%;"> Action </th>
@@ -98,7 +156,7 @@
                                           </ng-container>
 
                                           <ng-container matColumnDef="provision_diagnosis">
-                                              <th mat-header-cell *matHeaderCellDef>Provision Diagnosis </th>
+                                              <th mat-header-cell *matHeaderCellDef>Provisional Diagnosis </th>
                                               <td mat-cell *matCellDef="let row"> {{row.provision_diagnosis}} </td>
                                             </ng-container>
                                             
@@ -118,7 +176,63 @@
                                            Discharged List
                                     </ng-template>
 
-                                    <table mat-table [dataSource]="dischargeDataSource" class="mat-elevation-z8 reglisttable" style="width: 100%;" >
+
+                                    <section class="blockContent">
+                                        <form [formGroup]="SearchFormDischarge" (ngSubmit)="onSearchDischarge()" >
+                                          <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                                      
+                                           
+                                      
+                                            <div fxFlex="20%">
+                                              <mat-form-field class="fullwidthinp">
+                                                  <input matInput [matDatepicker]="fromDtPick1" placeholder="* From Date" formControlName="searchFromDateCtrldis" autocomplete="off" readonly >
+                                                  <mat-datepicker-toggle matSuffix [for]="fromDtPick1"></mat-datepicker-toggle>
+                                                  <mat-datepicker #fromDtPick1></mat-datepicker>
+                                              </mat-form-field>
+                                          </div>
+                                      
+                                            <div fxFlex="20%">
+                                                <mat-form-field class="fullwidthinp">
+                                                    <input matInput [matDatepicker]="toDtPick1" placeholder="* To Date" formControlName="searchToDateCtrldis" autocomplete="off" readonly >
+                                                    <mat-datepicker-toggle matSuffix [for]="toDtPick1"></mat-datepicker-toggle>
+                                                    <mat-datepicker #toDtPick1></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                            
+                                        
+                                            
+                                      
+                                            <div fxFlex="10%">
+                                                <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                                                    <button mat-flat-button color="primary" class="phrmcybtn" type="submit" > <i class="material-icons">
+                                                        youtube_searched_for </i> Search</button>
+                                                </div>
+                                               
+                                            </div>
+                                            <div fxFlex="20%">
+                  
+                                             
+                                                
+                                              </div> 
+                                            <div fxFlex="20%">
+                  
+                                            
+                                                  
+                                              </div> 
+                                      
+                                           
+                                            
+                                          </div>
+                                        </form>
+                                      </section>
+                                      <div *ngIf="recordsFoundDischarge" style="padding:5px;">
+                                          <button mat-flat-button class="phrmcybtn" color="warn" (click)="exportAsXLSXDischarge()"> 
+                                              <i class="material-icons" style="width: 30px;">
+                                                  save_alt
+                                                  </i>Excel</button>
+                                          </div>
+
+                                    <table *ngIf="recordsFoundDischarge" mat-table [dataSource]="dischargeDataSource" class="mat-elevation-z8 reglisttable" style="width: 100%;" >
   
                                             <ng-container matColumnDef="action" >
                                                 <th mat-header-cell *matHeaderCellDef style="width:20%;"> Action </th>
@@ -151,6 +265,10 @@
                                               <th mat-header-cell *matHeaderCellDef> Admission Dt </th>
                                               <td mat-cell *matCellDef="let row"> {{row.admission_dt}} </td>
                                             </ng-container>
+                                            <ng-container matColumnDef="discharge_date">
+                                                <th mat-header-cell *matHeaderCellDef> Discharge Dt </th>
+                                                <td mat-cell *matCellDef="let row"> {{row.discharge_date}} </td>
+                                              </ng-container>
 
                                             <ng-container matColumnDef="associate_permworker_code">
                                                 <th mat-header-cell *matHeaderCellDef>Permanent <br>Worker</th>
@@ -196,6 +314,10 @@
                                           <tr mat-header-row *matHeaderRowDef="dischargeDisplayedColumns" ></tr>
                                             <tr mat-row  *matRowDef="let row; columns: dischargeDisplayedColumns;"></tr>
                                     </table>
+
+                                    <mat-toolbar class="norecord" *ngIf="!recordsFoundDischarge">
+                                        <h2>No Records found for today</h2>
+                                    </mat-toolbar>
                                    
 
                             </mat-tab>

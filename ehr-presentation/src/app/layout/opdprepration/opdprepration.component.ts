@@ -318,6 +318,7 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
         this.filterSymptomsMulti();
+       // console.log(this.filterSymptomsMulti());
       });
 
 
@@ -592,14 +593,18 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
       // get the search keyword
       let search =  this.presciptionForm.get('symptomsMultiFilterCtrl').value;
       if (!search) {
+        console.log('!search');
         this.filteredSymptomMulti.next(this.symptoms.slice());
         return;
       } else {
+        console.log('search');
         search = search.toLowerCase();
       }
       // filter the banks
       this.filteredSymptomMulti.next(
-        this.symptoms.filter(symptom => symptom.name.toLowerCase().indexOf(search) > -1)
+        //this.symptoms.filter(symptom => symptom.name.toLowerCase().indexOf(search) > -1) // comented on 06.03.2019
+        this.symptoms.filter(symptom => symptom.name.toLowerCase().startsWith(search))
+   
       );
     }
 
@@ -617,7 +622,8 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
       }
       // filter the banks
       this.filteredDiagnosisMulti.next(
-        this.diagnosis.filter(diagnos => diagnos.name.toLowerCase().indexOf(search) > -1)
+       // this.diagnosis.filter(diagnos => diagnos.name.toLowerCase().indexOf(search) > -1) // comented on 06.03.2019
+        this.diagnosis.filter(diagnos => diagnos.name.toLowerCase().startsWith(search))
       );
     }
 
@@ -636,7 +642,8 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
       }
       // filter the banks
       this.filteredMedicines.next(
-        this.medicines.filter(medicine => medicine.name.toLowerCase().indexOf(search) > -1)
+      //  this.medicines.filter(medicine => medicine.name.toLowerCase().indexOf(search) > -1) // commented on 06.03.2019
+        this.medicines.filter(medicine => medicine.name.toLowerCase().startsWith(search))
       );
     }
 
@@ -693,7 +700,8 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
       }
       // filter the banks
       this.filteredReports.next(
-        this.medreports.filter(medreport => medreport.name.toLowerCase().indexOf(search) > -1)
+      //  this.medreports.filter(medreport => medreport.name.toLowerCase().indexOf(search) > -1)// commented on 06.03.2019
+        this.medreports.filter(medreport => medreport.name.toLowerCase().startsWith(search))
       );
     }
 

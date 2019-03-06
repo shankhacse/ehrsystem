@@ -69,6 +69,8 @@ export class PatienregistrationComponent implements OnInit ,OnDestroy {
 
   patientinfo:PatientInfo[] = [];
 
+  totalregToday=0;
+
   
 
   version = VERSION;
@@ -451,6 +453,10 @@ displayFn(id) {
       dataval = data;
       regdata = dataval.todaysreg_data;
       this.todaysregistrationList.push(regdata);
+      let tcount =  0;
+      tcount = this.todaysregistrationList[0].length;
+      this.totalregToday=tcount;
+
       this.todaysRegTblColumn = [
                           'action',
                           'date_of_registration',
@@ -483,6 +489,10 @@ displayFn(id) {
       dataval = data;
       regdata = dataval.todaysreg_data;
       this.todaysregistrationList.push(regdata);
+      let tcount =  0;
+      tcount = this.todaysregistrationList[0].length;
+      this.totalregToday=tcount;
+
       this.todaysRegTblColumn = [
                           'action',
                           'date_of_registration',

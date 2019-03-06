@@ -141,3 +141,9 @@ mat-tab-group {
 	99%{	color:transparent;	}
 	100%{	color: #FFF;	}
 }
+
+.blockContent {
+    width: 96%;
+    margin: 2% auto;
+  
+}

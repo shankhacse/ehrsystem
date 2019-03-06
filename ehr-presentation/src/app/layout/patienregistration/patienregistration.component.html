@@ -33,10 +33,10 @@
                               <!-- Start -->
                               <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" >
                                 
-                                    <div fxFlex="60%">
+                                    <div fxFlex="90%">
                                             <span style="font-size: 13px;" >* Reg. Type&nbsp;&nbsp;</span>
                                             <mat-radio-group  formControlName="regTypeCtrl" required >
-                                                <mat-radio-button value="CONSULTATION" > General Consultation&nbsp;&nbsp; </mat-radio-button>
+                                                <mat-radio-button value="CONSULTATION" > Gen. Consult.&nbsp;&nbsp; </mat-radio-button>
                                                 <mat-radio-button value="PREGNANCY" > Pregnancy&nbsp;&nbsp; </mat-radio-button>
                                                 <mat-radio-button value="VACCINATION" > Vaccination </mat-radio-button>
                                             </mat-radio-group>
@@ -173,7 +173,8 @@
                           
                         <div class="reg-action margincontent" >
                             <button mat-flat-button [ngClass]="{'avoid_clicks' : this.disableClick}" class="regblockbtn center-obj" style="background: #09446d;"  (click)="searchPatient()" *ngIf="!searchLoader">
-                                 Register Now <mat-icon>arrow_forward_ios</mat-icon> 
+                                 Register  
+                                 <!-- <mat-icon>arrow_forward_ios</mat-icon>  -->
                             </button>
 
                             <mat-spinner [diameter]="40" *ngIf="searchLoader" class="center-obj"></mat-spinner>
@@ -252,7 +253,11 @@
                                           </div>
                                       
                                             <div fxFlex="20%">
-                                          
+                                                <div  style="margin-top: 12%;margin-left: 17%;color: #306c33;">
+                                                        <span>Total Reg(s) : {{totalregToday}}</span>
+                                                </div>
+                                               
+                                               
                                             </div>
                                           
               

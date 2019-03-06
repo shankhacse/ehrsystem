@@ -37,10 +37,35 @@ export class IpdService {
       });
   }
 
+  /* added on 05.03.2019 */
+
+  getIPDPrescriptionsListByDateRange(formdata){
+    let datas = JSON.stringify({data:formdata});
+    
+     return new Promise(resolve => {
+        this.http.post(this.global.todasyIPDListDtRange_URL,datas).subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log(err);
+        });
+      });
+  }
+
   getDischargeIPDPrescriptions(date){
     let myData = JSON.stringify({searchdt:date});
      return new Promise(resolve => {
         this.http.post(this.global.ipdDischargeList_URL,myData).subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log(err);
+        });
+      });
+  }
+/* added on 05.03.2019 */
+  getDischargeIPDPrescriptionsByDateRange(formdata){
+    let datas = JSON.stringify({data:formdata});
+     return new Promise(resolve => {
+        this.http.post(this.global.ipdDischargeListDtRange_URL,datas).subscribe(data => {
           resolve(data);
         }, err => {
           console.log(err);

@@ -734,7 +734,8 @@ export class IpdregistrationComponent implements OnInit {
     }
     // filter the banks
     this.filteredReports.next(
-      this.medreports.filter(medreport => medreport.name.toLowerCase().indexOf(search) > -1)
+    //  this.medreports.filter(medreport => medreport.name.toLowerCase().indexOf(search) > -1) // commented on 06.03.2019
+      this.medreports.filter(medreport => medreport.name.toLowerCase().startsWith(search))
     );
   }
 
@@ -753,7 +754,8 @@ export class IpdregistrationComponent implements OnInit {
     }
     // filter the banks
     this.filteredMedicines.next(
-      this.medicines.filter(medicine => medicine.name.toLowerCase().indexOf(search) > -1)
+    //  this.medicines.filter(medicine => medicine.name.toLowerCase().indexOf(search) > -1) // commented on 06.03.2019
+      this.medicines.filter(medicine => medicine.name.toLowerCase().startsWith(search))
     );
   }
 

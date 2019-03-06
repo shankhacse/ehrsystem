@@ -112,6 +112,10 @@
                                     <th mat-header-cell *matHeaderCellDef> Approval Date </th>
                                     <td mat-cell *matCellDef="let element"> {{element.Approve_Date}} </td>apvdate
                                   </ng-container>
+                                  <ng-container matColumnDef="patient_type">
+                                      <th mat-header-cell *matHeaderCellDef> Patient Type  </th>
+                                      <td mat-cell *matCellDef="let element"> {{element.patient_type}}</td>
+                                    </ng-container>
                                 <ng-container matColumnDef="patientID">
                                   <th mat-header-cell *matHeaderCellDef> Patient ID </th>
                                   <td mat-cell *matCellDef="let element"> {{element.Patient_ID}}</td>

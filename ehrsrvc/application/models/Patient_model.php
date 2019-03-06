@@ -847,20 +847,25 @@ class Patient_model extends CI_Model
 
        
 
-        $query = $this->db->select("
-                       
-                        DATE_FORMAT(patient_sickleave_detail.applied_for_date,'%d-%m-%Y') as Apply_Date,
-                        DATE_FORMAT(patient_sickleave_detail.approved_on,'%d-%m-%Y') as Approve_Date,
-                        patients.patient_code as Patient_ID,
-                        patients.patient_name as Patient_Name,
-                        patients.challan_number as Challan_Number, 
-                        patients.division_number as Division_Number,
-                        patients.line_number as Line_Number,
-						1 AS Days
+        $query = $this->db->select("CASE
+                                WHEN patients.patient_type_id = 1 THEN patients.patient_code
+                                WHEN patients.patient_type_id = 2 THEN patients.patient_code
+                                ELSE NULL
+                                END AS Patient_ID,
+                               /* patients.patient_code as Patient_ID,*/
+                                DATE_FORMAT(patient_sickleave_detail.applied_for_date,'%d-%m-%Y') as Apply_Date,
+                                DATE_FORMAT(patient_sickleave_detail.approved_on,'%d-%m-%Y') as Approve_Date,
+                                patient_type.dr_type as patient_type,
+                                patients.patient_name as Patient_Name,
+                                patients.challan_number as Challan_Number, 
+                                patients.division_number as Division_Number,
+                                patients.line_number as Line_Number,
+                                1 AS Days
                         
-                        ")
+                        ",FALSE)
             ->from("patient_sickleave_detail")
             ->join("patients", "patient_sickleave_detail.patient_id=patients.patient_id", "LEFT")
+            ->join("patient_type","patient_type.patient_type_id = patients.patient_type_id","INNER")
             ->where('DATE_FORMAT(patient_sickleave_detail.applied_for_date,"%Y-%m-%d") BETWEEN "'. date('Y-m-d', strtotime($from_date)). '" AND "'. date('Y-m-d', strtotime($to_date)).'"')
             ->where($where)
             ->get();

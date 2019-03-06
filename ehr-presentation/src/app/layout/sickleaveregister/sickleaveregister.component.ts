@@ -158,7 +158,7 @@ export class SickleaveregisterComponent implements OnInit {
    });
   }
 
-  displayedColumns: string[] = ['slno','applydate','approvedate', 'patientID', 'name', 'challanno', 'division','lineno','noofdays'];
+  displayedColumns: string[] = ['slno','applydate','approvedate', 'patient_type', 'patientID', 'name', 'challanno', 'division','lineno','noofdays'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

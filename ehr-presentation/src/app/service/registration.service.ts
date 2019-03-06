@@ -115,5 +115,18 @@ getRegistrationByDate(formdata){
   
 }
 
+/*---------------------- 5 march 2019 --------------- */
+
+
+getTodaysAttendentCount(serve,serachDate) {
+  let myData = JSON.stringify({serve:serve,serachDate:serachDate});
+  return new Promise(resolve => {
+      this.http.post(this.global.attendentListBydate_URL,myData).subscribe(data => {
+        resolve(data);
+      }, err => {
+        console.log(err);
+      });
+    });
+}
   
 }

@@ -11,9 +11,9 @@ export class GlobalconstantService {
   //private APIURL = "http://192.168.2.10/ehrsystem/ehrsrvc/";
   //private APIURL = "http://127.0.0.1:8011/ehrsystem/ehrsrvc/";
   //private APIURL = "http://127.0.0.1/ehrsystem/ehrsrvc/";
-  // private APIURL = "http://127.0.0.1:8088/ehrsystem/ehrsrvc/";
+   private APIURL = "http://127.0.0.1:8088/ehrsystem/ehrsrvc/";
   // private APIURL = "http://127.0.0.1/ehr/ehrsrvc/";
-  private APIURL =  "http://13.234.41.243/devehrsystem/ehrsrvc/";
+ // private APIURL =  "http://13.234.41.243/devehrsystem/ehrsrvc/";
   //private APIURL = "http://medewise.com/medehr/";
   // private APIURL = "http://softhought.com/medewise/ehrsrvc/";
 
@@ -72,6 +72,7 @@ export class GlobalconstantService {
   public todaysRegDoct_URL = this.APIURL+"registration/getTodaysRegDoct";
   public todaysRegByRegType_URL = this.APIURL+"registration/todaysRegByRegType";
   public RegListBydate_URL = this.APIURL+"registration/RegListByDateRange";
+  public attendentListBydate_URL = this.APIURL+"registration/AttendentListByDate";
 
   //sick leave approval
   public sickApprovalList_URL = this.APIURL +"patient/getSickApprovedList";
@@ -123,7 +124,9 @@ export class GlobalconstantService {
 
   public insertIPD_URL = this.APIURL+"ipd/registerIPD";
   public todasyIPDList_URL = this.APIURL+"ipd/getIPDListByDt";
+  public todasyIPDListDtRange_URL = this.APIURL+"ipd/getIPDListByDtByDateRange";
   public ipdDischargeList_URL = this.APIURL+"ipd/getIPDDischargeListByDt";
+  public ipdDischargeListDtRange_URL = this.APIURL+"ipd/getIPDDischargeListByDateRange";
   public ipdDetailInfoByID_URL = this.APIURL+"ipd/getIpdDetailInfoByID";
   public insertregularVisitIPD_URL = this.APIURL+"ipd/saveIPDRegularVisit";
   public ipddischargeSave_URL = this.APIURL+"ipd/saveIPDDischarge";

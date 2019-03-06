@@ -46,6 +46,8 @@ export class TodaysregistrationnewComponent implements OnInit {
   pregnancyCountVisited = 0;
   vaccinationCountVisited = 0;
 
+  totalCountVisited=0;
+
 
 
   allcountVisited = 0;
@@ -127,6 +129,8 @@ export class TodaysregistrationnewComponent implements OnInit {
    this.getTodaysRegByRegTypeCount("CONSULTATION","N",serachDate);
    this.getTodaysRegByRegTypeCount("PREGNANCY","N",serachDate);
    this.getTodaysRegByRegTypeCount("VACCINATION","N",serachDate);
+
+   this.getTodaysAttendentVisitedCount('Y',serachDate);
    
    //(document.querySelector('.opdLoder') as HTMLElement).style.display = 'none';
   }
@@ -161,6 +165,7 @@ export class TodaysregistrationnewComponent implements OnInit {
       this.getTodaysRegByRegTypeVisitedCount("PREGNANCY","Y",serachDate);
       this.getTodaysRegByRegTypeVisitedCount("VACCINATION","Y",serachDate);
     }
+    this.getTodaysAttendentVisitedCount('Y',serachDate);
     
 }
 
@@ -314,6 +319,28 @@ export class TodaysregistrationnewComponent implements OnInit {
    });
   }
 
+  /* Attendent count */
+
+  getTodaysAttendentVisitedCount(serve,serachDate) {
+    this.todaysregistrationListCount = [];
+    let dataval;
+    let regdata;
+    this.registerService.getTodaysAttendentCount(serve,serachDate).then(data => {
+      dataval = data;
+      regdata = dataval.todaysreg_data;
+      this.todaysregistrationListCount = [];
+      this.todaysregistrationListCount.push(regdata);
+      let tcount =  0;
+      tcount = this.todaysregistrationListCount[0].length;
+      console.log('Total Attendent:'+tcount);
+      this.totalCountVisited=tcount;
+      
+    },
+    error => {
+     console.log("error in todays new registration list");
+   });
+  }
+
 
 
   getTodaysRegForDocCountVisited(type,serve) {
@@ -400,6 +427,7 @@ export class TodaysregistrationnewComponent implements OnInit {
         this.openSnackBar("Sick leave applied successfully");
         this.getTodaysRegForDocByRegType("CONSULTATION","N",serachDate);
         this.getTodaysRegByRegTypeCount("CONSULTATION","N",serachDate);
+        this.getTodaysAttendentVisitedCount('Y',serachDate);
       }
 
      
@@ -447,7 +475,7 @@ export class TodaysregistrationnewComponent implements OnInit {
   this.getTodaysRegByRegTypeCount("PREGNANCY","N",serachDate);
   this.getTodaysRegByRegTypeCount("CONSULTATION","N",serachDate);
   
-   
+  this.getTodaysAttendentVisitedCount('Y',serachDate);
 
 
   } 

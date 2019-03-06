@@ -50,7 +50,7 @@ class Medicine_model extends CI_Model{
 		$resultdata = "";
 		$query = $this->db->select("medicine.medicine_id,medicine.medicine_name,medicine.medicine_type")
                          ->from("medicine") 
-						 ->like('medicine.medicine_name', $medname) 
+						 ->like('medicine.medicine_name', $medname,'after') 
 						 ->limit(20)
 						 ->order_by('medicine.medicine_name')
 						 ->get();				 

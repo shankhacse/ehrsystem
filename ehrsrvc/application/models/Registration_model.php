@@ -25,10 +25,14 @@ class Registration_model extends CI_Model{
 			"registration.is_deleted" => "N"
 		];
 	
-		$query = $this->db->select("
+		$query = $this->db->select("CASE
+									WHEN patients.patient_type_id = 1 THEN patients.patient_code
+									WHEN patients.patient_type_id = 2 THEN patients.patient_code
+									ELSE NULL
+									END AS patient_code,
 									registration.registration_id,
 									DATE_FORMAT(registration.`date_of_registration`,'%d-%m-%Y') As date_of_registration,
-									patients.patient_code,
+									/*patients.patient_code,*/
 									patients.patient_name,
 									DATE_FORMAT(patients.`dob`,'%d-%m-%Y') As birthdate,
 									patients.gender,
@@ -462,7 +466,8 @@ class Registration_model extends CI_Model{
 
 		$query = $this->db->select("CASE
 							WHEN patients.patient_type_id = 1 THEN patients.patient_code
-							ELSE patients.employee_id
+							WHEN patients.patient_type_id = 2 THEN patients.patient_code
+							ELSE NULL
 							END AS parmanent_wrk_code,
 							DATE_FORMAT(registration.`date_of_registration`,'%d-%m-%Y') As date_of_registration,
 							registration.registration_type,
@@ -540,6 +545,75 @@ class Registration_model extends CI_Model{
     }
     
 	
+/*------------------------5 March 2019 ------------------- */
+
+	/**
+     * @name AttendentListByDate
+     * @author Shankha Ghosh
+     * @return $data
+     * @desc get all todays attendent data for doctors
+     */
+
+    public function AttendentListByDate($hospitalid,$request)
+    {
+        $resultdata = [];
+		
+		$serve = $request->serve;
+		$serachDate=date('Y-m-d', strtotime($request->serachDate));
+		
+		$conditional_where = [];
+
+		$conditional_where = [
+			"registration.served_flag" => $serve,
+			
+		];
+
+
+		
+	
+		$where = [
+			"DATE_FORMAT(registration.date_of_registration,'%Y-%m-%d')" => $serachDate,
+			"registration.hospital_id" => $hospitalid,
+			"registration.is_deleted" => 'N'
+		];
+	
+		$query = $this->db->select("CASE
+									WHEN patients.patient_type_id = 1 THEN patients.patient_code
+									ELSE patients.employee_id
+									END AS parmanent_wrk_code,
+									/* registration.registration_id,*/
+									registration.unique_id AS registration_id,
+									DATE_FORMAT(registration.`date_of_registration`,'%d-%m-%Y') As date_of_registration,
+									registration.registration_type AS reg_type,
+									patients.patient_code,
+                                    patients.patient_id,
+									patients.patient_name,
+									DATE_FORMAT(patients.`dob`,'%d-%m-%Y') As birthdate,
+									patients.gender,
+									patients.division_number,
+									patients.challan_number,
+									patients.line_number,
+									patients.mobile_one,
+									patients.adhar,
+									patients.age,
+									/* patient_type.patient_type */
+									patient_type.dr_type as patient_type 
+								",FALSE)
+                         ->from("registration") 
+						 ->join("patients","patients.patient_id = registration.patient_id","INNER")
+						 ->join("patient_type","patient_type.patient_type_id = patients.patient_type_id","INNER")
+						 ->where($where)
+						 ->where($conditional_where)
+						 ->order_by('registration.date_of_registration')
+                         ->get();
+						 
+						// echo $this->db->last_query();
+		
+        if($query->num_rows()>0) {
+            $resultdata=$query->result();
+            }
+        return $resultdata;
+    }
 
 
 }// end of class
