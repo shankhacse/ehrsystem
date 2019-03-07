@@ -220,4 +220,8 @@ getIPDMedicineByPresciption(event,data){
 }
 
 
+importGrn(){
+  this.router.navigate(['/panel/grn']);
 }
+
+}// end of class

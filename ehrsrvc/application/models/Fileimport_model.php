@@ -172,6 +172,7 @@ class Fileimport_model extends CI_Model{
                 $batch_id=$meddata->batch->value;
                 $expiry=$meddata->expiry->value;
                 $quantity=$meddata->quantity->value;
+                $po_no=$meddata->po_no->value;
                 if($date!=""){
                     $date = str_replace('/', '-', $date);
                     $date = date("Y-m-d",strtotime($date));
@@ -192,6 +193,7 @@ class Fileimport_model extends CI_Model{
                     'hospital_id' =>$hospital_id,
                     'date' =>$date,
                     'supplier_details' =>$supplier,
+                    'po_no' =>$po_no,
                  ];
 
                  $grnmasterID = $this->commondatamodel->insertSingleTableDataRerurnInsertId('grn_master',$grn_array);

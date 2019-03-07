@@ -74,15 +74,20 @@ class Opd_model extends CI_Model{
 			"patients.patient_id" => $pcode
 			
 		];
-		$query = $this->db->select("`patients`.`patient_id` as patientid,
+		$query = $this->db->select("ROUND(CASE
+									WHEN patients.dob IS NULL THEN patients.age
+									ELSE DATE_FORMAT(NOW(), '%Y') - DATE_FORMAT(patients.dob, '%Y') - (
+										DATE_FORMAT(NOW(), '00-%m-%d') < DATE_FORMAT(patients.dob, '00-%m-%d')
+									  )
+									END) AS age,
+									patients.`dob`,
+		                           `patients`.`patient_id` as patientid,
 									patients.`patient_code`,
 									patients.`patient_name`,
 									patients.`line_number`,
 									patients.`division_number`,
 									patients.`challan_number`,
-									patients.`estate`,
-									patients.`dob`,
-									patients.`age`,
+									patients.`estate`,					
 									patients.`gender`,
 									patients.`employee_id`,
 									patients.`adhar`,
@@ -106,7 +111,7 @@ class Opd_model extends CI_Model{
 									patient_health_profile.unique_id AS health_profile_uid,
 									opd_prescription.*,
 									hospitals.hospital_name
-									")
+									",FALSE)
 							 ->from("patients") 
 							 ->join("patient_type","patients.patient_type_id = patient_type.patient_type_id","LEFT")
 							 ->join("patient_health_profile","patient_health_profile.patient_id = patients.patient_id","LEFT")
@@ -116,7 +121,7 @@ class Opd_model extends CI_Model{
 							 ->order_by('patient_health_profile.patient_health_profile_id','DESC')
 							 ->limit(1)
 							 ->get();
-			// echo $this->db->last_query();		
+			# echo $this->db->last_query();		
 		if($query->num_rows()>0){
 				$patient_data = $query->row();
 			}

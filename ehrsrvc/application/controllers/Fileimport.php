@@ -428,6 +428,13 @@ public function verifyGrnFile()
                                  "" :$objWorksheet->getCellByColumnAndRow(5,$i)->getValue()  ),
                     );
 
+                    $po_no[] = array(
+                        "error" => 0,
+                        "cell" =>  $objWorksheet->getCellByColumnAndRow(6,$i)->getColumn().$i,
+                        "value" =>  ($objWorksheet->getCellByColumnAndRow(6,$i)->getValue() == "" ?
+                                 "" :$objWorksheet->getCellByColumnAndRow(6,$i)->getValue()  ),
+                    );
+
                 }
                 
 
@@ -439,7 +446,8 @@ public function verifyGrnFile()
                     "medicine" => $medicine,
                     "batch" => $batch,
                     "expiry" => $expiry,
-                    "quantity" => $quantity
+                    "quantity" => $quantity,
+                    "po_no" => $po_no
                     
                 ];
             

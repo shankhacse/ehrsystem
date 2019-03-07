@@ -20,7 +20,10 @@ class Patient extends CI_Controller{
     }
 
     public function pcodeUpdate(){
-      //  echo "pcode";
+        echo "pcode stop";
+
+      exit;
+        echo "pcode running";
       $where = array(
                         'patients.patient_type_id' =>3,
                       /*  'patients.employee_id' =>'E1111013',*/

@@ -56,6 +56,7 @@ export class ImportgrnvalidationdialogComponent implements OnInit {
           'batch': this.exceldata.batch[i],
           'expiry': this.exceldata.expiry[i],
           'quantity': this.exceldata.quantity[i],
+          'po_no': this.exceldata.po_no[i],
          
       }
      
@@ -81,7 +82,7 @@ export class ImportgrnvalidationdialogComponent implements OnInit {
     response = data;
     if(response.msg_data == "SUCCESS" && response.msg_status == "200"){
       this.updatemessage='Saved Successfully';
-        this.updateaction='Import File';
+        this.updateaction='';
  
         console.log('success');
         this.openSnackBar(this.updatemessage,this.updateaction);

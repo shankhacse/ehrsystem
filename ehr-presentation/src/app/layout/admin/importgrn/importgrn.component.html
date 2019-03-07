@@ -1,12 +1,16 @@
+<div *ngIf="backhome" style="width:90%;text-align:right;margin-top:1%;" class="navBtn">
+    <a mat-raised-button color="primary" class="toplink" routerLink="/panel/prescriptionlist" style="border-radius: 50px;font-size:11px;letter-spacing:1px;">Back To Home</a>
+    
+</div>
 <div id="grnuploadPage">
 
-
+    
+             
 
   <div class="reportuploadContainer">
       <form [formGroup]="addGrnuploadForm" (ngSubmit)="onSubmit(this.addGrnuploadForm)">
 
-          
-                 
+       
       <!--test Reg Block-->
       <section class="grnuploadBlock">
 

@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 import { TokeninterceptorService } from './../../../service/tokeninterceptor.service';
 import { ExcelvalidationdialogComponent } from '../components/excelvalidationdialog/excelvalidationdialog.component';
 import { ImportgrnvalidationdialogComponent } from '../components/importgrnvalidationdialog/importgrnvalidationdialog.component';
+import * as jwt_decode from "jwt-decode";
 
 
 @Component({
@@ -28,6 +29,8 @@ export class ImportgrnComponent implements OnInit {
   isLoader=false;
   filename:string = "";
   disableClick;
+
+  backhome=false;
 
   constructor(
     private router:Router,
@@ -46,6 +49,15 @@ export class ImportgrnComponent implements OnInit {
   }
 
   ngOnInit() {
+
+      let token = this.getDecodedAccessToken(localStorage.getItem("token"));
+      console.log("role:");
+      console.log(token.data.user_role_code);
+
+      if(token.data.user_role_code=='PHRM'){
+        this.backhome=true;
+      }
+
 
       
  
@@ -110,4 +122,17 @@ basicUpload(files: File[]){
 }
 
 
+getDecodedAccessToken(token: string): any {
+  try{
+      return jwt_decode(token);
+  }
+  catch(Error){
+      return null;
+  }
 }
+importGrn(){
+  console.log('list')
+  this.router.navigateByUrl('panel/grn');
+}
+
+} // end of class
