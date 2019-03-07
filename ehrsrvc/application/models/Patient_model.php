@@ -385,12 +385,26 @@ class Patient_model extends CI_Model
                 $relationID = $patientdata->relationCtrl;
             }
 
-            $patient_code=NULL;
-            if($request->dob!='' &&  $employeeid!=''){
-               // echo date("d-m-Y", strtotime($request->dob));
-               // echo "T".$employeeid;
 
-                $patient_code=$employeeid."/".date("d-m-Y", strtotime($request->dob));
+            $patient_code=NULL;
+            if($employeeid!=''){
+             
+
+              //  $patient_code=$employeeid."/".date("d-m-Y", strtotime($request->dob));
+                /*-------- modified on 06.03.2019 --------------- */
+                $employee=$employeeid;
+                $relationID=$relationID;
+                $srl_no = $this->patient->getEmployeeSerialCode($employee);
+                $relation_code = $this->relation->getRelationCodeById($relationID);
+       
+                $patient_code = $this->patient->generateEmployeeCode($employee, $relation_code, $srl_no);
+
+                $updateArr = [
+                    "patients.last_srl_code" => $srl_no
+                ];
+                $employeeWhere = array('patients.patient_code' =>$employee );
+                $this->commondatamodel->updateSingleTableData('patients',$updateArr,$employeeWhere);
+
             }
 
             $pdob  = NULL;
@@ -444,7 +458,8 @@ class Patient_model extends CI_Model
         }
     }
 
-    private function getEmployeeSerialCode($employee_code)
+   // private function getEmployeeSerialCode($employee_code)
+    public function getEmployeeSerialCode($employee_code)
     {
         $last_srl = (int) (0);
         $srl = (int) (0);
@@ -460,7 +475,7 @@ class Patient_model extends CI_Model
         return $srl;
     }
 
-    private function generateEmployeeCode($emplcode, $relationcode, $srl)
+    public function generateEmployeeCode($emplcode, $relationcode, $srl)
     {
         $generated_code = "";
 

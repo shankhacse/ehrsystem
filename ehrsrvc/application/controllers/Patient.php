@@ -9,8 +9,57 @@ class Patient extends CI_Controller{
         $this->load->model("Patient_model", "patient", TRUE);
         $this->load->model("Opd_model", "opd", TRUE);
         $this->load->model("Relation_model", "relation", TRUE);
+      
+
+        ini_set('memory_limit', '960M');
+        ini_set('post_max_size', '640M');
+        ini_set('upload_max_filesize', '640M');
+        ini_set('max_execution_time', 0);
 
         
+    }
+
+    public function pcodeUpdate(){
+      //  echo "pcode";
+      $where = array(
+                        'patients.patient_type_id' =>3,
+                      /*  'patients.employee_id' =>'E1111013',*/
+                    );
+
+      $patientData = $this->commondatamodel->getAllRecordWhere('patients',$where);
+
+    //  pre($patientData);
+        $sl=1;
+      foreach ($patientData as $patientdata) {
+
+         echo "<br>".'SL: '.$sl++;
+         echo "<br>".$patientdata->patient_id;
+         echo "<br>".$patientdata->patient_code;
+         echo "<br>".$patientdata->employee_id;
+         echo "<br>".$patientdata->relation_id;
+
+         $employee=$patientdata->employee_id;
+         $relationID=$patientdata->relation_id;
+         $srl_no = $this->patient->getEmployeeSerialCode($employee);
+         $relation_code = $this->relation->getRelationCodeById($relationID);
+
+         echo "<br>".$employeGenCode = $this->patient->generateEmployeeCode($employee, $relation_code, $srl_no);
+         echo "<br>-----------------------------------<br>";
+
+         // update dependent code
+         $dependentWhere = array('patients.patient_id' =>$patientdata->patient_id);
+         $updt_dpendentcode_ar = array('patients.patient_code' =>$employeGenCode);
+         $this->commondatamodel->updateSingleTableData('patients',$updt_dpendentcode_ar,$dependentWhere);
+
+       // update last serial no
+         $updateArr = [
+            "patients.last_srl_code" => $srl_no
+        ];
+        $employeeWhere = array('patients.patient_code' =>$employee );
+        $this->commondatamodel->updateSingleTableData('patients',$updateArr,$employeeWhere);
+      }
+
+
     }
     public function getAllPatient()
     {

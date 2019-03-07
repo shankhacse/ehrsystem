@@ -319,7 +319,8 @@ export class IssuedmedicineComponent implements OnInit {
     }
     // filter the banks
     this.filteredMedicines.next(
-      this.medicines.filter(medicine => medicine.name.toLowerCase().indexOf(search) > -1)
+    //  this.medicines.filter(medicine => medicine.name.toLowerCase().indexOf(search) > -1) // commented on 07.03.2019
+      this.medicines.filter(medicine => medicine.name.toLowerCase().startsWith(search))
     );
   }
 

@@ -7,7 +7,9 @@ class Fileimport extends CI_Controller{
         $this->load->model("Authorization_model", "authorisation", TRUE);
 		$this->load->model("Medicine_model", "medicine", TRUE);
 		$this->load->model("Diagonosis_model", "diagonosis", TRUE);
-		$this->load->model("Fileimport_model", "fileimport", TRUE);
+        $this->load->model("Fileimport_model", "fileimport", TRUE);
+        $this->load->model("Patient_model", "patient", TRUE);
+        $this->load->model("Relation_model", "relation", TRUE);
         $this->load->library('excel');//load PHPExcel library
        
         
@@ -863,7 +865,7 @@ public function insertIntoDependentPatient()
        $lineno=$DependentData->lineno->value;
        $divisionno=$DependentData->divisionno->value;
 
-       $generatedCode=$worker_code.'/'.$dob;
+      // $generatedCode=$worker_code.'/'.$dob;
 
        $RelationWhere = array('relationship_master.relation' =>trim($relation));
        $relationData = $this->commondatamodel->getSingleRowByWhereCls('relationship_master',$RelationWhere);
@@ -876,7 +878,8 @@ public function insertIntoDependentPatient()
        }
 
 
-       $dependent_array = array(
+
+     /*  $dependent_array = array(
                                 'patient_code' => $generatedCode, 
                                 'patient_name' => $dependent_name, 
                                 'relation_id' => $relation_id, 
@@ -889,12 +892,23 @@ public function insertIntoDependentPatient()
                                 'division_number' => $divisionno, 
                                 'hospital_id' => $hospital_id
                                );
-       // pre($dependent_array );
+        pre($dependent_array ); */
 
-        $patientwhere = array('patients.patient_code' =>$generatedCode);
-            $checkpatientCode=$this->commondatamodel->checkExistanceData('patients',$patientwhere);
+        
 
-            if($checkpatientCode){
+        $patientwhere = array(
+                                'patients.employee_id' =>$worker_code,
+                                'patients.dob' => date("Y-m-d",strtotime($dob)),
+                                'patients.relation_id' => $relation_id
+                            );
+
+            $patientCodeData=$this->commondatamodel->getSingleRowByWhereCls('patients',$patientwhere);
+            
+           
+           
+
+            if($patientCodeData){
+                $patientID=$patientCodeData->patient_id;
                 $dependent_upd_array = array(
                     'patient_name' => $dependent_name, 
                     'relation_id' => $relation_id, 
@@ -906,28 +920,52 @@ public function insertIntoDependentPatient()
                     'house_no' => $houseno, 
                     'line_number' => $lineno, 
                     'division_number' => $divisionno, 
+                    'entry_from' => 'IMPORT', 
                     'hospital_id' => $hospital_id
                    );
-
-                   $this->db->where($patientwhere);
+                  
+                   $patient_upd_where = array('patients.patient_id' =>$patientID );
+                   $this->db->where($patient_upd_where);
                    $query= $this->db->update('patients',$dependent_upd_array);
-
+                 // echo "Update";
             }else{
+
+                // added on 06.03.2019
+                $employee=$worker_code;
+                $relationID=$relation_id;
+                $srl_no = $this->patient->getEmployeeSerialCode($employee);
+                $relation_code = $this->relation->getRelationCodeById($relationID);
+
+                $generatedCode = $this->patient->generateEmployeeCode($employee, $relation_code, $srl_no);
+
+
+
                 $dependent_inst_array = array(
                     'patient_code' => $generatedCode, 
                     'patient_name' => $dependent_name, 
                     'patient_type_id' => 3, // dependent id
                     'relation_id' => $relation_id, 
+                    'employee_id' => $worker_code, 
                     'currant_status' => $currant_status, 
                     'gender' => $sex, 
                     'dob' => date("Y-m-d",strtotime($dob)), 
                     'house_no' => $houseno, 
                     'line_number' => $lineno, 
-                    'division_number' => $divisionno, 
+                    'division_number' => $divisionno,
+                    'entry_from' => 'IMPORT',  
+                    'hospital_id' => $hospital_id
                    );
 
                   $query = $this->db->insert('patients', $dependent_inst_array); 
+                  // update last serial no
+                    $updateArr = [
+                        "patients.last_srl_code" => $srl_no
+                    ];
+                    $employeeWhere = array('patients.patient_code' =>$employee );
+                    $this->commondatamodel->updateSingleTableData('patients',$updateArr,$employeeWhere);
 
+                 // echo "Insert";
+                  
 
             }
     
