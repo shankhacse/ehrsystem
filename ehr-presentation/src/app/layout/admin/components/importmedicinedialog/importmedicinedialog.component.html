@@ -1,0 +1,62 @@
+<div style="width:100%;float: right;text-align:right;padding-bottom: 12px;">
+  <button mat-mini-fab color="warn"   (click)="redirectToComp()" type="button" ><i class="material-icons">
+        clear
+        </i></button>
+
+</div>
+<div class="wrapper"> 
+<table class="table table-striped mat-elevation-z8"  >
+<thead>
+  <tr style="background-color: #373e77; color: #f3f1ed;">
+    <th width="5%">Sl</th>
+    <th width="10%">Name</th>
+    <th width="10%">Type</th>
+
+   
+  </tr>
+</thead>
+<tbody>
+  <tr *ngFor="let excelrow of medList; let i = index">
+    <td align='center'>{{i+1}}</td>
+    <td>{{excelrow.medicine_name.value}}</td>
+    <td matTooltip="{{excelrow.medicine_type.cell}}" [ngClass]="{'errorcell' : excelrow.medicine_type.error}">{{excelrow.medicine_type.value}}</td>
+   
+
+  </tr>
+ 
+</tbody>
+</table>
+
+</div>
+<p style="color:#F00;text-align: left;padding-left: 20px;">{{validFormErr}}</p>
+
+  <div *ngIf="this.incorrectClose" style="text-align: center;margin-top:2%;margin-bottom:2%;" >
+  
+  <a mat-raised-button color="warn" class="toplink" (click)="redirectToComp()" style="font-size:11px;letter-spacing:1px;margin-left:5px">Close</a>
+  
+
+
+</div>
+
+<section id="SubmitBlock">
+  <div *ngIf="this.isButtonVisible" (click)="this.isButtonVisible = false" class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+      <button  mat-flat-button color="primary" class="phrmcybtn" type="button" (click)="saveData()"> Save</button>
+  </div>
+
+  <div *ngIf="this.isProcess" style="color:rgb(38, 107, 197);text-align: center;padding-left: 20px;">
+        <p>  Processing please wait .... {{insertrow}} / {{totalrow}} </p>
+  </div>
+
+  <div *ngIf="this.afterProcess" style="text-align: center;padding-left: 20px;margin-top:2%;margin-bottom:2%;" >
+      <p style="color:rgb(34, 111, 212);text-align: center;padding-left: 20px;">{{updatemessage}}</p>
+      <a mat-raised-button color="primary" class="toplink"(click)="redirectToPatientList()" style="font-size:11px;letter-spacing:1px;">Medicine List</a>
+      <a mat-raised-button color="warn" class="toplink" (click)="redirectToComp()" style="font-size:11px;letter-spacing:1px;margin-left:5px">Close</a>
+      
+   
+   
+</div>
+
+
+
+
+</section>

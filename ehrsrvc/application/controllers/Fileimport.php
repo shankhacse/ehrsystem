@@ -709,6 +709,32 @@ public function verifyDependentExcelFile()
       
     }
 
+ /*
+	@return type boolean
+	@method isValidMedicineType(type)
+	@date  26.02.2019
+*/
+private function isValidMedicineType($type)
+{
+        if($type!="")
+        {
+            $where = array("medicine_type.medicine_type"=>trim($type));
+            $isexist = $this->commondatamodel->checkExistanceData('medicine_type',$where);
+            if($isexist>=1)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            return 1;
+        }
+}
+
 
  /*
 	@return type boolean
@@ -971,6 +997,185 @@ public function insertIntoDependentPatient()
                     ];
                     $employeeWhere = array('patients.patient_code' =>$employee );
                     $this->commondatamodel->updateSingleTableData('patients',$updateArr,$employeeWhere);
+
+                 // echo "Insert";
+                  
+
+            }
+    
+     
+        if($query){
+            $json_response = [
+                "msg_status"=>HTTP_SUCCESS,
+                "msg_data"=>"SUCCESS",
+            ];
+        }
+        else{
+            $json_response = [
+                "msg_status"=>HTTP_SUCCESS,
+                "msg_data"=>"There is some problem.Please try again",
+            ];
+        }
+        
+    }else{
+        $json_response = [
+                            "msg_status"=>HTTP_AUTH_FAIL,
+                            "msg_data"=>"Authentication fail."
+        ];
+    }
+    }else{
+         $json_response = [
+                            "msg_status"=>HTTP_AUTH_FAIL,
+                            "msg_data"=>"Authentication fail."
+        ];
+
+    }
+    header('Content-Type: application/json');
+echo json_encode( $json_response );
+exit;
+    
+  
+}
+
+
+
+
+
+    /*--------------------------- verify medicine excel--------------------------- */
+
+    public function verifyMedicineExcelFile()
+    {
+        CUSTOMHEADER::getCustomHeader();
+        $json_response = [];
+        $headers = $this->input->request_headers();
+
+        if($_FILES['file']['error']!=4)
+        { 
+            $tempFile = $_FILES['file']['tmp_name'];
+            //$extension = ".xls";
+        
+            $array = explode('.', $_FILES['file']['name']);
+            $extension = end($array);
+
+                
+                if($extension=="xls")
+                {
+                    $objReader= PHPExcel_IOFactory::createReader('Excel5');	// For excel 2007 	  
+                }
+                else
+                {           	
+                    $objReader= PHPExcel_IOFactory::createReader('Excel2007');	// For excel 2007 	  
+                }
+
+                $filename =  $tempFile;
+				
+				$objReader->setReadDataOnly(true); 		
+				$objPHPExcel=$objReader->load($filename);
+		        $totalrows=$objPHPExcel->setActiveSheetIndex(0)->getHighestRow();   //Count Numbe of rows avalable in excel      	 
+		        $objWorksheet=$objPHPExcel->setActiveSheetIndex(0); 
+                $totalcolumn = $objPHPExcel->setActiveSheetIndex(0)->getHighestDataColumn();
+
+                for($i=2;$i<=$totalrows;$i++)
+		        { 
+                    $medicine_name[] = array(
+                        "error" => 0,
+                        "cell" =>  $objWorksheet->getCellByColumnAndRow(0,$i)->getColumn().$i,
+                        "value" =>  ($objWorksheet->getCellByColumnAndRow(0,$i)->getValue() == "" ?
+                                     "" :$objWorksheet->getCellByColumnAndRow(0,$i)->getValue()  ),
+                    );
+
+                    $medicine_type[] = array(
+                        "error" => $this->isValidMedicineType($objWorksheet->getCellByColumnAndRow(1,$i)->getValue()),
+                        "cell" =>  $objWorksheet->getCellByColumnAndRow(1,$i)->getColumn().$i,
+                        "value" =>  ($objWorksheet->getCellByColumnAndRow(1,$i)->getValue() == "" ?
+                                     "" :$objWorksheet->getCellByColumnAndRow(1,$i)->getValue()  ),
+                    );
+
+
+
+                   
+
+                }
+                
+
+
+                $json_response= [
+                    
+                    "medicine_name" => $medicine_name,
+                    "medicine_type" => $medicine_type
+                   
+                    
+                ];
+            
+        }//end of file check
+        
+       
+        header('Content-Type: application/json');
+	echo json_encode( $json_response );
+	exit;
+        
+      
+    }
+
+
+
+    // insert into madicine from excel
+
+    
+public function insertIntoMedicineFromExcel()
+{
+    CUSTOMHEADER::getCustomHeader();
+    $json_response = [];
+    $headers = $this->input->request_headers();
+    
+    if(CUSTOMHEADER::getAuthotoken($headers)){$client_token = CUSTOMHEADER::getAuthotoken($headers);}else{$client_token = "";}
+    
+    $server_token="";
+    if($client_token!=""){
+        $server_token = $this->authorisation->getToken($client_token->jti)->web_token;
+       
+    }
+   
+    if($client_token!=""){
+    if($client_token->jti==$server_token ){
+        
+        $token_data = $client_token->data;
+        $hospital_id = $token_data->hospital_id;
+        
+    
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+
+       // pre($request->fdata);
+        
+        $MedicineData = $request->fdata;
+
+
+       $medicine_name=$MedicineData->medicine_name->value;
+       $medicine_type=$MedicineData->medicine_type->value;
+       
+
+        
+        $medicinewhere = array(
+                                'medicine.medicine_name' =>$medicine_name,
+                                'medicine.medicine_type' =>$medicine_type
+                              
+                            );
+
+            $medicineExist=$this->commondatamodel->duplicateValueCheck('medicine',$medicinewhere);
+            
+        
+           
+
+            if($medicineExist){
+                
+                $query=1; 
+                 // echo "Update";
+
+            }else{
+
+                 
+                $query=$this->commondatamodel->insertSingleTableData('medicine',$medicinewhere);
 
                  // echo "Insert";
                   

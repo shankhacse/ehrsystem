@@ -1,0 +1,84 @@
+<div id="depuploadPage">
+
+
+
+  <div class="uploadContainer">
+      <form [formGroup]="addMedicineuploadForm" (ngSubmit)="onSubmit(this.addMedicineuploadForm)">
+
+          
+                 
+      <!--test Reg Block-->
+      <section class="exluploadBlock">
+
+           <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap  fxLayoutGap="1.5%" fxLayoutAlign="center">
+            
+            <div fxFlex="90%">
+                <h5 class="form_block_title">Medicine Excel File Import  <button mat-raised-button color="primary" class="toplink" (click)="gotoList()" type="button" style="margin-left: 240px;">Back To List </button></h5>
+                
+                   
+                 
+               
+                    <!-- Start -->
+                    <div  class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" >
+
+                          <div fxFlex="35%">
+                                <a href="assets/template/medicine_import.xlsx" mat-raised-button color="accent" download>
+                             
+                                  <i class="material-icons">
+                                      get_app
+                                      </i>Template
+                                </a>
+                               
+                            
+                               
+                          </div>   
+                          <div fxFlex="60%">
+                            
+                              <div class="upload-btn-wrapper">
+                                
+                                  <button mat-raised-button [ngClass]="{'avoid_clicks' : this.disableClick}" class="btn" (click)="fileInput.click()" >Select file</button>&nbsp;<span class="filenamespan">{{filename}}</span>
+    <input accept=".xlsx, .xls" type="file" name="reportfile" id="reportfile" (change)="upload($event.target.files)" #fileInput />
+                                         </div> 
+                          </div>
+                          <div fxFlex="10%">
+                             
+                                  <!-- <div class="container infocontainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+                                      <button mat-flat-button color="primary" class="phrmcybtn" type="submit">
+                                         Upload </button>
+                                  </div> -->
+
+                                  
+                             
+                                  
+                          </div>
+                         
+                    </div>
+                   <br><br>
+                   <div *ngIf="isLoader" style="text-align:center">
+                      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                      <h3 class="loadingtxt">Loading.....</h3>
+                     </div>
+                   
+
+
+                    <!-- End -->
+             
+              </div>
+          </div> 
+          
+         
+
+       
+
+        
+      <p style="color: #D87575;text-align: left;padding-left: 33px;font-size: 13px;"></p>
+                <br>
+     </section>
+
+   </form>
+
+  </div>
+
+
+
+</div>

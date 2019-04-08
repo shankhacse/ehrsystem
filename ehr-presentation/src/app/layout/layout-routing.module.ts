@@ -53,8 +53,11 @@ const routes: Routes = [
             { path: 'regreport' , loadChildren:'./registrationreport/registrationreport.module#RegistrationreportModule'},
 
             { path:'importdependent', loadChildren:'./admin/importdependent/importdependent.module#ImportdependentModule'},
+            { path:'importmedicine', loadChildren:'./admin/importmedicine/importmedicine.module#ImportmedicineModule'},
             { path:'superadmin', loadChildren:'./superadmin/superadmin.module#SuperadminModule'},
            
+            { path:'medicinetype', loadChildren:'./admin/medicinetype/medicinetype/medicinetype.module#MedicinetypeModule'},
+            { path:'medicinetypelist', loadChildren:'./admin/medicinetype/medicinetypelist/medicinetypelist.module#MedicinetypelistModule'},
             
         ]
     }

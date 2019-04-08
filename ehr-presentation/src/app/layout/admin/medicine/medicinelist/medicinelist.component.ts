@@ -119,5 +119,8 @@ export class MedicinelistComponent implements OnInit {
   gotoAdd(){
     this.router.navigateByUrl('panel/med');
   }
+  gotoImport(){
+    this.router.navigateByUrl('panel/importmedicine');
+  }
 
 }

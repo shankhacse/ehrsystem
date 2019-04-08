@@ -21,8 +21,14 @@
                                 <div fxFlex="75%">
                                   <button mat-raised-button color="primary" class="toplink"  type="button" (click)="gotoAdd()" style="margin: 10px;"><i class="material-icons">
                                       add
-                                      </i>Add </button>   
+                                      </i>Add </button> 
+                                      <button mat-raised-button color="primary" class="toplink"  type="button" (click)="gotoImport()" style="margin: 10px;"><i class="material-icons">
+                                        attachment
+                                        </i> Import From Excel </button>    
                                 </div>
+
+                                
+                                
                                  <div fxFlex="20%">
                                    <mat-form-field class="fullwidthinp" style="margin-right: 15px;">
                                         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">

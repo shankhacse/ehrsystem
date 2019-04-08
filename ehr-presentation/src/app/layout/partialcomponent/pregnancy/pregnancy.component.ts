@@ -312,7 +312,7 @@ calEstimateDeliveryDate(type: string, event) {
           });
 
           this.additionalInfoForm.patchValue({
-            nextChkupDate : new Date(preg_pdata.lmp_date).toISOString(),
+            nextChkupDate : '',
             pregRemarks : preg_pdata.remarks
           });
           

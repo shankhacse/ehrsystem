@@ -906,4 +906,24 @@ async insertIntoDependentPatient(formval) {
  });
 }
 
+
+  /**
+ * @author Shankha Ghosh
+ * @param formval 
+ * @description Insert medicine into medicine table from excel 08.04.2019
+ */
+
+
+async insertIntoMedicinefromImport(formval) {
+  let datas = JSON.stringify({fdata:formval});
+  return await new Promise(resolve => {
+    this.http.post(this.global.insertMedicineimport_URL,datas).subscribe(data => {
+      
+      resolve(data);
+    }, err => {
+      console.log(err);
+    });
+ });
+}
+
 }// end of class
