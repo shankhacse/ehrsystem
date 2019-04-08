@@ -123,6 +123,10 @@
                                                 <th mat-header-cell *matHeaderCellDef>Permanent <br>Worker </th>
                                                 <td mat-cell *matCellDef="let row"> {{row.associate_permworker_code}} </td>
                                             </ng-container>
+                                            <ng-container matColumnDef="permworker_name">
+                                              <th mat-header-cell *matHeaderCellDef>Permanent Worker <br>Name</th>
+                                              <td mat-cell *matCellDef="let row"> {{row.permworker_name}} </td>
+                                             </ng-container>
 
                         
                                             <ng-container matColumnDef="patient_name">
@@ -273,7 +277,11 @@
                                             <ng-container matColumnDef="associate_permworker_code">
                                                 <th mat-header-cell *matHeaderCellDef>Permanent <br>Worker</th>
                                                 <td mat-cell *matCellDef="let row"> {{row.associate_permworker_code}} </td>
-                                              </ng-container>
+                                            </ng-container>
+                                            <ng-container matColumnDef="permworker_name">
+                                              <th mat-header-cell *matHeaderCellDef>Permanent Worker<br>Name</th>
+                                              <td mat-cell *matCellDef="let row"> {{row.permworker_name}} </td>
+                                          </ng-container>
                         
                                             <ng-container matColumnDef="patient_name">
                                                 <th mat-header-cell *matHeaderCellDef> Name </th>

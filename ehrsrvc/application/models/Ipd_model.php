@@ -559,6 +559,7 @@ class Ipd_model extends CI_Model{
 							patients.patient_name,
 							patients.mobile_one , */
 							patients.patient_code as associate_permworker_code,
+							patients.patient_name as permworker_name,
 							patients.patient_id,
 							ipd_patient_master.patient_name,
 							  ipd_patient_master.patient_type,
@@ -617,6 +618,7 @@ class Ipd_model extends CI_Model{
 							patients.patient_name,
 							patients.mobile_one , */
 							patients.patient_code as associate_permworker_code,
+							patients.patient_name as permworker_name,
 							patients.patient_id,
 							  ipd_patient_master.patient_name,
 							  ipd_patient_master.patient_type,
@@ -902,6 +904,7 @@ class Ipd_model extends CI_Model{
 									ipd_patient_master.discharge_summary,
 									ipd_patient_master.discharge_date,
 									ipd_patient_master.final_digonosis,
+									DATE_FORMAT(ipd_patient_master.admission_date,'%d-%m-%Y') AS admission_dt,
 									DATE_FORMAT(ipd_patient_master.next_checkup_dt,'%d/%m/%Y') AS nextChkupDtDt,
 									CASE 
 									WHEN ipd_patient_master.`admission_id` IS NOT NULL THEN ipd_patient_master.`admission_id`
@@ -937,6 +940,7 @@ class Ipd_model extends CI_Model{
 						ipd_patient_master.discharge_summary,
 						ipd_patient_master.discharge_date,
 						ipd_patient_master.final_digonosis,
+						DATE_FORMAT(ipd_patient_master.admission_date,'%d-%m-%Y') AS admission_dt,
 						DATE_FORMAT(ipd_patient_master.next_checkup_dt,'%d/%m/%Y') AS nextChkupDtDt,
 						CASE 
 						WHEN ipd_patient_master.`admission_id` IS NOT NULL THEN ipd_patient_master.`admission_id`
@@ -1020,6 +1024,7 @@ class Ipd_model extends CI_Model{
 							patients.patient_name,
 							patients.mobile_one , */
 							patients.patient_code as associate_permworker_code,
+							patients.patient_name as permworker_name,
 							patients.patient_id,
 							  ipd_patient_master.patient_name,
 							  ipd_patient_master.patient_type,
@@ -1085,6 +1090,7 @@ class Ipd_model extends CI_Model{
 						  /*patient_type.patient_type,
 							patients.patient_name,
 							patients.mobile_one , */
+							patients.patient_name as permworker_name,
 							patients.patient_code as associate_permworker_code,
 							patients.patient_id,
 							ipd_patient_master.patient_name,

@@ -659,12 +659,47 @@ class Patient_model extends CI_Model
 
         $query = $this->db->select("
                         patient_sickleave_detail.*,
+                        DATE_FORMAT(patient_sickleave_detail.approved_on,'%d-%m-%Y') AS approved_on,
                         patients.*")
             ->from("patient_sickleave_detail")
             ->join("patients", "patient_sickleave_detail.patient_id=patients.patient_id")
             ->where($where)
             ->get();
+           #echo $this->db->last_query();
 
+        if ($query->num_rows() > 0) {
+            $resultdata = $query->result();
+        }
+        return $resultdata;
+    }
+
+
+    public function getSickApprovedListByDateRange($request,$hospital_id)
+    {
+        $resultdata = [];
+        $today = date("Y-m-d");
+        
+        $formData = $request->data;
+	
+		$from_date = $formData->searchFromDateCtrl;
+		$to_date = $formData->searchToDateCtrl;
+
+
+        // $where = [
+            
+        //      "DATE_FORMAT(`patient_sickleave_detail`.`applied_for_date`,'%Y-%m-%d')" => $today
+        // ];
+
+        $query = $this->db->select("
+                        patient_sickleave_detail.*,
+                        DATE_FORMAT(patient_sickleave_detail.approved_on,'%d-%m-%Y') AS approved_on,
+                        DATE_FORMAT(patient_sickleave_detail.applied_for_date,'%d-%m-%Y') as apply_date,
+                        patients.*")
+            ->from("patient_sickleave_detail")
+            ->join("patients", "patient_sickleave_detail.patient_id=patients.patient_id")
+            ->where('DATE_FORMAT(patient_sickleave_detail.applied_for_date,"%Y-%m-%d") BETWEEN "'. date('Y-m-d', strtotime($from_date)). '" AND "'. date('Y-m-d', strtotime($to_date)).'"')
+            ->get();
+           #echo $this->db->last_query();
 
         if ($query->num_rows() > 0) {
             $resultdata = $query->result();
@@ -681,13 +716,25 @@ class Patient_model extends CI_Model
         $rsltSt = FALSE;
         try {
             $this->db->trans_begin();
+            if($status=='Y'){
+                $updAry = [
 
-            $updAry = [
+                    "patient_sickleave_detail.is_approved" => $status,
+                    "patient_sickleave_detail.approved_by" => $userid,
+                    "patient_sickleave_detail.approved_on" => date("Y-m-d H:i:s")
+                ];
 
-                "patient_sickleave_detail.is_approved" => $status,
-                "patient_sickleave_detail.approved_by" => $userid,
-                "patient_sickleave_detail.approved_on" => date("Y-m-d H:i:s")
-            ];
+            }else{
+                $updAry = [
+
+                    "patient_sickleave_detail.is_approved" => $status,
+                    "patient_sickleave_detail.approved_by" => $userid,
+                    "patient_sickleave_detail.approved_on" => NULL
+                ];  
+            }
+
+           
+
             $this->db->where("patient_sickleave_detail.id", $id);
             $this->db->update("patient_sickleave_detail", $updAry);
 
@@ -730,6 +777,38 @@ class Patient_model extends CI_Model
         return $totalRegister;
     }
 
+    public function getCountTotalRegisterByDateRange($request)
+    {
+        $totalRegister = 0;
+        $searchDate = "";
+        $formData = $request->data;
+	
+		$from_date = $formData->searchFromDateCtrl;
+        $to_date = $formData->searchToDateCtrl;
+        
+        // if ($currentDate != "") {
+        //     $searchDate = $currentDate;
+        // } else {
+        //     $searchDate = date("Y-m-d");
+        // }
+
+        // $where = [
+        //     "DATE_FORMAT(`patient_sickleave_detail`.`applied_for_date`,'%Y-%m-%d')" => $searchDate
+        // ];
+
+        $query = $this->db->select("COUNT(*)as cnt")
+            ->from("patient_sickleave_detail")
+            ->where('DATE_FORMAT(patient_sickleave_detail.applied_for_date,"%Y-%m-%d") BETWEEN "'. date('Y-m-d', strtotime($from_date)). '" AND "'. date('Y-m-d', strtotime($to_date)).'"')
+            ->get();
+        // echo($this->db->last_query());
+        if ($query->num_rows() > 0) {
+            $row = $query->row();
+            $totalRegister = $row->cnt;
+        }
+        // echo($totalRegister);
+        return $totalRegister;
+    }
+
     public function getCountSickApprove($currentDate)
     {
         $totalSickApproved = 0;
@@ -746,6 +825,42 @@ class Patient_model extends CI_Model
         ];
         $query = $this->db->select("COUNT(*)as cnt")
             ->from("patient_sickleave_detail")
+            ->where($where)
+            ->get();
+        // echo($this->db->last_query());
+        if ($query->num_rows() > 0) {
+            $row = $query->row();
+            $totalSickApproved = $row->cnt;
+        }
+        // echo($totalSickApproved);
+        return $totalSickApproved;
+    }
+
+
+    public function getCountSickApproveByDateRange($request)
+    {
+        $totalSickApproved = 0;
+        $searchDate = "";
+
+        $formData = $request->data;
+	
+		$from_date = $formData->searchFromDateCtrl;
+        $to_date = $formData->searchToDateCtrl;
+      
+        // if ($currentDate != "") {
+        //     $searchDate = $currentDate;
+        // } else {
+        //     $searchDate = date("Y-m-d");
+        // }
+
+        $where = [
+            // "DATE_FORMAT(`patient_sickleave_detail`.`applied_for_date`,'%Y-%m-%d')" => $searchDate,
+            "patient_sickleave_detail.is_approved" => 'Y'
+        ];
+
+        $query = $this->db->select("COUNT(*)as cnt")
+            ->from("patient_sickleave_detail")
+            ->where('DATE_FORMAT(patient_sickleave_detail.applied_for_date,"%Y-%m-%d") BETWEEN "'. date('Y-m-d', strtotime($from_date)). '" AND "'. date('Y-m-d', strtotime($to_date)).'"')
             ->where($where)
             ->get();
         // echo($this->db->last_query());
@@ -936,6 +1051,63 @@ class Patient_model extends CI_Model
         return $patient_data;
     }
 
+// added on 06.04.2019
+
+public function getSickApprovedListcountgrpDate($request,$hospital_id)
+{
+    $resultdata = [];
+    $today = date("Y-m-d");
+    
+    $formData = $request->data;
+
+    $from_date = $formData->searchFromDateCtrl;
+    $to_date = $formData->searchToDateCtrl;
+
+
+    $where = array('patient_sickleave_detail.is_approved' => 'Y' );
+
+    $query = $this->db->select("
+                    COUNT(*) AS approvedcount,
+                    DATE_FORMAT(patient_sickleave_detail.approved_on,'%d-%m-%Y') AS approved_on,
+                   
+                  
+                    ")
+        ->from("patient_sickleave_detail")
+        ->join("patients", "patient_sickleave_detail.patient_id=patients.patient_id")
+        ->where('DATE_FORMAT(patient_sickleave_detail.approved_on,"%Y-%m-%d") BETWEEN "'. date('Y-m-d', strtotime($from_date)). '" AND "'. date('Y-m-d', strtotime($to_date)).'"')
+        ->where($where)
+        ->group_by('DATE_FORMAT( patient_sickleave_detail.approved_on, "%Y-%m-%d")')
+        ->get();
+       #echo $this->db->last_query();
+
+    if ($query->num_rows() > 0) {
+        $resultdata = $query->result();
+    }
+    return $resultdata;
+}
+
+
+public function approvedsickleavedetailsbydate($searchdate)
+{
+         $test_data = "";
+         $where = array('patient_sickleave_detail.is_approved' => 'Y' );
+         $query = $this->db->select("
+        patient_sickleave_detail.*,
+        DATE_FORMAT(patient_sickleave_detail.approved_on,'%d-%m-%Y') AS approved_on,
+        DATE_FORMAT(patient_sickleave_detail.applied_for_date,'%d-%m-%Y') as apply_date,
+        patients.*")
+        ->from("patient_sickleave_detail")
+        ->join("patients", "patient_sickleave_detail.patient_id=patients.patient_id")
+        ->where('DATE_FORMAT(patient_sickleave_detail.approved_on,"%Y-%m-%d") = "'. date('Y-m-d', strtotime($searchdate)).'"')
+        ->where($where)
+        ->get();
+    #echo $this->db->last_query();
+
+    if ($query->num_rows() > 0) {
+    $resultdata = $query->result();
+    }
+    return $resultdata;
+}
 
 
 }// ens of class

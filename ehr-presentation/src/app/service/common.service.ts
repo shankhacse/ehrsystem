@@ -115,6 +115,32 @@ export class CommonService {
     });
   }
 
+// added on 01.04.2019
+  getSickApproveListByDateRange(formdata){
+    let datas = JSON.stringify({data:formdata});
+    
+     return new Promise(resolve => {
+        this.http.post(this.global.sickApprovalListDtRange_URL,datas).subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log(err);
+        });
+      });
+  }
+
+  // added on 06.04.2019
+  getApprovedSickLeaveByDate(formdata){
+    let datas = JSON.stringify({data:formdata});
+    
+     return new Promise(resolve => {
+        this.http.post(this.global.sickApprovedListcountgrpDt_URL,datas).subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log(err);
+        });
+      });
+  }
+
   getSickLeaveApproveCount(){
     return new Promise(resolve=>{this.http.get(this.global.sickApprovalCount_URL).subscribe(data=>{
       resolve(data);  
@@ -123,6 +149,21 @@ export class CommonService {
     });
   });
   }
+
+  // added on 01.04.2019
+  getSickLeaveApproveCountByDateRange(formdata){
+    let datas = JSON.stringify({data:formdata});
+    
+     return new Promise(resolve => {
+        this.http.post(this.global.sickApprovalCountListDtRange_URL,datas).subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log(err);
+        });
+      });
+  }
+
+
 /**
  * @name deleteRecords
  * @param delid 
@@ -440,6 +481,19 @@ filterTestByName(name){
   let myData = JSON.stringify({pcode: name});
    return new Promise(resolve => {
       this.http.post(this.global.testSearchByQry_URL,myData).subscribe(data => {
+        resolve(data);
+       
+      }, err => {
+        console.log(err);
+      });
+    });
+}
+
+
+getSickApprovedDetailsbydate(date){
+  let myData = JSON.stringify({searchdate: date});
+   return new Promise(resolve => {
+      this.http.post(this.global.approvedsiclleaveDtl_URL,myData).subscribe(data => {
         resolve(data);
        
       }, err => {

@@ -93,3 +93,12 @@ td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:
 .avoid_clicks {
     pointer-events: none;
 }
+
+
+.mat-datepicker-content .mat-calendar {
+
+    width: 100%!important;
+    height: auto!important;
+  
+
+}

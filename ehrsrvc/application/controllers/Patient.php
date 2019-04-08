@@ -680,6 +680,53 @@ class Patient extends CI_Controller{
 		echo json_encode( $json_response );
 		exit;
         }
+
+        public function getSickApprovedListByDateRange(){
+            CUSTOMHEADER::getCustomHeader();
+            $json_response = [];
+            $headers = $this->input->request_headers();
+            
+            if(CUSTOMHEADER::getAuthotoken($headers)){$client_token = CUSTOMHEADER::getAuthotoken($headers);}else{$client_token = "";}
+            
+        $server_token="";
+            if($client_token!=""){
+                $server_token = $this->authorisation->getToken($client_token->jti)->web_token;
+            }
+           
+            if($client_token!=""){
+            if($client_token->jti==$server_token ){
+                $token_data = $client_token->data;
+                $hospital_id = $token_data->hospital_id;
+                
+                $postdata = file_get_contents("php://input");
+                $request = json_decode($postdata);
+                
+                       $resultdata = $this->patient->getSickApprovedListByDateRange($request,$hospital_id);
+                
+                $json_response = [
+                         "msg_status"=>HTTP_SUCCESS,
+                         "msg_data"=>"Authentication ok.",
+                         "sickleaveList"=>$resultdata,
+            
+                ];
+                
+            }else{
+                $json_response = [
+                                    "msg_status"=>HTTP_AUTH_FAIL,
+                                    "msg_data"=>"Authentication fail."
+                ];
+            }
+            }else{
+                 $json_response = [
+                                    "msg_status"=>HTTP_AUTH_FAIL,
+                                    "msg_data"=>"Authentication fail."
+                ];
+    
+            }
+            header('Content-Type: application/json');
+            echo json_encode( $json_response );
+            exit;
+            }
         
         
         public function getSickLeaveApproveCount()
@@ -737,6 +784,62 @@ class Patient extends CI_Controller{
         exit;
     
    }
+
+   public function getSickLeaveApproveCountByDateRange()
+   {
+       CUSTOMHEADER::getCustomHeader();
+   $json_response = [];
+   $headers = $this->input->request_headers();
+   
+   if(CUSTOMHEADER::getAuthotoken($headers)){$client_token = CUSTOMHEADER::getAuthotoken($headers);}else{$client_token = "";}
+   
+   $server_token = "";
+   if ($client_token != "") {
+       $server_token = $this->authorisation->getToken($client_token->jti)->web_token;
+   }
+
+   if ($client_token != "") {
+       if ($client_token->jti == $server_token) {
+
+           $postdata = file_get_contents("php://input");
+           $request = json_decode($postdata);
+          
+           //$currentDate = $request->current_date;
+           $currentDate="";
+           
+           $totalRegister =	$this->patient->getCountTotalRegisterByDateRange($request);
+           $totalRegisterSickApprove = $this->patient->getCountSickApproveByDateRange($request);
+
+
+           //$updateData = $this->patient->updateSickApprovalStatus($opdid, $status);
+           
+           $response_arr =["totalApproved"=>$totalRegisterSickApprove,"totalRegister"=>$totalRegister];
+
+           $json_response =[
+                   "msg_status" => HTTP_SUCCESS,
+                                           "msg_data" => "",
+                                           "result" => $response_arr
+           
+           ];
+
+           
+       } else {
+           $json_response = [
+               "msg_status" => HTTP_AUTH_FAIL,
+               "msg_data" => "Authentication fail."
+           ];
+       }
+   } else {
+       $json_response = [
+           "msg_status" => HTTP_AUTH_FAIL,
+           "msg_data" => "Authentication fail."
+       ];
+   }
+   header('Content-Type: application/json');
+   echo json_encode($json_response);
+   exit;
+
+}
         
         
         public function updateSickLeaveApprovalStatus()
@@ -1006,4 +1109,107 @@ public function patientSickLeaveRegSearchByQry(){
     echo json_encode( $json_response );
     exit;
 }
+
+// added on 06.04.2019
+public function getSickApprovedListcountgrpDate(){
+    CUSTOMHEADER::getCustomHeader();
+    $json_response = [];
+    $headers = $this->input->request_headers();
+    
+    if(CUSTOMHEADER::getAuthotoken($headers)){$client_token = CUSTOMHEADER::getAuthotoken($headers);}else{$client_token = "";}
+    
+$server_token="";
+    if($client_token!=""){
+        $server_token = $this->authorisation->getToken($client_token->jti)->web_token;
+    }
+   
+    if($client_token!=""){
+    if($client_token->jti==$server_token ){
+        $token_data = $client_token->data;
+        $hospital_id = $token_data->hospital_id;
+        
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        
+               $resultdata = $this->patient->getSickApprovedListcountgrpDate($request,$hospital_id);
+        
+        $json_response = [
+                 "msg_status"=>HTTP_SUCCESS,
+                 "msg_data"=>"Authentication ok.",
+                 "approvedsickleaveList"=>$resultdata,
+    
+        ];
+        
+    }else{
+        $json_response = [
+                            "msg_status"=>HTTP_AUTH_FAIL,
+                            "msg_data"=>"Authentication fail."
+        ];
+    }
+    }else{
+         $json_response = [
+                            "msg_status"=>HTTP_AUTH_FAIL,
+                            "msg_data"=>"Authentication fail."
+        ];
+
+    }
+    header('Content-Type: application/json');
+    echo json_encode( $json_response );
+    exit;
+    }
+
+
+
+    
+    public function approvedsickleavedetailsbydate(){
+		CUSTOMHEADER::getCustomHeader();
+        $json_response = [];
+        $headers = $this->input->request_headers();
+        
+        if(CUSTOMHEADER::getAuthotoken($headers)){$client_token = CUSTOMHEADER::getAuthotoken($headers);}else{$client_token = "";}
+        
+		$server_token="";
+        if($client_token!=""){
+            $server_token = $this->authorisation->getToken($client_token->jti)->web_token;
+        }
+       
+        if($client_token!=""){
+        if($client_token->jti==$server_token ){
+			$token_data = $client_token->data;
+			$hospital_id = $token_data->hospital_id;
+			
+            $postdata = file_get_contents("php://input");
+			$request = json_decode($postdata);
+			$searchdate = $request->searchdate;
+			$resultdata = $this->patient->approvedsickleavedetailsbydate($searchdate);
+			
+			$json_response = [
+                     "msg_status"=>HTTP_SUCCESS,
+                     "msg_data"=>"Authentication ok.",
+                     "resultdata"=>$resultdata
+					
+            ];
+            
+        }else{
+            $json_response = [
+                                "msg_status"=>HTTP_AUTH_FAIL,
+                                "msg_data"=>"Authentication fail."
+            ];
+        }
+        }else{
+             $json_response = [
+                                "msg_status"=>HTTP_AUTH_FAIL,
+                                "msg_data"=>"Authentication fail."
+            ];
+
+        }
+        header('Content-Type: application/json');
+		echo json_encode( $json_response );
+		exit;
+    }
+    
+
+
+    
+
 }// end of class

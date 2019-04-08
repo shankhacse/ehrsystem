@@ -1,0 +1,43 @@
+<div style="width:100%;float: right;text-align:right;padding-bottom: 12px;">
+     
+      
+    <button mat-mini-fab color="warn"   (click)="redirectToComp()" type="button" ><i class="material-icons">
+        clear
+        </i></button>
+   
+  </div>
+
+    <h3 style="text-align:center;">Approved Sick Leave Details</h3>
+
+
+    <table class="table table-striped mat-elevation-z8" style="font-size: 11px;
+letter-spacing: 1px;margin-top: 20px;" >
+  <thead>
+    <tr style="background-color: #5361c6; color: #f3f1ed;">
+      <th style="width:5px;">Sl No.</th>
+    
+      <th style="width:10px;">Apply Date</th>
+      <th style="width:10px;">Approved Date</th>
+      <th style="width:20px;">Patient ID</th>
+      <th style="width:20px;">Name</th>
+      <th style="width:10px;">Gender</th>
+      
+      
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let excelrow of approvedList[0]; let i = index">
+      <td align='center'>{{i+1}}</td>
+    
+      <td>{{excelrow.apply_date}}</td>
+      <td>{{excelrow.approved_on}}</td>
+      <td>{{excelrow.patient_code}}</td>
+      <td>{{excelrow.patient_name}}</td>
+      <td style="text-align:center">{{excelrow.gender}}</td>
+            
+    
+    </tr>
+   
+  </tbody>
+</table>

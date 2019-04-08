@@ -19,6 +19,7 @@ import { RegistrationreportComponent } from './registrationreport.component';
 
 
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -30,7 +31,7 @@ import { RegistrationreportComponent } from './registrationreport.component';
     
   ],
   providers:[],
-  declarations: [RegistrationreportComponent],
+  declarations: [RegistrationreportComponent,],
   entryComponents : []
 })
 export class RegistrationreportModule { }

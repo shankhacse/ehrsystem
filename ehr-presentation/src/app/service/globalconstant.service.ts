@@ -76,9 +76,15 @@ export class GlobalconstantService {
 
   //sick leave approval
   public sickApprovalList_URL = this.APIURL +"patient/getSickApprovedList";
+  public sickApprovalListDtRange_URL = this.APIURL +"patient/getSickApprovedListByDateRange";
   public sickApprovalUpdate_URL = this.APIURL +"patient/updateSickLeaveApprovalStatus";
   public sickApprovalCount_URL = this.APIURL+"patient/getSickLeaveApproveCount";
+  public sickApprovalCountListDtRange_URL = this.APIURL+"patient/getSickLeaveApproveCountByDateRange";
   public sickleaveregisterList_URL = this.APIURL +"patient/getSickleaveregisterList";
+
+  public sickApprovedListcountgrpDt_URL = this.APIURL +"patient/getSickApprovedListcountgrpDate";
+
+  public approvedsiclleaveDtl_URL = this.APIURL+"patient/approvedsickleavedetailsbydate";	
 
 
   public patientPrescInfoBycode_URL = this.APIURL+"opd/getPatientPrescInfoByCode";

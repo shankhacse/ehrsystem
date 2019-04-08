@@ -321,7 +321,7 @@ calEstimateDeliveryDate(type: string, event) {
       },error => {console.log("There is some error ...");});
     }
 
-
+console.log('prengancy..................')
 
 
   }
@@ -563,6 +563,7 @@ savePregnancy() {
     console.log(this.additionalInfoForm.value);
     console.log(this.addedMeddata);
     console.log(this.addedInvestigations);
+    if(this.validateForm()){
 
     let objParam = {
       healthProfileInfo :this.presciptionHealthForm.value,
@@ -598,6 +599,9 @@ savePregnancy() {
             console.log("There is some error on submitting...");
         });
       
+        
+
+      }//end of if
       
   }
 
@@ -835,4 +839,21 @@ savePregnancy() {
 
  
 
-}
+
+  validateForm(){
+    this.validFormErr = "";
+    let validForm = false;
+  
+    if(this.pregnencyestimatedForm.controls['lmpDateCtrl'].value==''){
+          this.validFormErr = "Error : LMP is required";
+          return validForm = false;
+        
+    }
+  
+
+  
+    validForm = true;
+    return validForm;
+  }
+
+} // end of class

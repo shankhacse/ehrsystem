@@ -32,7 +32,7 @@ class Registration_model extends CI_Model{
 									END AS patient_code,
 									registration.registration_id,
 									DATE_FORMAT(registration.`date_of_registration`,'%d-%m-%Y') As date_of_registration,
-									/*patients.patient_code,*/
+									patients.patient_code,
 									patients.patient_name,
 									DATE_FORMAT(patients.`dob`,'%d-%m-%Y') As birthdate,
 									patients.gender,
@@ -372,6 +372,7 @@ class Registration_model extends CI_Model{
 	
 		$query = $this->db->select("CASE
 									WHEN patients.patient_type_id = 1 THEN patients.patient_code
+									WHEN patients.patient_type_id = 2 THEN patients.patient_code
 									ELSE patients.employee_id
 									END AS parmanent_wrk_code,
 									/* registration.registration_id,*/
@@ -400,7 +401,7 @@ class Registration_model extends CI_Model{
 						 ->order_by('registration.date_of_registration')
                          ->get();
 						 
-						// echo $this->db->last_query();
+						# echo $this->db->last_query();
 		
         if($query->num_rows()>0) {
             $resultdata=$query->result();

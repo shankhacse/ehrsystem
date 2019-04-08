@@ -5,6 +5,7 @@ import { AppMaterialModule } from '../../app-material/app-material.module';
 import { sickleaveapprovalRoutingModule } from './sickleaveapproval-routing.module';
 import { SickleaveapprovalComponent } from './sickleaveapproval.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { ApprovedsickleavedetailsdialogComponent } from '../components/approvedsickleavedetailsdialog/approvedsickleavedetailsdialog.component';
 
 
 @NgModule({
@@ -16,8 +17,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     ReactiveFormsModule
     ],
     declarations: [
-        SickleaveapprovalComponent
-    ]
+        SickleaveapprovalComponent,ApprovedsickleavedetailsdialogComponent
+    ],
+    entryComponents : [SickleaveapprovalComponent,ApprovedsickleavedetailsdialogComponent]
 })
 export class sickleaveapprovalModule {
     

@@ -131,8 +131,15 @@
 	<div style="border:0px solid #ececec;clear:both;"></div>
 
 	<table width="100%" class="noborder" border="0" align="" class="smallFont" border="2">
+	<tr>
+			<td width="20%" class="boldstyle"></td>
+			
+			<td width="30%" align="right"><span style="font-family: 'Open Sans',helvetica,arial,sans-serif; font-size:9px; ">Admission Date :<?php echo date("d/m/Y", strtotime($prescData['patienthealthProfileData']->admission_dt)); ?></span></td>
+			
+		</tr>
 		<tr>
 			<td width="20%" class="boldstyle">Patient:<?php echo $prescData['patienthealthProfileData']->patient_name; ?> <?php //echo $prescData['patienthealthProfileData']->patient_code; ?></td>
+			
 			<td width="30%" align="right"><span style="font-family: 'Open Sans',helvetica,arial,sans-serif; font-size:9px; ">Discharge Date :<?php echo date("d/m/Y", strtotime($prescData['patienthealthProfileData']->discharge_date)); ?></span></td>
 			
 		</tr>
