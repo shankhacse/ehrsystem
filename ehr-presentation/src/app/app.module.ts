@@ -28,7 +28,8 @@ import { AppMaterialModule } from './app-material/app-material.module';
 import { AutofocusDirective } from './autofocus.directive';
 import { ExcelService } from './service/excel.service';
 
-
+import { NgxBarcodeModule } from 'ngx-barcode';
+import {NgxPrintModule} from 'ngx-print';
 
 
 
@@ -52,7 +53,9 @@ import { ExcelService } from './service/excel.service';
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    MatMenuModule
+    MatMenuModule,
+    NgxBarcodeModule,
+    NgxPrintModule
   ],
   providers: [GlobalconstantService,AuthService,ErrorHandler,ExcelService,
       {

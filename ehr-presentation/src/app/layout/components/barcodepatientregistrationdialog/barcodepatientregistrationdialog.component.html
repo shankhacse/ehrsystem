@@ -1,0 +1,42 @@
+<div id="barcodePatienRegistartionDialogPage">
+
+  <div style="float: right;cursor: pointer;" (click)="onNoClick()">
+    <mat-icon>clear</mat-icon>
+  </div>
+
+  <h5 mat-dialog-title>Scan Barcode & Register Patient</h5>
+
+  <form [formGroup]="patientbarCodeRegForm" novalidate (ngSubmit)="onSubmit()">
+
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+        <div fxFlex="96%">
+          <mat-form-field class="fullwidthinp">
+            <input matInput placeholder="* Barcode value" formControlName="patientCode" autocomplete="off"  />
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+       
+
+        <div fxFlex="96%">
+          * Reg. Type&nbsp;&nbsp;<br><br>
+          <mat-radio-group  formControlName="regType" required >
+              <mat-radio-button value="CONSULTATION" > General Consultation&nbsp;&nbsp; </mat-radio-button><br><br>
+              <mat-radio-button value="PREGNANCY" > Pregnancy&nbsp;&nbsp; </mat-radio-button><br><br>
+              <mat-radio-button value="VACCINATION" > Vaccination </mat-radio-button><br>
+          </mat-radio-group>
+        </div>
+      </div>
+
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center" style="margin-top:2%;">
+        <button class="mat-raised-button mat-primary" type="submit" [disabled]="!patientbarCodeRegForm.valid" >Register</button>
+      </div>
+
+      
+  
+  </form>
+
+
+</div>

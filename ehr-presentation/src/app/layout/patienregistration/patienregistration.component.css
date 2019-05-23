@@ -116,6 +116,16 @@
     background: #73940e;
    /* border-radius: 10px; */
   }
+
+  #patientRegPage .biometricsearch img {
+    width: 42%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin: 11% auto;
+    margin-bottom: 2%;
+  }
+
   #patientRegPage .addmorepatient{
     background: #de4040;
   }

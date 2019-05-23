@@ -1,0 +1,34 @@
+#patientAllBarCodePrint{
+    padding: 1%;
+}
+
+.customcontainer{
+    width: auto;
+    font-size: 0.8rem;
+}
+
+.customcontainer .cuscolumn{
+
+
+    border: 1px solid #cfcfcf;
+    margin: 5px;
+    padding: 1%;
+    background: #FFF;
+    float:none;
+    display: inline-block;
+    width: 90% !important;
+}
+
+.cuscolumn table{
+    width:100%;
+}
+
+.spinner-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    padding: 3%;
+    text-transform: capitalize;
+    letter-spacing: 4px;
+}

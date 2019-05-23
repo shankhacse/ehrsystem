@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 
 
+
 const routes: Routes = [ 
     {
         path: '',
@@ -26,6 +27,7 @@ const routes: Routes = [
             { path:'diagnosislist', loadChildren:'./admin/diagonosis/diagonosislist/diagonosislist.module#DiagonosislistModule'},
             { path:'excel', loadChildren:'./admin/importexcel/importexcel.module#ImportexcelModule'},
             { path:'patientlist', loadChildren:'./admin/patient/patientlist/patientlist.module#PatientlistModule'},
+            { path:'barcodelist', loadChildren:'./admin/patient/patientbarcodeprint/patientbarcodeprint.module#PatientbarcodeprintModule'},
             { path:'symptoms', loadChildren:'./admin/symptoms/symptoms/symptoms.module#SymptomsModule'},
             { path:'symptomslist', loadChildren:'./admin/symptoms/symptomslist/symptomslist.module#SymptomslistModule'},
             { path:'grn', loadChildren:'./admin/importgrn/importgrn.module#ImportgrnModule'},
@@ -59,6 +61,9 @@ const routes: Routes = [
             { path:'medicinetype', loadChildren:'./admin/medicinetype/medicinetype/medicinetype.module#MedicinetypeModule'},
             { path:'medicinetypelist', loadChildren:'./admin/medicinetype/medicinetypelist/medicinetypelist.module#MedicinetypelistModule'},
             
+            
+
+
         ]
     }
 ];

@@ -9,6 +9,8 @@ import { SuccessdialogComponent } from '../../../components/successdialog/succes
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 import { take, takeUntil } from 'rxjs/operators';
+import { PatientbarcodedialogComponent } from '../../components/patientbarcodedialog/patientbarcodedialog.component';
+
 
 
 
@@ -56,12 +58,16 @@ export class PatientlistComponent implements OnInit {
     'division_number',
     'line_number',
     'house_no',
-    
+    'barcode'
   ];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+
+
+
+  barCodeButtonEnable:boolean = false;
 
   constructor(
     private router:Router,
@@ -140,5 +146,54 @@ export class PatientlistComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+
+
+  patientBarcodeDialog(rowdata) {
+    console.log(rowdata);
+    this.openPatientBarCodeDialog(rowdata);
+  }
+
+
+  openPatientBarCodeDialog(rowdata) {
+    const dialogRef = this.dialog.open(PatientbarcodedialogComponent, {
+      width: '300px',
+      //height:'550px',
+      disableClose: true,
+      data:  rowdata
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+
+      /*
+      var serachDate=this.searchForm.get("searchFromDateCtrl").value;
+      if(result.from == "Save") {
+        this.openSnackBar("Sick leave applied successfully");
+        this.getTodaysRegForDocByRegType("CONSULTATION","N",serachDate);
+        this.getTodaysRegByRegTypeCount("CONSULTATION","N",serachDate);
+        this.getTodaysAttendentVisitedCount('Y',serachDate);
+      }
+      */
+
+     
+    });
+  }
+
+
+  getAllBarcodes(){
+    this.router.navigate(['panel/barcodelist']);
+  }
+
+  patientTypeChange(val){
+   if(val==1){
+     // 1 == Permament Patient
+     this.barCodeButtonEnable = true;
+   }
+   else{
+    this.barCodeButtonEnable = false;
+   }
+
+  }
+
 
 }

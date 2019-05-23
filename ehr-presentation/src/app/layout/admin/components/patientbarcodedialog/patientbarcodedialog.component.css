@@ -1,0 +1,11 @@
+#patientBarCodeBlock {
+    font-size: 0.8rem;
+}
+.print_section {
+    border: 1px solid #c7c7c7;
+    padding: 3%;
+    border-radius: 6px;
+}
+@media print{
+    .doNotPrint{display:none !important;}
+  }

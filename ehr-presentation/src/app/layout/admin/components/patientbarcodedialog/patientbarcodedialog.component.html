@@ -1,0 +1,53 @@
+<div id="patientBarCodeBlock">
+
+    <div id="print-section" class="print_section">
+
+    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+       <div fxFlex="22%" class="patientbarcodeinfoHead">Name</div>
+       <div fxFlex="78%">{{patientName}}</div>
+    </div>
+
+    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+      <div fxFlex="22%">DOB</div>
+      <div fxFlex="78%">{{patientDOB}}</div>
+    </div>
+
+    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+        <div fxFlex="22%">Gender</div>
+        <div fxFlex="78%">Male</div>
+    </div>
+
+    
+    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+        <div fxFlex="22%">Challan</div>
+        <div fxFlex="78%">E11</div>
+    </div>
+
+    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+        <div fxFlex="22%">Division</div>
+        <div fxFlex="78%">E221</div>
+    </div>
+
+    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="1.5%" fxLayoutAlign="center">
+      
+        <div fxFlex="100%">
+            <ngx-barcode 
+            [bc-value]="patientbarCode" 
+            [bc-format]="format" 
+            [bc-display-value]="true"
+            >
+            </ngx-barcode>
+        </div>
+    </div>
+
+    </div>
+
+
+
+
+
+    <div mat-dialog-actions style="display:block;text-align: center;">
+      <button mat-raised-button color="warn" class="doNotPrint" (click)="closeDialog()" type="button"><mat-icon>cancel</mat-icon> Cancel</button>
+      <button mat-raised-button color="primary" class="doNotPrint" printSectionId="print-section" ngxPrint><mat-icon>save</mat-icon> Print</button>
+    </div>
+</div>

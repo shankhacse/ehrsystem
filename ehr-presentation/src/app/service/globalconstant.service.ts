@@ -13,12 +13,12 @@ export class GlobalconstantService {
   //private APIURL = "http://127.0.0.1/ehrsystem/ehrsrvc/";
  //  private APIURL = "http://127.0.0.1:8088/ehrsystem/ehrsrvc/";
   // private APIURL = "http://127.0.0.1/ehr/ehrsrvc/";
- // private APIURL =  "http://13.234.41.243/devehrsystem/ehrsrvc/";
+  private APIURL =  "http://13.234.41.243/devehrsystem/ehrsrvc/";
   //private APIURL = "http://medewise.com/medehr/";
   // private APIURL = "http://softhought.com/medewise/ehrsrvc/";
 
-  private APIURL =  "http://13.234.41.243/ehr/ehrsrvc/";
-  //private APIURL = "http://127.0.0.1/ehrsystem/ehrsrvc/";
+  //private APIURL =  "http://13.234.41.243/ehr/ehrsrvc/";
+ // private APIURL = "http://127.0.0.1/ehrsystem/ehrsrvc/";
   private APIKEY = "24ecdccb1258eaacfd441e012ac034392403c692";
 
   // URL INFO
@@ -277,6 +277,9 @@ public lineListMaster_URL = this.APIURL+"master/getLineMaster";
 /*  -------------------------------- 8 February 2019 -----------------------------------------  */
 public getmasterPatientBydr_URL = this.APIURL+"patient/getAllPatientByDrType";
 
+
+
+public verifyAndRegisterPatient_URL = this.APIURL+"registration/verifyAndRegisterPatient";
 
   getApiURL(){
     return this.APIURL;

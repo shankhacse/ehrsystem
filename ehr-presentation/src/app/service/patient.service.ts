@@ -332,4 +332,19 @@ export class PatientService {
         });
     }
    
+
+
+
+    verifyAndRegisterPatient(formValue){
+    
+      let myData = JSON.stringify({values:formValue});
+       return new Promise(resolve => {
+          this.http.post(this.global.verifyAndRegisterPatient_URL,myData).subscribe(data => {
+            resolve(data);
+           
+          }, err => {
+            console.log(err);
+          });
+        });
+    }
 }

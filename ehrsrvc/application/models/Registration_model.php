@@ -615,6 +615,68 @@ class Registration_model extends CI_Model{
             }
         return $resultdata;
     }
+	
+	
+	
+	/**
+     * @name registerPatient
+     * @author Mithilesh Routh
+     * @return $patient_data
+     * @desc register patient datas
+     */
+	 
+    public function registerPatientByBarCode($request,$hospital_id)
+    {
+       	try{
+		
+            $this->db->trans_begin();
+			$reg_data = [];
+			$regdate = date("Y-m-d H:i:s");
+			
+			$formvalue = $request->values;
+			$pcode = $formvalue->patientCode;
+			$regType = $formvalue->regType;
+
+			$patientid = $this->patient->getPatientByCode($pcode)->patient_id;
+			
+			$reg_data = [
+					"hospital_id" => $hospital_id,
+					"date_of_registration" => $regdate,
+					"patient_id" => (trim(htmlspecialchars($patientid))),
+					"registration_type" => trim(htmlspecialchars($regType)),
+					"served_flag" => "N",
+					"servertag" => getServerTag()
+				];
+			
+			$this->db->insert('registration', $reg_data);
+			$inserted_id = $this->db->insert_id();
+	
+
+
+			// Update Table 
+			$where = [
+				"registration_id" => $inserted_id,
+				"servertag" => getServerTag(),
+				"hospital_id" => $hospital_id
+			];
+			$upda_data = [
+				"unique_id" => generateUniqRowID($inserted_id,getServerTag(),$hospital_id)
+			];
+			$this->commondatamodel->updateSingleTableData('registration',$upda_data,$where);
+
+			
+			if($this->db->trans_status() === FALSE) {
+                $this->db->trans_rollback();
+				return false;
+            } else {
+				$this->db->trans_commit();
+                return true;
+            }
+        } 
+		catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+    }
 
 
 }// end of class

@@ -6,6 +6,7 @@ class Registration extends CI_Controller{
         $this->load->model("User_model", "user", TRUE);
         $this->load->model("Authorization_model", "authorisation", TRUE);
 		$this->load->model("Registration_model", "registration", TRUE);
+		$this->load->model("Patient_model", "patient", TRUE);
 
         
     }
@@ -480,6 +481,109 @@ exit;
 	exit;
         
       
+    }
+	
+	
+	
+	public function verifyAndRegisterPatient()
+    {
+        CUSTOMHEADER::getCustomHeader();
+        $json_response = [];
+        $headers = $this->input->request_headers();
+        
+        if(CUSTOMHEADER::getAuthotoken($headers)){$client_token = CUSTOMHEADER::getAuthotoken($headers);}else{$client_token = "";}
+        
+		$server_token="";
+        if($client_token!=""){
+            $server_token = $this->authorisation->getToken($client_token->jti)->web_token;
+        }
+       
+        if($client_token!=""){
+        if($client_token->jti==$server_token ){
+			
+			$token_data = $client_token->data;
+			$hospital_id = $token_data->hospital_id;
+		
+            $postdata = file_get_contents("php://input");
+			$request = json_decode($postdata);
+			
+			$formRequest = $request->values;
+			$patient_code = $formRequest->patientCode;
+			
+			$wherePatient = [
+				"patients.patient_code" => $patient_code,
+				"patients.currant_status" => "Active"
+			];
+			
+			
+			$isDataPatientCodeExist = $this->commondatamodel->checkExistanceData('patients',$wherePatient);
+			
+			if($isDataPatientCodeExist > 0){
+					
+					$regdate = date("Y-m-d");
+					$patientid = $this->patient->getPatientByCode($patient_code)->patient_id;
+					
+					$whereReg = [
+						"registration.hospital_id" => $hospital_id,
+						"DATE_FORMAT(registration.date_of_registration,'%Y-%m-%d')" => $regdate,
+						"registration.patient_id" => $patientid,
+						"registration.is_deleted" => "N"
+					];
+				
+					$isAlreadyRegistered = $this->commondatamodel->checkExistanceData('registration',$whereReg);
+					
+					if($isAlreadyRegistered>0){
+						$json_response = [
+							"msg_status"=>HTTP_DUPLICATE,
+							"msg_data"=>"Patient already registered for today",
+						];
+					}
+					else{
+								$register = $this->registration->registerPatientByBarCode($request,$hospital_id);
+								if($register){
+									$json_response = [
+										"msg_status"=>HTTP_SUCCESS,
+										"msg_data"=>"Registration has been done successfully",
+										"patientdata"=>$this->patient->getPatientByCode($patient_code)
+									];
+								}
+								else{
+									$json_response = [
+										"msg_status"=>HTTP_SUCCESS,
+										"msg_data"=>"There is some problem.Please try again",
+									];
+								}
+					}
+					
+					
+				
+
+			}
+			else{
+				// Patient Does not Exist
+				$json_response = [
+							"msg_status"=>HTTP_ERROR,
+							"msg_data"=>"Patient doesn't exist or Terminated",
+						];
+			
+			}
+			
+		}else{
+            $json_response = [
+                                "msg_status"=>HTTP_AUTH_FAIL,
+                                "msg_data"=>"Authentication fail."
+            ];
+        }
+        }else{
+             $json_response = [
+                                "msg_status"=>HTTP_AUTH_FAIL,
+                                "msg_data"=>"Authentication fail."
+            ];
+
+        }
+        header('Content-Type: application/json');
+		echo json_encode( $json_response );
+		exit;
     }
 
 

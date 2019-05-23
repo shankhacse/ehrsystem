@@ -906,6 +906,8 @@ class Patient_model extends CI_Model
             ->from("patients")
             ->join("patient_type", "patient_type.patient_type_id = patients.patient_type_id", "LEFT")
             ->where($where)
+			->order_by('patients.patient_name','ASC')
+			//->limit(90) // temporary need to uncomment after test
             ->get();
 
         if ($query->num_rows() > 0) {

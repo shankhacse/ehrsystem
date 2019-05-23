@@ -2,6 +2,7 @@
 <div id="symptomsPage">
 
 
+
   <div class="wraper-container blockContent">
     <div class="search-container">
        
@@ -33,14 +34,14 @@
 
                       <div fxFlex="90%">
                         <mat-form-field class="fullwidthinp">
-                          <mat-select placeholder="Patient Type" formControlName="patientTypeCtrl" >
+                          <mat-select placeholder="Patient Type" formControlName="patientTypeCtrl" (selectionChange)="patientTypeChange($event.value)">
                               <mat-option *ngFor="let patients of patientsTypeList[0]" [value]="patients.patient_type_id">
                                   {{patients.dr_type}}
                               </mat-option>
                           </mat-select>
                       </mat-form-field>
                     </div>
-          
+                   
                      
                   </div>
 
@@ -79,6 +80,10 @@
 
 
 
+
+
+
+
 <div *ngIf="isPageloded" id="symptomslistPage">
 
   <div class="wraper-container">
@@ -95,7 +100,13 @@
                                 <div fxFlex="75%">
                                   <mat-toolbar> 
                                     <h4 class="form_block_title">Patient List</h4>
-                            </mat-toolbar>      
+                                    &nbsp;
+                                    &nbsp;
+                                    <!-- <button mat-flat-button color="primary" class="phrmcybtn" type="button" (click)="getAllBarcodes()" > All Barcodes</button> -->
+                                    <!-- <a href="panel/barcodelist/" color="primary" class="phrmcybtn" (click)="getAllBarcodes()" > All Barcodes1</a> -->
+                                    <a mat-flat-button color="primary" (click)="getAllBarcodes()" class="phrmcybtn" *ngIf="barCodeButtonEnable">Generate All Barcode</a>
+                                    <!-- <a [routerLink]="['panel/barcodelist/', {'paramKey': 'sdasd'}]" color="primary" class="phrmcybtn" > All Barcodes1</a> -->
+                                  </mat-toolbar>      
                                 </div>
                                 <div fxFlex="20%">
                                     <mat-form-field class="fullwidthinp" style="margin-right: 15px;">
@@ -189,6 +200,16 @@
                               <td mat-cell *matCellDef="let row">{{row.house_no}} </td>
                             </ng-container>
 
+                            <ng-container matColumnDef="barcode">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header style="text-align:right;width:7%;">Barcode</th>
+                                <td mat-cell *matCellDef="let row">
+                                 
+                                  <button mat-raised-button  (click)="patientBarcodeDialog(row)" *ngIf="barCodeButtonEnable" style="width:20%;float:right;border-radius: 142px;">
+                                     <img src="assets/barcode.jpg" style="width:70%;" />
+                                  </button>
+                                </td>
+                              </ng-container>
+
                        
 
                        
@@ -214,4 +235,6 @@
 
 
 </div>
+
+<!-- bar Code Experiment -->
 

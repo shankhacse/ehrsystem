@@ -1,0 +1,123 @@
+<div id="patientAllBarCodePrint">
+
+
+    <div mat-dialog-actions style="display:block;text-align: center;margin-bottom: 2%;">
+        <!-- <button mat-raised-button color="warn" class="doNotPrint" (click)="closeDialog()" type="button"><mat-icon>cancel</mat-icon> Cancel</button> -->
+        <a mat-raised-button color="primary" class="doNotPrint" routerLink="/panel/patientlist" style="margin-right: 24px;"><mat-icon>chevron_left</mat-icon> Back</a>
+        <button mat-raised-button color="primary" class="doNotPrint" printSectionId="print_section" ngxPrint><mat-icon>save</mat-icon> Print</button>
+   </div>
+
+
+    <div class="spinner-wrapper" *ngIf = "!isBarCodeLoaded" >
+        <mat-spinner [diameter]="42"></mat-spinner> <span>&nbsp;&nbsp;Please Wait Barcode Generating ...</span>
+    </div>
+
+  <div id="print_section" *ngIf="isBarCodeLoaded">
+    <div class="customcontainer">
+        <div class="cuscolumn" *ngFor="let patient of patientsList[0]; let i=index;" style="width:90% !important;margin:5px; font-size: 0.8rem;border:1px solid #323232;">
+
+            <table style="width:100% !important;">
+              <tr>
+                <td>
+
+                    <table style="width:100% !important;">
+                        <tr>
+                          <td width="100">Name</td>
+                          <td>{{patient.patient_name}}</td>
+                        </tr>
+            
+                        <tr>
+                            <td width="100">DOB</td>
+                            <td>{{patient.dateofbirth}}</td>
+                        </tr>
+            
+                        <tr>
+                            <td width="100">Gender</td>
+                            <td>{{patient.gender}}</td>
+                        </tr>
+            
+                        <tr>
+                            <td width="100">Challan</td>
+                            <td>{{patient.challan_number}}</td>
+                        </tr>
+                        <tr>
+                            <td width="100">Division</td>
+                            <td>{{patient.division_number}}</td>
+                        </tr>
+            
+                      
+                      </table>
+
+                </td>
+                <td style="text-align:right;">
+                   
+                            <ngx-barcode 
+                            [bc-value]="patient.patient_code" 
+                            [bc-format]="format" 
+                            [bc-display-value]="true"
+                            [bc-height]="height"
+                            >
+                            </ngx-barcode>
+                        
+                </td>
+              </tr>
+            </table>
+
+
+
+            <div *ngIf="i > 0 && i % 7 == 0" style="page-break-after: always;"></div>
+
+
+          <!-- <table>
+
+
+
+            
+            <tr>
+              <td>Name</td>
+              <td>{{patient.patient_name}}</td>
+            </tr>
+
+            <tr>
+                <td>DOB</td>
+                <td>{{patient.dateofbirth}}</td>
+            </tr>
+
+            <tr>
+                <td>Gender</td>
+                <td>{{patient.gender}}</td>
+            </tr>
+
+            <tr>
+                <td>Challan</td>
+                <td>{{patient.challan_number}}</td>
+            </tr>
+            <tr>
+                <td>Division</td>
+                <td>{{patient.division_number}}</td>
+            </tr>
+
+            <tr>
+                
+                <td colspan="2">
+                    <ngx-barcode 
+                    [bc-value]="patient.patient_code" 
+                    [bc-format]="format" 
+                    [bc-display-value]="true"
+                    [bc-height]="height"
+                    >
+                    </ngx-barcode>
+                </td>
+            </tr>
+          </table>  -->
+
+        </div>
+      </div>
+
+
+
+
+        
+     
+  </div>
+</div>

@@ -9,7 +9,9 @@
                         <div class="responsiveBioAddPatient" fxFlex="40%">
                                 <div class="addAndBiometricBlock" style="text-align:right;font-size: 13px;">
     
-                                    <button  mat-flat-button class="" style="background:#699e13;"> <mat-icon >fingerprint</mat-icon> Biometric Scan </button>&nbsp;&nbsp;
+                                    <!-- <button  mat-flat-button class="" style="background:#699e13;"> <mat-icon >fingerprint</mat-icon> Biometric Scan </button> -->
+                                    <button  mat-flat-button class="" style="background:#699e13;"><img src="assets/homebarcode.png" /> Barcode Scan </button>
+                                    &nbsp;&nbsp;
                                     <button  mat-flat-button class=""  (click)="openDialog()" style="background:#f32969;"> <mat-icon >add_circle</mat-icon> Add New Patient </button>
     
                                    <!--
@@ -209,8 +211,12 @@
                     
                       
                         <div class="biometricsearch desktopBioAddPatient" fxFlex="20%"  >
-                            <mat-icon class="reg_big_icon">fingerprint</mat-icon>
-                            <button  mat-flat-button class="center-obj regblockbtn" style="color:#73940e;">Biometric Scan </button>
+                            <!-- <mat-icon class="reg_big_icon">fingerprint</mat-icon>
+                            <button  mat-flat-button class="center-obj regblockbtn" style="color:#73940e;">Biometric Scan </button> -->
+
+                            <img src="assets/homebarcode.png" />
+                            <button  mat-flat-button class="center-obj regblockbtn" style="color:#73940e;" (click)="openBarcodeReg()">Scan Barcode </button>
+
                         </div><!--end of biometric search-->
                         <div class="addmorepatient desktopBioAddPatient" fxFlex="20%"  >
                             <mat-icon class="reg_big_icon">add_circle</mat-icon>

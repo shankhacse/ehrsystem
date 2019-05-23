@@ -17,6 +17,8 @@ import { MatSelect, VERSION } from '@angular/material';
 import { isObject } from 'rxjs/internal/util/isObject';
 
 import { ConfirmationdialogComponent } from '../components/confirmationdialog/confirmationdialog.component';
+import { BarcodepatientregistrationdialogComponent } from '../components/barcodepatientregistrationdialog/barcodepatientregistrationdialog.component';
+import { AutofillMonitor } from '@angular/cdk/text-field';
 
 /*
 
@@ -1082,6 +1084,72 @@ onSearchBydate() {
   this.getRegistrationBydate() ;
  
 } 
+
+
+
+/**
+ * @date 22.05.2019
+ * @By Mithilesh
+ */
+
+
+openBarcodeReg() {
+  const dialogRef = this.dialog.open(BarcodepatientregistrationdialogComponent, {
+    width: '350px',
+   // height:'500px',
+    disableClose: true,
+    data: ''
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+  
+
+
+      console.log(result);
+
+     if(result.from=="Save"){
+      this.displayedColSecond = [
+        'reg-action' ,
+      //  'reg-type',
+        'reg-patientid' ,
+       /* 'reg-patientname' ,
+        'reg-patientdob' ,
+        'reg-patientgender' , */
+        'reg-patientdivision' ,
+        'reg-patientchallan' ,
+        'reg-patientline' ,
+         'reg-patientmobile' ,
+        /* 'reg-patientaadhar' */
+        ];
+    this.enableregister = true;
+    this.displayp = 'table-row';
+
+  
+     
+      this.tblPatientID = result.patientcode;
+      this.tblPatientName = result.patientname;
+      this.tblPatientDOB = result.dob;
+      this.tblPatientGender = result.gender;
+      this.tblPatientDivision = result.division;
+      this.tblPatientChallan = result.challan;
+      this.tblPatientLine = result.line;
+      this.tblPatientMbl = result.mobile;
+      this.tblPatientAadhar = result.aadhar;
+
+
+      this.patientTblRegForm.patchValue({
+        regpcodeCtrl: result.patientcode,
+        registrationTypeCtrl:result.regType
+      });
+      this.registerPtc();
+    }
+
+ 
+
+  });
+}
+
+
 
   
 
