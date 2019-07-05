@@ -157,9 +157,9 @@ export class PatientService {
     }
 
 
-    checkIsRegisteredToday(formValue,serachtype){
+    async checkIsRegisteredToday(formValue,serachtype){
       let myData = JSON.stringify({values:formValue,stype:serachtype});
-      return new Promise(resolve => {
+      return await new Promise(resolve => {
          this.http.post(this.global.isregisterdToday_URL,myData).subscribe(data => {
            resolve(data);
           

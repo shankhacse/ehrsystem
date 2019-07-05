@@ -19,6 +19,7 @@ import { isObject } from 'rxjs/internal/util/isObject';
 import { ConfirmationdialogComponent } from '../components/confirmationdialog/confirmationdialog.component';
 import { BarcodepatientregistrationdialogComponent } from '../components/barcodepatientregistrationdialog/barcodepatientregistrationdialog.component';
 import { AutofillMonitor } from '@angular/cdk/text-field';
+import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 
 /*
 
@@ -170,7 +171,7 @@ export class PatienregistrationComponent implements OnInit ,OnDestroy {
   
   validFormErr:string = "";
 
-  constructor(private zone:NgZone,private patientService:PatientService,private _global:GlobalconstantService,public dialog: MatDialog,private registerService: RegistrationService ) {
+  constructor(private zone:NgZone,private patientService:PatientService,private _global:GlobalconstantService,public dialog: MatDialog,private registerService: RegistrationService, public snackBar: MatSnackBar ) {
     
 /*
     this.filteredStates = this.stateCtrl.valueChanges
@@ -523,22 +524,31 @@ displayFn(id) {
 
 
 searchPatient(){
+  this.searchLoader = true;
+  console.log("clicked times");
   let response;
   let isExist = false;
 
   let searchData;
   let searchType;
-  if ( this.enableAdvancesearch ) {
-    this.validateAdvanceSearch();
-     searchData = this.FieldsearchForm.value;
-     searchType = 'ADV';
-  } else {
 
-    this.validateBasicSearch();
-    searchData = this.IDsearchForm.value;
-    searchType = 'BASIC';
-    
-  }
+  /*
+    Commented on 02.07.2019 
+    if ( this.enableAdvancesearch ) {
+      this.validateAdvanceSearch();
+      searchData = this.FieldsearchForm.value;
+      searchType = 'ADV';
+    } else {
+
+      this.validateBasicSearch();
+      searchData = this.IDsearchForm.value;
+      searchType = 'BASIC';
+      
+    }
+  */
+  searchData = this.IDsearchForm.value;
+  searchType = 'BASIC';
+
   if(this.validateOnRegType()){
   this.patientService.checkIsRegisteredToday(searchData,searchType).then(data => {
     response = data;
@@ -546,7 +556,7 @@ searchPatient(){
 
     if(!isExist){
     this.isRegAlreadyDone_Err = false;
-    this.searchLoader = true;
+    
     this.displayp = 'none';
 
     let response;
@@ -555,7 +565,7 @@ searchPatient(){
     this.patientService.searchPatient(searchData, searchType).then(data => {
       
       response = data;
-      this.searchLoader = false;
+     
       if (response.msg_status === 200 && response.patient!="") {
          
          //this.registerButtonActive = true;
@@ -611,7 +621,7 @@ searchPatient(){
 
           this.enableregister = true;
           this.registerPtc();
-   
+          this.searchLoader = false;
        });
         
        } 
@@ -622,6 +632,7 @@ searchPatient(){
       });
     }
     else{
+      this.searchLoader = false;
       this.displayp = 'none';
       this.isRegAlreadyDone_Err = true;
     }
@@ -632,6 +643,9 @@ searchPatient(){
     });
 
     
+  }
+  else{
+    this.searchLoader = false;
   }// end of validation
  
  }
@@ -744,8 +758,23 @@ searchPatient(){
     });
   
     dialogRef.afterClosed().subscribe(result => {
-       this.todaysregistrationList = [];
+      if(result.from=="Cancel"){
+        console.log("Cancel Delete Registration");
+      }
+      else if(result.from=="Save"){
+             this.todaysregistrationList = [];
+             this.getTodaysRegistration();
+      }
+      else if(result.from=="EXIST"){
+        this.snackBar.open(result.msg, "Error", {
+          duration: 5000,
+          panelClass: ['red-snackbar']
+        });
+        this.todaysregistrationList = [];
         this.getTodaysRegistration();
+         // this.openSnackBar(result.msg);
+      }
+    
     });
   }
 
@@ -1151,6 +1180,11 @@ openBarcodeReg() {
 
 
 
-  
+openSnackBar(msg) {
+  let config = new MatSnackBarConfig();
+  config.duration = 3000;
+  this.snackBar.open(msg, "", config);
+ 
+} 
 
 }// end of class

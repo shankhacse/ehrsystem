@@ -179,6 +179,8 @@
                                  <!-- <mat-icon>arrow_forward_ios</mat-icon>  -->
                             </button>
 
+                           
+
                             <mat-spinner [diameter]="40" *ngIf="searchLoader" class="center-obj"></mat-spinner>
                         </div>
 
@@ -211,11 +213,12 @@
                     
                       
                         <div class="biometricsearch desktopBioAddPatient" fxFlex="20%"  >
-                            <!-- <mat-icon class="reg_big_icon">fingerprint</mat-icon>
-                            <button  mat-flat-button class="center-obj regblockbtn" style="color:#73940e;">Biometric Scan </button> -->
+                            <mat-icon class="reg_big_icon">fingerprint</mat-icon>
+                            <button  mat-flat-button class="center-obj regblockbtn" style="color:#73940e;">Biometric Scan </button>
 
-                            <img src="assets/homebarcode.png" />
-                            <button  mat-flat-button class="center-obj regblockbtn" style="color:#73940e;" (click)="openBarcodeReg()">Scan Barcode </button>
+                            <!-- will open if bar code implemented
+                                 <img src="assets/homebarcode.png" />
+                            <button  mat-flat-button class="center-obj regblockbtn" style="color:#73940e;" (click)="openBarcodeReg()">Scan Barcode </button> -->
 
                         </div><!--end of biometric search-->
                         <div class="addmorepatient desktopBioAddPatient" fxFlex="20%"  >
@@ -386,7 +389,7 @@
 
                                     <div class="desktopAction">
                                         <button mat-flat-button [ngClass]="{'avoid_clicks' : this.disableClick}" class="success custmbtn"><mat-icon class="matcustomicon">done</mat-icon>Registered</button>&nbsp;
-                                        <button mat-flat-button mat-mini-fab [ngClass]="{'avoid_clicks' : this.disableClick}" color="warn" (click)="deleteRegistration(row.registration_id)"  *ngIf="row.allowdelete === 'Y'" ><mat-icon>delete</mat-icon></button>
+                                        <button mat-flat-button mat-mini-fab [ngClass]="{'avoid_clicks' : this.disableClick}" color="warn" (click)="deleteRegistration(row.reguniqid)"  *ngIf="row.allowdelete === 'Y'" ><mat-icon>delete</mat-icon></button>
                                     </div>
                                     
                                     <!-- Enable on responsive mode -->

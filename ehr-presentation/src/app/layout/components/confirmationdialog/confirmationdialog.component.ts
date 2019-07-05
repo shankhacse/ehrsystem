@@ -45,13 +45,18 @@ export class ConfirmationdialogComponent implements OnInit {
   */
 
  cancelDialog() {
+   
+  let data = {
+    "from" : "Cancel",
+    "msg" : ""
+  }
   this.dialogRef.close();
  }
 
   deleteFromTable(delid,column,tblinfo) {
 
-    console.log("Delete ID "+delid);
-    console.log("Delete ID "+tblinfo);
+    //console.log("Delete ID "+delid);
+    //console.log("Delete ID "+tblinfo);
 
 
 
@@ -59,17 +64,31 @@ export class ConfirmationdialogComponent implements OnInit {
     let response;
     this.commonService.deleteRecords(delid,column,tblinfo).then(data => {
       response = data;
-     
+      
+      /*
+      console.log("********");
+      console.log(response);
+      console.log("********");
+      */
+
       if(response.msg_status==200) {
         
 
         let data = {
           "from" : "Save",
-           
-          }
-          this.dialogRef.close(data);
+          "msg" : ""
+        }
+        this.dialogRef.close(data);
 
 
+      }
+      else if(response.msg_status==222 && response.msg_data=="EXIST") {
+
+        let data = {
+          "from" : "EXIST",
+          "msg" : "Can not delete this record due to prescription done against this registration",
+        }
+        this.dialogRef.close(data);
       }
       else{
       

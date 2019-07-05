@@ -209,14 +209,28 @@ export class SickleaveapprovalComponent implements OnInit {
     }
     this.registrationService.sickApprove(rowid,sickLeaveApprovalStatus).then(
       data=>{
-        response=data;
-              if(response.result==1){
+              response=data;
+              console.log("/*/*/*/*/*/*");
+              console.log(response);
+              console.log("/*/*/*/*/*/*-------*/*/*/-*//-/-*//-");
+
+              if(response.msg_status == 200){
                //this.getSickApproveList();
               // this.getSickLeaveApproveCount();
 
                this.getSickApproveListByDateRange(this.SearchForm.value);
                this.getSickLeaveApproveCountByDateRange(this.SearchForm.value);
               }
+              else if(response.msg_status == 222){
+                this.snackBar.open("Approved status already changed.","Error", {
+                  duration: 5000,
+                  panelClass: ['red-snackbar']
+                });
+                
+                this.getSickApproveListByDateRange(this.SearchForm.value);
+                this.getSickLeaveApproveCountByDateRange(this.SearchForm.value);
+              }
+
       },
       error=>{
         console.log("Error in sick approve update");

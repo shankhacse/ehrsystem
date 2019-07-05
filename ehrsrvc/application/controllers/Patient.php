@@ -867,23 +867,43 @@ class Patient extends CI_Controller{
                 $request = json_decode($postdata);
                 $id = $request->rowid;
                 $status = $request->sick_leave_apprv;
-                $updateData = $this->patient->updateSickApprovalStatus($id, $status ,$userid);
+				
+				$whereDuplicate=[
+					"patient_sickleave_detail.unique_id" => $id,
+					"patient_sickleave_detail.is_approved" => $status
+				];
+				
+				$isAlreadyDone = $this->commondatamodel->duplicateValueCheck('patient_sickleave_detail',$whereDuplicate);
+				
+				if($isAlreadyDone == FALSE){
+					$updateData = $this->patient->updateSickApprovalStatus($id, $status ,$userid);
+					if ($updateData) {
+						$json_response = [
+							"msg_status" => HTTP_SUCCESS,
+							"msg_data" => "Update success",
+							"result" => 1
+						];
+					}
+					else {
+						$json_response = [
+							"msg_status" => HTTP_FAIL,
+							"msg_data" => "Update error",
+							"result" => 0
+						];
+					}
+				}
+				else{
+					$json_response = [
+						"msg_status"=>HTTP_DUPLICATE,
+						"msg_data"=>"EXIST"
+					];
+				}
+				
+                
 
 
 
-                if ($updateData) {
-                    $json_response = [
-                        "msg_status" => HTTP_SUCCESS,
-                        "msg_data" => "Update success",
-                        "result" => 1
-                    ];
-                } else {
-                    $json_response = [
-                        "msg_status" => HTTP_FAIL,
-                        "msg_data" => "Update error",
-                        "result" => 0
-                    ];
-                }
+               
             } else {
                 $json_response = [
                     "msg_status" => HTTP_AUTH_FAIL,

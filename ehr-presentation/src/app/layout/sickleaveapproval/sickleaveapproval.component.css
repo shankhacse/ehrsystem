@@ -20,3 +20,16 @@
   font-size: 12px !important;
 }
 
+  #sickLeavePage .btn_approval button {
+    font-size: 12px;
+    margin: 8px 20px;
+  }
+
+  .btn_approval .mat-badge-medium.mat-badge-overlap.mat-badge-after .mat-badge-content {
+    right: -33px;
+    padding: 5px 20px;
+    border-radius: 41px;
+    z-index: -1;
+    font-size: 9px !important;
+  }
+

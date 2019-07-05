@@ -421,7 +421,6 @@ export class TodaysregistrationnewComponent implements OnInit {
     });
   
     dialogRef.afterClosed().subscribe(result => {
-
       var serachDate=this.searchForm.get("searchFromDateCtrl").value;
       if(result.from == "Save") {
         this.openSnackBar("Sick leave applied successfully");
@@ -429,6 +428,18 @@ export class TodaysregistrationnewComponent implements OnInit {
         this.getTodaysRegByRegTypeCount("CONSULTATION","N",serachDate);
         this.getTodaysAttendentVisitedCount('Y',serachDate);
       }
+      else if(result.from=="EXIST"){
+
+        this.snackBar.open("Sick leave has been given to the patient.", "Error", {
+          duration: 5000,
+          panelClass: ['red-snackbar']
+        });
+        this.getTodaysRegForDocByRegType("CONSULTATION","N",serachDate);
+        this.getTodaysRegByRegTypeCount("CONSULTATION","N",serachDate);
+        this.getTodaysAttendentVisitedCount('Y',serachDate);
+        // this.openSnackBar("Can not delete .Prescription already done.");
+      }
+
 
      
     });
@@ -438,6 +449,7 @@ export class TodaysregistrationnewComponent implements OnInit {
   openSnackBar(msg) {
     let config = new MatSnackBarConfig();
     config.duration = 3000;
+    
     this.snackBar.open(msg, "", config);
    
   }

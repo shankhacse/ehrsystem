@@ -807,8 +807,14 @@ export class OpdpreprationComponent implements OnInit, OnDestroy {
           this.openDialogWithPdfPreview(presdata.prescription,presdata.healthprfl,'O','CONSULTATION');
 
         }
+        else if(response.msg_status == 222) {
+          this.snackBar.open("Prescription already done.", "Error", {
+            duration: 5000,
+            panelClass: ['red-snackbar']
+          });
+        }
         else{
-       
+          console.log("OPD Saved else");
         }
        },
          error => {

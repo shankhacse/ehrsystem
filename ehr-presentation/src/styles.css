@@ -102,3 +102,11 @@ td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:
   
 
 }
+
+.blue-snackbar {
+    background: #2196F3;
+}
+
+.red-snackbar {
+    background: #F44336;
+}

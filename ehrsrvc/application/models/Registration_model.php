@@ -42,7 +42,8 @@ class Registration_model extends CI_Model{
 									patients.mobile_one,
 									patients.adhar,
 									IF(opd_prescription.id IS NULL, 'Y', 'N') AS allowdelete,
-									registration.registration_type as regtype
+									registration.registration_type as regtype,
+									registration.unique_id AS reguniqid
 								",FALSE)
                          ->from("registration") 
 						 ->join("patients","patients.patient_id = registration.patient_id","INNER")
@@ -175,6 +176,11 @@ class Registration_model extends CI_Model{
 		$regdate = date("Y-m-d");
 		$searchType = $request->stype;
 		$formValue = $request->values;
+		
+		
+		//pre($formValue);
+		
+		
 		/* Closed on 17.01.2019 =   ================================= Because single field serach enable
 		if($searchType=="BASIC"){
 			$pdetail = $formValue->patientID;
@@ -537,7 +543,7 @@ class Registration_model extends CI_Model{
 						 ->where($where)
 						 ->order_by('registration.date_of_registration','DESC')
                          ->get();
-			#echo $this->db->last_query();			
+		//	echo $this->db->last_query();			
 		
         if($query->num_rows()>0) {
             $resultdata=$query->result();

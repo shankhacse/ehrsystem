@@ -33,6 +33,8 @@ export class SickentrydialogComponent implements OnInit {
   bufferValue = 75;
   isEnableProgress = false;
   disableClick;
+
+  isSaveLoaderEnable:boolean = false;
   
 
   constructor(private router:Router,public dialogRef: MatDialogRef<SickentrydialogComponent> , private commonService:CommonService, @Inject(MAT_DIALOG_DATA) public data: any , private symptomdiseaseService:SymptomdiseaseService ) { 
@@ -83,7 +85,7 @@ export class SickentrydialogComponent implements OnInit {
 
 
   closeDialog(): void {
-    let data = {"from":"Close"}
+    let data = {"from":"Close","msg":""}
     this.dialogRef.close(data);
   }
 
@@ -123,36 +125,64 @@ export class SickentrydialogComponent implements OnInit {
 
 
   saveSickLeave() {
+    this.isSaveLoaderEnable=true;
     this.sickValidationError = false;
     this.isEnableProgress = true;
     let response;
     
     if(this.sickDialogEntryForm.get('sickdaysCtrl').value > 0) {
      
-     
-    
         this.symptomdiseaseService.insertToSickLeave(this.sickDialogEntryForm.value).then(data => {
           response = data;
-        if(response.msg_status == 200) {
-          this.isEnableProgress = false;
-          let data = {"from":"Save"}
-          this.dialogRef.close(data);
-        
-        }
-        else{
+          if(response.msg_status == 200) {
             this.isEnableProgress = false;
-          console.log();
-        }
+            let data = {
+              "from":"Save",
+              "msg":""
+            }
+            
+            this.isSaveLoaderEnable = false;
+            this.dialogRef.close(data);
+          
+          }
+          else if(response.msg_status == 222) {
+            console.log(response);
+            let data = {
+              "from": "EXIST",
+              "msg" : "Sick leave has been given to the patient."
+            }
+            
+            this.isSaveLoaderEnable = false;
+            this.dialogRef.close(data);
+             
+          //  this.dialogRef.close(data);
+            //this.dialogRef.close(data);
+            //this.isSaveLoaderEnable = false;
+          }
+          else{
+            let data = {
+              "from": "",
+              "msg" : ""
+            }
+              console.log(response);
+              this.isEnableProgress = false;
+             // this.isSaveLoaderEnable = false;
+              //console.log();
+          }
+            
+            
                 
         },
         error => {
         console.log("There is some error in master data entry dialog...");
+        this.isSaveLoaderEnable = false;
       }); 
     
     }
     else{
       this.isEnableProgress = false;
       this.sickValidationError = true;
+      this.isSaveLoaderEnable = false;
     }
   
 

@@ -726,8 +726,7 @@ class Patient_model extends CI_Model
 
             }else{
                 $updAry = [
-
-                    "patient_sickleave_detail.is_approved" => $status,
+					"patient_sickleave_detail.is_approved" => $status,
                     "patient_sickleave_detail.approved_by" => $userid,
                     "patient_sickleave_detail.approved_on" => NULL
                 ];  
@@ -735,7 +734,7 @@ class Patient_model extends CI_Model
 
            
 
-            $this->db->where("patient_sickleave_detail.id", $id);
+            $this->db->where("patient_sickleave_detail.unique_id", $id);
             $this->db->update("patient_sickleave_detail", $updAry);
 
             if ($this->db->trans_status() === FALSE) {

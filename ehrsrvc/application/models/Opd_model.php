@@ -193,95 +193,105 @@ class Opd_model extends CI_Model{
 				$referalhospital_id = $referalHospital->id;
 			}
 			
-			$opdPrescriptionArry = [
-				"opd_prescription_id" => $opdPrecesptionID, 
-				"registrationid" => $registrationID,
-				"hospital_id" => $hospital_id,
-				"date" => $todaydt,
-				"patient_id" => $patientid,
-				"doctor_id" => $doctor_id,
-				"accidental_approval" => $acc_approval,
-				"symptom_list" => $symptomList,
-				"diagonised_list" => $diagnosisList,
-				"sick_flag" => $sickFlag,
-				"no_of_days_sick" => $noofdaysSick,
-				"ipd_reco_flag" => $ipd_reco,
-				"hospital_rec_flag" => $referal_hospital,
-				"referal_hospital_id" => $referalhospital_id,
-				"keep_in_observation" => $keep_in_observation,
-				"comments" => $comments,
-				"prescription_from" => "CONSULTATION",
-				"servertag" => getServerTag()
+			
+			
+			$whereDuplicate = [
+				"registrationid" => $registrationID
 			];
 			
-			$this->db->insert('opd_prescription', $opdPrescriptionArry); 
-			$opd_precp_id = $this->db->insert_id();
-			$opd_uniq_id = generateUniqRowID($opd_precp_id,getServerTag(),$hospital_id);
+			$isAlreadyInserted = $this->commondatamodel->duplicateValueCheck('opd_prescription',$whereDuplicate);
+			
+			if($isAlreadyInserted == FALSE){
+				
+				$opdPrescriptionArry = [
+					"opd_prescription_id" => $opdPrecesptionID, 
+					"registrationid" => $registrationID,
+					"hospital_id" => $hospital_id,
+					"date" => $todaydt,
+					"patient_id" => $patientid,
+					"doctor_id" => $doctor_id,
+					"accidental_approval" => $acc_approval,
+					"symptom_list" => $symptomList,
+					"diagonised_list" => $diagnosisList,
+					"sick_flag" => $sickFlag,
+					"no_of_days_sick" => $noofdaysSick,
+					"ipd_reco_flag" => $ipd_reco,
+					"hospital_rec_flag" => $referal_hospital,
+					"referal_hospital_id" => $referalhospital_id,
+					"keep_in_observation" => $keep_in_observation,
+					"comments" => $comments,
+					"prescription_from" => "CONSULTATION",
+					"servertag" => getServerTag()
+				];
+				
+				//pre($opdPrescriptionArry);
+				//exit;
+			
+				$this->db->insert('opd_prescription', $opdPrescriptionArry); 
+				$opd_precp_id = $this->db->insert_id();
+				$opd_uniq_id = generateUniqRowID($opd_precp_id,getServerTag(),$hospital_id);
 
-			// Update Table 
-			$whereOpdPresc = [
-				"id" => $opd_precp_id,
-				"servertag" => getServerTag(),
-				"hospital_id" => $hospital_id
-			];
-			$upda_OpdPresc = [
-				"unique_id" => $opd_uniq_id
-			];
+				// Update Table 
+				$whereOpdPresc = [
+					"id" => $opd_precp_id,
+					"servertag" => getServerTag(),
+					"hospital_id" => $hospital_id
+				];
+				$upda_OpdPresc = [
+					"unique_id" => $opd_uniq_id
+				];
 
-			$this->commondatamodel->updateSingleTableData('opd_prescription',$upda_OpdPresc,$whereOpdPresc);
+				$this->commondatamodel->updateSingleTableData('opd_prescription',$upda_OpdPresc,$whereOpdPresc);
 
 		
-			$healthProfileArry = [
-				"patient_id" => $patientid,
-				"date" => $todaydt,
-				"prescription_addmission_id" => $opd_uniq_id,
-				"opd_ipd_flag" => 'O',
-				"pulse" => $pulse,
-				"temp" => $tempratute,
-				"anemia" => $anaemia,
-				"bp" => $bp, // bp systolic
-				"jaundice" => $jaundice,
-				"odema" => $odema,
-				"height" => $height,
-				"weight" => $weight,
-				"bp_diastolic" => $bpdiastolic,
-				"blood_sugar_f" => $sugarFasting,
-				"blood_sugar_pp" => $sugarPP,
-				"blood_sugar_random" => $sugarRandom,
-				"comment" => NULL,
-				"servertag" => getServerTag(),
-				"hospital_id" => $hospital_id
-			];
+				$healthProfileArry = [
+					"patient_id" => $patientid,
+					"date" => $todaydt,
+					"prescription_addmission_id" => $opd_uniq_id,
+					"opd_ipd_flag" => 'O',
+					"pulse" => $pulse,
+					"temp" => $tempratute,
+					"anemia" => $anaemia,
+					"bp" => $bp, // bp systolic
+					"jaundice" => $jaundice,
+					"odema" => $odema,
+					"height" => $height,
+					"weight" => $weight,
+					"bp_diastolic" => $bpdiastolic,
+					"blood_sugar_f" => $sugarFasting,
+					"blood_sugar_pp" => $sugarPP,
+					"blood_sugar_random" => $sugarRandom,
+					"comment" => NULL,
+					"servertag" => getServerTag(),
+					"hospital_id" => $hospital_id
+				];
 			
-			$this->db->insert('patient_health_profile', $healthProfileArry); 
-			$healthprofile_inserted_id = $this->db->insert_id();
-			$health_profile_uniq_id = generateUniqRowID($healthprofile_inserted_id,getServerTag(),$hospital_id);
+				$this->db->insert('patient_health_profile', $healthProfileArry); 
+				$healthprofile_inserted_id = $this->db->insert_id();
+				$health_profile_uniq_id = generateUniqRowID($healthprofile_inserted_id,getServerTag(),$hospital_id);
 
-			// Update Table 
-			$whereHealth= [
-				"patient_health_profile_id" => $healthprofile_inserted_id,
-				"servertag" => getServerTag(),
-				"hospital_id" => $hospital_id
-			];
-			$upda_Health = [
-				"unique_id" => $health_profile_uniq_id
-			];
-			$this->commondatamodel->updateSingleTableData('patient_health_profile',$upda_Health,$whereHealth);
+				// Update Table 
+				$whereHealth= [
+					"patient_health_profile_id" => $healthprofile_inserted_id,
+					"servertag" => getServerTag(),
+					"hospital_id" => $hospital_id
+				];
+				$upda_Health = [
+					"unique_id" => $health_profile_uniq_id
+				];
+				$this->commondatamodel->updateSingleTableData('patient_health_profile',$upda_Health,$whereHealth);
 
+				
+				
+				$medInsert = $this->insertIntoMedicines($hospital_id,$opd_uniq_id,$health_profile_uniq_id,$request->medicines);
+				$testReportinsert = $this->insertIntoTestReports($hospital_id,$opd_uniq_id,$health_profile_uniq_id,$request->reports);
 			
-			
-			$medInsert = $this->insertIntoMedicines($hospital_id,$opd_uniq_id,$health_profile_uniq_id,$request->medicines);
-			$testReportinsert = $this->insertIntoTestReports($hospital_id,$opd_uniq_id,$health_profile_uniq_id,$request->reports);
-			
-
 
 			// Insert Into Sick Leav Approval if sick leave apply
 			if(isset($sickFlag) && $sickFlag=="Y" && $noofdaysSick > 0 ) {
-
 				$insert_patient_sickleave_detail = [];
 				$apply_date = date("Y-m-d");
 					for($i=0;$i<$noofdaysSick;$i++) {
-						
 						$insert_patient_sickleave_detail = [
 							"opd_ipd__id" => $opd_uniq_id,
 							"opd_ipd_flag" => "O",
@@ -309,28 +319,23 @@ class Opd_model extends CI_Model{
 							"unique_id" => generateUniqRowID($sick_inserted_id,getServerTag(),$hospital_id)
 						];
 						$this->commondatamodel->updateSingleTableData('patient_sickleave_detail',$upda_SickLeave,$whereSick);
-					
-
 					}
-
 			}
 
-
-
+				$updArry = [
+					"registration.served_flag" => 'Y',
+				];
+				
+				$whereReg = [
+					"registration.unique_id" => $registrationID,
+					"registration.hospital_id" => $hospital_id,
+				];
+				
+				$this->db->where($whereReg);
+				$this->db->update('registration', $updArry); 
+			}
 			
-			$updArry = [
-				"registration.served_flag" => 'Y',
-			];
 			
-			$whereReg = [
-				"registration.unique_id" => $registrationID,
-				"registration.hospital_id" => $hospital_id,
-			];
-			
-			$this->db->where($whereReg);
-			$this->db->update('registration', $updArry); 
-			
-		
 			if($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();
 				return false;
@@ -396,7 +401,14 @@ class Opd_model extends CI_Model{
 				$referalhospital_id = $referalHospital->hospital_id;
 			}
 			
-			$opdPrescriptionArry = [
+			$whereDuplicate = [
+				"registrationid" => $registrationID
+			];
+			
+			$isAlreadyInserted = $this->commondatamodel->duplicateValueCheck('opd_prescription',$whereDuplicate);
+			
+			if($isAlreadyInserted == FALSE){
+				$opdPrescriptionArry = [
 				"opd_prescription_id" => $opdPrecesptionID, 
 				"registrationid" => $registrationID,
 				"hospital_id" => $hospital_id,
@@ -415,81 +427,84 @@ class Opd_model extends CI_Model{
 				"comments" => $comments,
 				"prescription_from" => $pres_from,
 				"servertag" => getServerTag()
-			];
+				];
 			
-
-			$this->db->insert('opd_prescription', $opdPrescriptionArry); 
-			$opd_precp_id = $this->db->insert_id();
-			$opd_uniq_id = generateUniqRowID($opd_precp_id,getServerTag(),$hospital_id);
-
-			// Update Table 
-			$whereOpdPresc = [
-				"id" => $opd_precp_id,
-				"servertag" => getServerTag(),
-				"hospital_id" => $hospital_id
-			];
-			$upda_OpdPresc = [
-				"unique_id" => $opd_uniq_id
-			];
-
-			$this->commondatamodel->updateSingleTableData('opd_prescription',$upda_OpdPresc,$whereOpdPresc);
 			
-			// Insert Into Sick Leav Approval if sick leave apply
-			if(isset($sickFlag) && $sickFlag=="Y" && $noofdaysSick > 0 ) {
+				//pre($opdPrescriptionArry);
+				//exit;
+				
+				$this->db->insert('opd_prescription', $opdPrescriptionArry); 
+				$opd_precp_id = $this->db->insert_id();
+				$opd_uniq_id = generateUniqRowID($opd_precp_id,getServerTag(),$hospital_id);
+				
+				
+				// Update Table 
+				$whereOpdPresc = [
+					"id" => $opd_precp_id,
+					"servertag" => getServerTag(),
+					"hospital_id" => $hospital_id
+				];
+				$upda_OpdPresc = [
+					"unique_id" => $opd_uniq_id
+				];
 
-				$insert_patient_sickleave_detail = [];
-				$apply_date = date("Y-m-d");
-					for($i=0;$i<$noofdaysSick;$i++) {
+				$this->commondatamodel->updateSingleTableData('opd_prescription',$upda_OpdPresc,$whereOpdPresc);
+				
+				// Insert Into Sick Leav Approval if sick leave apply
+				if(isset($sickFlag) && $sickFlag=="Y" && $noofdaysSick > 0 ) {
+
+					$insert_patient_sickleave_detail = [];
+					$apply_date = date("Y-m-d");
+						for($i=0;$i<$noofdaysSick;$i++) {
+							
+							$insert_patient_sickleave_detail = [
+								"opd_ipd__id" => $opd_uniq_id,
+								"opd_ipd_flag" => "O",
+								"patient_id" => $patientid,
+								"applied_for_date" => $apply_date,
+								"is_approved" => "N",
+								"approved_by" => NULL,
+								"approved_on" => NULL,
+								"servertag" => getServerTag(),
+								"hospital_id" => $hospital_id
+							];
+
+							$this->db->insert('patient_sickleave_detail', $insert_patient_sickleave_detail); 
+							$sick_inserted_id = $this->db->insert_id();
+
+							$apply_date = date('Y-m-d', strtotime("+1 day", strtotime($apply_date)));
+
+							// Update Table 
+							$whereSick = [
+								"id" => $sick_inserted_id,
+								"servertag" => getServerTag(),
+								"hospital_id" => $hospital_id
+							];
+							$upda_SickLeave = [
+								"unique_id" => generateUniqRowID($sick_inserted_id,getServerTag(),$hospital_id)
+							];
+							$this->commondatamodel->updateSingleTableData('patient_sickleave_detail',$upda_SickLeave,$whereSick);
 						
-						$insert_patient_sickleave_detail = [
-							"opd_ipd__id" => $opd_uniq_id,
-							"opd_ipd_flag" => "O",
-							"patient_id" => $patientid,
-							"applied_for_date" => $apply_date,
-							"is_approved" => "N",
-							"approved_by" => NULL,
-							"approved_on" => NULL,
-							"servertag" => getServerTag(),
-							"hospital_id" => $hospital_id
-						];
 
-						$this->db->insert('patient_sickleave_detail', $insert_patient_sickleave_detail); 
-						$sick_inserted_id = $this->db->insert_id();
+						}
 
-						$apply_date = date('Y-m-d', strtotime("+1 day", strtotime($apply_date)));
+				}
 
-						// Update Table 
-						$whereSick = [
-							"id" => $sick_inserted_id,
-							"servertag" => getServerTag(),
-							"hospital_id" => $hospital_id
-						];
-						$upda_SickLeave = [
-							"unique_id" => generateUniqRowID($sick_inserted_id,getServerTag(),$hospital_id)
-						];
-						$this->commondatamodel->updateSingleTableData('patient_sickleave_detail',$upda_SickLeave,$whereSick);
+					$updArry = [
+						"registration.served_flag" => 'Y',
+					];
 					
-
-					}
-
+					$whereReg = [
+						"registration.unique_id" => $registrationID,
+						"registration.hospital_id" => $hospital_id,
+					];
+					
+					$this->db->where($whereReg);
+					$this->db->update('registration', $updArry); 
+			
+			
 			}
-
-
-
 			
-			$updArry = [
-				"registration.served_flag" => 'Y',
-			];
-			
-			$whereReg = [
-				"registration.unique_id" => $registrationID,
-				"registration.hospital_id" => $hospital_id,
-			];
-			
-			$this->db->where($whereReg);
-			$this->db->update('registration', $updArry); 
-			
-		
 			if($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();
 				return false;

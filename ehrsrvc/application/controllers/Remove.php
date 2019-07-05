@@ -21,34 +21,50 @@ class Remove extends CI_Controller{
            
         } 
         if($client_token!=""){
-        if($client_token->jti==$server_token ){
-        
-		$token_data = $client_token->data;
-		$hospital_id = $token_data->hospital_id;
-		
-		$postdata = file_get_contents("php://input");
-		$request = json_decode($postdata);
-		
-		$tableID = $request->tid;
-		$tableColumn = $request->tc;
-		$tableName = $request->from;
-		
-        $resultdata = $this->remove->softlyRemoveRecords($tableID,$tableColumn,$tableName);
-           
-		$json_response = [
-                "msg_status"=>HTTP_SUCCESS,
-                "msg_data"=>"Authentication ok.",
-                "result"=>$resultdata
-        ];
-		
-        }else {
+			if($client_token->jti==$server_token ){
+			
+				$token_data = $client_token->data;
+				$hospital_id = $token_data->hospital_id;
+				
+				$postdata = file_get_contents("php://input");
+				$request = json_decode($postdata);
+				
+				$tableID = $request->tid;
+				$tableColumn = $request->tc;
+				$tableName = $request->from;
+				
+				
+				$whereDuplicate = ["registrationid" => $tableID];
+					
+				$isAlreadyInserted = $this->commondatamodel->duplicateValueCheck('opd_prescription',$whereDuplicate);
+				
+				if($isAlreadyInserted == FALSE) {
+					$resultdata = $this->remove->softlyRemoveRecords($tableID,$tableColumn,$tableName);
+					
+					$json_response = [
+						"msg_status"=>HTTP_SUCCESS,
+						"msg_data"=>"Authentication ok.",
+						"result"=>$resultdata
+					];
+					
+				}
+				else{
+					$json_response = [
+						"msg_status"=>HTTP_DUPLICATE,
+						"msg_data"=>"EXIST",
+						
+					];
+				}
+			}
+			else {
+				$json_response = [
+					"msg_status"=>HTTP_AUTH_FAIL,
+					"msg_data"=>"Authentication fail."
+				];
+			}
+        } 
+		else{
             $json_response = [
-                "msg_status"=>HTTP_AUTH_FAIL,
-                "msg_data"=>"Authentication fail."
-            ];
-        }
-        } else{
-             $json_response = [
                 "msg_status"=>HTTP_AUTH_FAIL,
                 "msg_data"=>"Authentication fail."
             ];

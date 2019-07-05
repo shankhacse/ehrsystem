@@ -50,38 +50,60 @@ class Opd extends CI_Controller{
         }
        
         if($client_token!=""){
-        if($client_token->jti==$server_token ){
+			if($client_token->jti==$server_token ){
+				
+				$token_data = $client_token->data;
+				$hospital_id = $token_data->hospital_id;
+				$doctor_id = $token_data->doctor_id;
 			
-			$token_data = $client_token->data;
-			$hospital_id = $token_data->hospital_id;
-			$doctor_id = $token_data->doctor_id;
-		
-            $postdata = file_get_contents("php://input");
-			$request = json_decode($postdata);
-			
-			
-            $register = $this->opd->insertIntoOPD($request,$hospital_id,$doctor_id);
-			if($register){
-				$json_response = [
-                    "msg_status"=>HTTP_SUCCESS,
-					"msg_data"=>"SUCCESS",
-					"result" => $register
-                ];
+				$postdata = file_get_contents("php://input");
+				$request = json_decode($postdata);
+				
+				$healthPrf = $request->healthprofile;
+				$registrationID = $healthPrf->hdnregistrationID;
+				
+				
+				$whereDuplicate = [
+					"registrationid" => $registrationID
+				];
+				
+				$isAlreadyInserted = $this->commondatamodel->duplicateValueCheck('opd_prescription',$whereDuplicate);
+				
+				if($isAlreadyInserted === FALSE){
+					
+					$register = $this->opd->insertIntoOPD($request,$hospital_id,$doctor_id);
+					if($register){
+						$json_response = [
+								"msg_status"=>HTTP_SUCCESS,
+								"msg_data"=>"SUCCESS",
+								"result" => $register
+							];
+					}
+					else{
+						$json_response = [
+							"msg_status"=>HTTP_SUCCESS,
+							"msg_data"=>"There is some problem.Please try again",
+						];
+					}
+				}
+				else{
+					$json_response = [
+						"msg_status"=>HTTP_DUPLICATE,
+						"msg_data"=>"EXIST"
+					];
+				}
+				
+
+				
 			}
 			else{
 				$json_response = [
-                    "msg_status"=>HTTP_SUCCESS,
-                    "msg_data"=>"There is some problem.Please try again",
-                ];
+									"msg_status"=>HTTP_AUTH_FAIL,
+									"msg_data"=>"Authentication fail."
+				];
 			}
-            
-        }else{
-            $json_response = [
-                                "msg_status"=>HTTP_AUTH_FAIL,
-                                "msg_data"=>"Authentication fail."
-            ];
         }
-        }else{
+		else{
              $json_response = [
                                 "msg_status"=>HTTP_AUTH_FAIL,
                                 "msg_data"=>"Authentication fail."
@@ -98,6 +120,7 @@ class Opd extends CI_Controller{
 
 	public function saveSickLeave()
     {
+		$token_data = NULL;
         CUSTOMHEADER::getCustomHeader();
         $json_response = [];
         $headers = $this->input->request_headers();
@@ -111,47 +134,67 @@ class Opd extends CI_Controller{
         }
        
         if($client_token!=""){
-        if($client_token->jti==$server_token ){
+			if($client_token->jti==$server_token ){
+				
+				$token_data = $client_token->data;
+				$hospital_id = $token_data->hospital_id;
+				$doctor_id = $token_data->doctor_id;
 			
-			$token_data = $client_token->data;
-			$hospital_id = $token_data->hospital_id;
-			$doctor_id = $token_data->doctor_id;
-		
-            $postdata = file_get_contents("php://input");
-			$request = json_decode($postdata);
+				$postdata = file_get_contents("php://input");
+				$request = json_decode($postdata);
+				
+				$opdForm =  $request->formdata;
+				$registrationID = $opdForm->hdnRegID;
+				$whereDuplicate = [
+					"registrationid" => $registrationID
+				];
+				
+				
+				$isAlreadyInserted = $this->commondatamodel->duplicateValueCheck('opd_prescription',$whereDuplicate);
 			
-			
-            $register = $this->opd->saveSickLeave($request,$hospital_id,$doctor_id);
-			if($register){
-				$json_response = [
-                    "msg_status"=>HTTP_SUCCESS,
-					"msg_data"=>"SUCCESS",
-					"result" => $register
-                ];
+				if($isAlreadyInserted == FALSE){
+						$register = $this->opd->saveSickLeave($request,$hospital_id,$doctor_id);
+						if($register){
+							$json_response = [
+								"msg_status"=>HTTP_SUCCESS,
+								"msg_data"=>"SUCCESS",
+								"result" => $register
+							];
+						}
+						else{
+							$json_response = [
+								"msg_status"=>HTTP_SUCCESS,
+								"msg_data"=>"There is some problem.Please try again",
+							];
+						}
+				}
+				else {
+					$json_response = [
+						"msg_status"=>HTTP_DUPLICATE,
+						"msg_data"=>"EXIST"
+					];
+				}
+				
+				
+
+				
 			}
 			else{
 				$json_response = [
-                    "msg_status"=>HTTP_SUCCESS,
-                    "msg_data"=>"There is some problem.Please try again",
-                ];
+									"msg_status"=>HTTP_AUTH_FAIL,
+									"msg_data"=>"Authentication fail."
+				];
 			}
-            
-        }else{
-            $json_response = [
-                                "msg_status"=>HTTP_AUTH_FAIL,
-                                "msg_data"=>"Authentication fail."
-            ];
         }
-        }else{
+		else{
              $json_response = [
-                                "msg_status"=>HTTP_AUTH_FAIL,
-                                "msg_data"=>"Authentication fail."
+                    "msg_status"=>HTTP_AUTH_FAIL,
+                    "msg_data"=>"Authentication fail."
             ];
-
-        }
+		}
         header('Content-Type: application/json');
-	echo json_encode( $json_response );
-	exit;
+		echo json_encode( $json_response );
+		exit;
         
       
     }
